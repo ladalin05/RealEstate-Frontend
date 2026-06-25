@@ -1,36 +1,12 @@
 import { CheckCircle, ChevronRight, Mail, Phone } from 'lucide-react';
-import { getIcon } from '../../utils/helper';
-import { useNavigate } from 'react-router-dom';
+import { SocialIcon } from '../../utils/helper';
 
-interface Agent {
-  id: number;
-  name: string;
-  title: string;
-  company: string;
-  image: string;
-  officePhone: string;
-  phone: string;
-  email: string;
-  location: string;
-  experience: string;
-  listings: number;
-  rating: number;
-  language: string[];
-  social: {
-    facebook: string;
-    twitter: string;
-    linkedin: string;
-    instagram: string;
-  };
-  bio: string;
-}
-
-export const AgentCardV2 = ({ agent }: { agent: Agent } ) => {
+export const AgentCardV2 = ({ agent }: { agent: any } ) => {
 
     return (
         <div className="h-72 relative flex bg-white shadow-lg rounded-md overflow-hidden p-1">
             <div className="relative rounded-md overflow-hidden w-1/3 p-7">
-                <img src={agent.image} alt={agent.name} className="w-full h-full object-cover rounded-lg" />
+                <img src={agent.profile_image} alt={agent.name} className="w-full h-full object-cover rounded-lg" />
             </div>
             <div className="w-2/3 flex flex-col justify-between px-2 py-3 ">
                 <div className="flex-1">
@@ -38,7 +14,7 @@ export const AgentCardV2 = ({ agent }: { agent: Agent } ) => {
                     <p className="text-md text-gray-500">Company Agent at The {agent.company}</p>
                     <div className="border-b border-gray-300 w-full my-4"></div>
                 </div>
-                <div className="flex flex-2 items-center justify-between">
+                <div className="flex flex-2 flex-wrap items-center justify-between">
                     <div className="flex items-center gap-2">
                         <Phone className="text-blue-500" size={25}/>
                         <div className="flex flex-col">
@@ -63,14 +39,11 @@ export const AgentCardV2 = ({ agent }: { agent: Agent } ) => {
                 </div>
                 <div className="flex justify-between items-center flex-3 w-full mt-2">
                     <div className="flex gap-4">
-                        {Object.entries(agent.social).map(([key, value]) => {
-                            const Icon = getIcon(key);
-                            return (
-                                <a href={value} target="_blank" key={key} className="flex items-center">
-                                    <Icon className="text-gray-500 hover:text-blue-500" size={18} />
-                                </a>
-                            );
-                        })}
+                        {Object.entries(JSON.parse(agent.social_links ?? '{}')).map(([platform, url]) => (
+                            <a href={url as string} target="_blank" rel="noreferrer" key={platform}>
+                                <SocialIcon platform={platform} size={18} className="text-gray-500 hover:text-blue-500" />
+                            </a>
+                        ))}
                     </div>
                     <a href={`/agent/${agent.id}`} className="text-blue-500 hover:text-blue-700 font-semibold px-4 py-2 rounded-md flex items-center">
                         Listed Properties <ChevronRight size={20} />

@@ -1,80 +1,155 @@
-
 import { CustomSelect } from "../ui/CustomSelect"
-import { getFilterOptions } from "../../utils/data"
-import { Search } from "lucide-react";
+import { Search, MapPin, House, LayoutGrid, Bath, ListCheck } from "lucide-react";
 import { RangeSlider } from "../ui/RangeSlider";
+import { useEffect, useState } from "react";
+import { PropertyService } from "../../services/property.service";
 
+interface FilterData {
+    areas:      { id: number; name: string }[];
+    categories: { id: number; name: string }[];
+    feature:    { id: number; name: string }[];
+}
 
+export const Filter = ({ filter, setFilter, }: {
+        filter: Record<string, string>;
+        setFilter: React.Dispatch<React.SetStateAction<Record<string, string>>>;
+    }) => {
+    const [filterData, setFilterData] = useState<FilterData>({
+        areas:      [],
+        categories: [],
+        feature:    [],
+    });
 
-export const Filter = ({ filter, setFilter }: { filter: Record<string, string>; setFilter: React.Dispatch<React.SetStateAction<Record<string, string>>> }) => {
-    
-    const filterOptions = getFilterOptions();
+    useEffect(() => {
+        PropertyService.getDataFillter().then((data) => {
+            if (data) setFilterData(data);
+        });
+    }, []);
 
-    
+    const filterOptions = {
+        Area: {
+            icon: MapPin,
+            key: "area_id",
+            options: [
+                { label: "All Areas", value: "" },
+                ...filterData.areas.map((a) => ({ label: a.name, value: String(a.id) })),
+            ],
+        },
+        Purpose: {
+            icon: House,
+            key: "purpose",
+            options: [
+                { label: "All Purpose", value: "" },
+                { label: "For Sale",    value: "sale" },
+                { label: "For Rent",    value: "rent" },
+                { label: "Sale & Rent", value: "sale_rent" },
+            ],
+        },
+        Category: {
+            icon: LayoutGrid,
+            key: "type_id",
+            options: [
+                { label: "All Types", value: "" },
+                ...filterData.categories.map((c) => ({ label: c.name, value: String(c.id) })),
+            ],
+        },
+        Bathroom: {
+            icon: Bath,
+            key: "bathrooms",
+            options: [
+                { label: "Bathrooms", value: "" },
+                { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5+", value: "5" },
+            ],
+        },
+        Feature: {
+            icon: ListCheck,
+            key: "feature_id",
+            options: [
+                { label: "All Features", value: "" },
+                ...filterData.feature.map((f) => ({ label: f.name, value: String(f.id) })),
+            ],
+        },
+    };
+
     return (
         <div className="w-full p-4 bg-white dark:bg-slate-800 shadow-xl rounded-lg">
             <div className="flex justify-between items-center py-4 border-b border-gray-300 mb-3">
                 <h2 className="text-2xl font-bold">Find Your Home</h2>
             </div>
             <div className="flex flex-col gap-6 pt-4">
+
+                {/* Search */}
                 <div className="w-full h-12 flex">
-                    <label htmlFor="search_text" className="flex-1 flex items-center p-2 gap-2 border border-gray-200 h-full rounded-sm">
+                    <label htmlFor="search" className="flex-1 flex items-center p-2 gap-2 border border-gray-200 h-full rounded-sm">
                         <span className="px-1">
-                            <Search className="w-5 h-5 text-gray-600"/>
+                            <Search className="w-5 h-5 text-gray-600" />
                         </span>
-                        <input type="text" name="search_text" id="search_text" value={filter.search_text} onChange={(e) => setFilter({...filter, search_text: e.target.value})} placeholder="Search Property" className="w-full h-full focus:outline-none" />
+                        <input
+                            type="text"
+                            id="search"
+                            value={filter.search}
+                            onChange={(e) => setFilter({ ...filter, search: e.target.value })}
+                            placeholder="Search Property"
+                            className="w-full h-full focus:outline-none"
+                        />
                     </label>
                 </div>
-                {Object.entries(filterOptions).map(([label, config]) => {
-                        const Icon = config.icon;
 
-                        return (
-                            <div key={label} className="w-auto h-12">
+                {/* Dynamic selects from API */}
+                {Object.entries(filterOptions).map(([label, config]) => {
+                    const Icon = config.icon;
+                    return (
+                        <div key={label} className="w-auto h-12">
                             <CustomSelect
                                 label={label}
                                 icon={Icon}
                                 options={config.options}
-                                value={filter[label.toLowerCase()]}
+                                value={filter[config.key] ?? ""}
                                 className="w-full rounded-sm border border-gray-200"
-                                onChange={(value) =>
-                                setFilter({
-                                    ...filter,
-                                    [label.toLowerCase()]: value,
-                                })
-                                }
+                                onChange={(value) => setFilter({ ...filter, [config.key]: value })}
                             />
-                            </div>
-                        );
-                    })}
-                    <div className="flex justify-between gap-4">
-                        <div className="flex w-full h-14 border border-gray-200 rounded-sm">
-                            <input type="text" value={filter?.min_area} onChange={(e) => setFilter({...filter, min_area: e.target.value})} className="w-full h-full focus:outline-none p-4" placeholder="Min Area (sq ft)" />
                         </div>
-                        <div className="flex w-full h-14 border border-gray-200 rounded-sm">
-                            <input type="text" value={filter?.max_area} onChange={(e) => setFilter({...filter, max_area: e.target.value})} className="w-full h-full focus:outline-none p-4" placeholder="Max Area (sq ft)" />
-                        </div>
+                    );
+                })}
+
+                {/* Rooms */}
+                <div className="flex flex-col gap-4">
+                    <h2 className="text-xl">Rooms</h2>
+                    <div className="flex justify-center">
+                        <button
+                            className={`w-16 h-15 border border-gray-200 hover:border-blue-400 rounded-l-sm ${filter.rooms === "" ? "border-blue-400" : ""}`}
+                            onClick={() => setFilter({ ...filter, rooms: "" })}
+                        >
+                            All
+                        </button>
+                        {Array.from({ length: 5 }).map((_, i) => (
+                            <button
+                                key={i}
+                                className={`w-16 h-15 border border-gray-200 hover:border-blue-400 ${filter.rooms === String(i + 1) ? "border-blue-400" : ""}`}
+                                onClick={() => setFilter({ ...filter, rooms: String(i + 1) })}
+                            >
+                                {i + 1}
+                            </button>
+                        ))}
+                        <button
+                            className={`w-16 h-15 border border-gray-200 hover:border-blue-400 rounded-r-sm ${filter.rooms === "6" ? "border-blue-400" : ""}`}
+                            onClick={() => setFilter({ ...filter, rooms: "6" })}
+                        >
+                            6+
+                        </button>
                     </div>
-                    <div className="flex flex-col gap-4">
-                        <h2 className="text-xl">Rooms</h2>
-                        <div className="flex justify-center">
-                            <button className={`w-16 h-15 border border-gray-200 hover:border-blue-400 rounded-l-sm ${filter.rooms === "all" ? "border-blue-400" : ""}`}
-                                    onClick={() => setFilter({ ...filter, rooms: "all" })}
-                                    >All</button>
-                            {Array.from({length: 5}).map((_, index) => (
-                                <button key={index} className={`w-16 h-15 border border-gray-200 hover:border-blue-400 ${filter.rooms === (index + 1).toString() ? "border-blue-400" : ""}`}
-                                    onClick={() => setFilter({ ...filter, rooms: (index + 1).toString() })}
-                                    >{index + 1}</button>
-                            ))}
-                            <button className={`w-16 h-15 border border-gray-200 hover:border-blue-400 rounded-r-sm ${filter.rooms === "6+" ? "border-blue-400" : ""}`}
-                                    onClick={() => setFilter({ ...filter, rooms: "6+" })}
-                                    >6+</button>
-                        </div>
-                    </div>
-                    <div className="flex flex-col gap-4">
-                        <h2 className="text-xl">Price</h2>
-                        <RangeSlider filter={filter} setFilter={setFilter} />
-                    </div>
+                </div>
+
+                {/* Price range */}
+                <div className="flex flex-col gap-4">
+                    <h2 className="text-xl">Price</h2>
+                    <RangeSlider filter={filter} setFilter={setFilter} />
+                </div>
             </div>
         </div>
-    )
-}
+    );
+};

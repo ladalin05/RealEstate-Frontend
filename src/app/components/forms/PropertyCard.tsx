@@ -3,7 +3,7 @@ import { BedDouble, ShowerHead, TriangleRight, Paperclip, ChevronLeft, ChevronRi
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
-export const PropertyCard = ({ property }: { property: any }) => {
+export const PropertyCard = ({ property }: { property: any }) => { 
     const scrollImageRef = useRef(null);
     const navigation = useNavigate();
     const handleNextImage = () => {

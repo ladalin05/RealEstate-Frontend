@@ -1,4 +1,4 @@
-import { Facebook, Instagram, Linkedin, Twitter, Youtube } from "react-bootstrap-icons";
+import { Facebook, Instagram, Linkedin, Telegram, Twitter, TwitterX, Youtube } from "react-bootstrap-icons";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 
@@ -194,3 +194,18 @@ export function getIcon(key: string){
             return null;
     }
 }
+
+const socialIcons: Record<string, React.ElementType> = {
+    facebook:  Facebook,
+    telegram:  Telegram,
+    twitter:   TwitterX,
+    instagram: Instagram,
+    linkedin:  Linkedin,
+    youtube:   Youtube,
+};
+
+export function SocialIcon ({ platform, size = 12, className = "text-gray-500" }: { platform: string; size?: number; className?: string; }) {
+    const Icon = socialIcons[platform.toLowerCase()];
+    if (!Icon) return null;
+    return <Icon size={size} className={className} />;
+};

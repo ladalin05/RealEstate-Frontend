@@ -1,5 +1,6 @@
 
 export const Categories = ({categories}: {categories: any}) => {
+    
     return (
         <section className="container grid grid-cols-4 gap-3 mx-auto">
                 { categories.map((category, index) => (

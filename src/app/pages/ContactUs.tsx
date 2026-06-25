@@ -103,7 +103,7 @@ const ContactUsPage = () => {
                         </div>
                         <div className="flex justify-center mt-8 gap-4">
                             {socials.map((social, index) => (
-                                <button className={`${social.color} w-12 h-12 rounded-lg flex items-center justify-center transition-all duration-200 cursor-pointer`}>
+                                <button key={index} className={`${social.color} w-12 h-12 rounded-lg flex items-center justify-center transition-all duration-200 cursor-pointer`}>
                                     <social.Icon color="white" size={20} />
                                 </button>
                             ))}

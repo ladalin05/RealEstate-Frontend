@@ -5,12 +5,12 @@ import { LanguageSwitcher } from "./ui/LanguageSwitcher";
 import { AuthService } from "../services/auth.service";
 
 const Navigation = () => {
+    const location = useLocation();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const [isHomePage, setIsHomePage] = useState(true);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [user, setUser] = useState(null);
-    const location = useLocation();
+    const user = AuthService.getUser();
+    const isLoggedIn = AuthService.isAuthenticated();
     const links = [
         { id: 1, menu_title: 'Home', menu_link: '/home' },
         { id: 3, menu_title: 'Property', menu_link: '/property' },
@@ -20,12 +20,6 @@ const Navigation = () => {
         { id: 6, menu_title: 'Contact Us', menu_link: '/contact-us' },
     ];
 
-    useEffect(() => {
-        const user = AuthService.getUser();
-        const isLoggedIn = AuthService.isAuthenticated();
-        setUser(user);
-        setIsLoggedIn(isLoggedIn);
-    }, [isLoggedIn, user]);
 
     useEffect(() => {
         const onScroll = () => {

@@ -16,16 +16,16 @@ export const AboutRealEsteteSection = ({ realEstateData }: { realEstateData: any
                     </div>
                 </div>
                 <div className="bg-white absolute bottom-4 right-4 w-[64%] h-64 transform rounded-lg shadow-lg z-10">
-                    <div className="grid grid-cols-4 gap-12 px-8 pt-8">
+                    <div className="grid grid-cols-4 gap-12 px-8 pt-6">
                         {realEstateData.map((realEstate, index) => (
                             <div className="h-full rounded-lg" key={index}>
-                                <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-200">{realEstate.name}</h1>
+                                <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-200">{realEstate.title}</h1>
                                 <p className="text-base text-gray-500 mt-4">{realEstate.description}</p>
                             </div>
                         ))}
                     </div>
-                    <hr className="border-secondary opacity-25 my-5" />
-                    <div className="flex items-center justify-between px-8">
+                    <hr className="border-secondary opacity-25 my-4 md:my-2" />
+                    <div className="flex items-center justify-between px-8 relative">
                         <div className="flex items-center">
                             <div className="w-10 h-10 rounded-full">
                                 <img src="https://main.houzez.co/wp-content/uploads/2025/10/demo-31-1.jpg" alt="CTA" className="w-full h-auto rounded-full shadow-lg" />

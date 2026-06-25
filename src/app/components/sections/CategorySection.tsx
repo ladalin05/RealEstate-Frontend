@@ -1,9 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { Categories } from "./Categories";
 
-export const CategorySection = ({categoriesData}: {categoriesData: any}) => {
-
-    const categories = categoriesData?.slice(0, 6);
+export const CategorySection = ({categories}: {categories: any}) => {
 
     return (
         <section className="container py-16 px-8">

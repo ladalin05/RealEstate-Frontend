@@ -25,7 +25,7 @@ export class AuthService {
 
       if (!token) return null;
 
-      const response = await fetch(`${API_URL}/users/customers/${user_id}`, {
+      const response = await fetch(`${API_URL}/users/${user_id}`, {
           method: "GET",
           headers: {
               "Authorization": `Bearer ${token}`,
@@ -42,7 +42,7 @@ export class AuthService {
  
     if (!token) return null;
  
-    const response = await fetch(`${API_URL}/users/customers/${user_id}`, {
+    const response = await fetch(`${API_URL}/users/${user_id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -88,8 +88,7 @@ export class AuthService {
     return result;
   }
 
-  static async loginUser(userData: any) {
-    console.log(userData)
+  static async loginUser(userData: any) { 
     const response = await fetch(`${API_URL}/auth/login`, {
         method: 'POST',
         headers: {

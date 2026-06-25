@@ -29,7 +29,7 @@ export const AgentDetail = ({ agent, properties, categories }: { agent: any, pro
                           {Object.entries(agent.social).map(([key, value]) => {
                               const Icon = getIcon(key);
                               return (
-                                  <a href={value} target="_blank" key={key} className="flex items-center">
+                                  <a href={value as string} target="_blank" key={key} className="flex items-center">
                                       <Icon className="text-gray-500 hover:text-blue-500" size={18} />
                                   </a>
                               );

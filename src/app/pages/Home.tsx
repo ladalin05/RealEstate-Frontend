@@ -5,28 +5,50 @@ import { CategorySection } from "../components/sections/CategorySection";
 import { PropertySection } from "../components/sections/PropertySection";
 import { PropertyForRent } from "../components/sections/PropertyForRent";
 import { AgentSection } from "../components/sections/AgentSection";
-import { propertiesData, categoriesData, agentsData, areasData } from "../utils/data";
+import { categoriesData } from "../utils/data";
 import { AboutRealEsteteSection } from "../components/sections/AboutRealEsteteSection";
+import { useEffect, useState } from "react";
+import { CMSService } from "../services/cms.service";
 
 const HomePage = () => {
+    const [areas, setAreas] = useState([]);
+    const [stats, setStats] = useState([]);
+    const [featuredProperties, setFeaturedProperties] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [propertiesForRent, setPropertiesForRent] = useState([]);
+    const [agents, setAgents] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
-    const realEstateData = [
-        { name: '53,000+', description: 'Real estate professionals worldwide trust Houzez to power their websites.' },
-        { name: '2,600+', description: 'Positive reviews praising Houzez for its flexibility and reliable support.' },
-        { name: '4.85+', description: 'Average rating reflecting the theme’s quality and user satisfaction.' },
-        { name: '10+', description: 'Years of experience creating solutions for real estate professionals.' },
-    ]
+    useEffect(()=>{
+        setIsLoading(true);
+        CMSService.getHomePageData().then((data)=>{
+            setAreas(data.areas);
+            setStats(data.stats);
+            setPropertiesForRent(data.propertiesForRent);
+            setFeaturedProperties(data.featuredProperties);
+            setCategories(data.propertyCategories);
+            setAgents(data.agents); 
+        })
+        .finally(()=>{
+            setIsLoading(false);
+        })
+    },[])
 
-    const propertiesForRent = propertiesData.filter(property => property.status.toLowerCase() === 'for rent');
-    const agents = agentsData.sort((a, b) => b.rating - a.rating).slice(0, 3);
+    if (isLoading) {
+        return (
+            <div className="w-full min-h-screen flex items-center justify-center z-50 fixed top-0 bg-white">
+                <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-sky-500"></div>
+            </div>
+        );
+    }
 
     return (
         <div className="bg-white dark:bg-slate-900">
-            <HeroSection categories={categoriesData} />
-            <AreaSection areas={areasData} />
-            <AboutRealEsteteSection realEstateData={realEstateData} />
-            <PropertySection propertiesData={propertiesData} />
-            <CategorySection categoriesData={categoriesData} />
+            <HeroSection categories={categories} />
+            <AreaSection areas={areas} />
+            <AboutRealEsteteSection realEstateData={stats} />
+            <PropertySection propertiesData={featuredProperties} />
+            <CategorySection categories={categories} />
             <PropertyForRent properties={propertiesForRent} />
             <AgentSection agents={agents} />
             <section className="container py-16 px-6 relative">

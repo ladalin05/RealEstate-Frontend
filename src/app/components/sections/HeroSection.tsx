@@ -8,7 +8,7 @@ export const HeroSection = ({categories}: {categories: any[]}) => {
 
   const navigate = useNavigate();
   const [filters, setFilters] = useState({ search_address: "", category_id: "" });
-  const PROPERTY_TYPES = categories.map(category => ({ label: category.title, value: category.id }));
+  const PROPERTY_TYPES = categories.map(category => ({ label: category.name, value: category.id }));
 
   const handleFiltter = () => {
     navigate('/property', { state: { filters } })
