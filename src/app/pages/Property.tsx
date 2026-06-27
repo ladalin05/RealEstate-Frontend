@@ -13,25 +13,12 @@ const PropertyPage = () => {
     const [viewMode,       setViewMode]       = useState<"grid" | "list">("grid");
     const [propertiesData, setPropertiesData] = useState<any[]>([]);
     const [isLoading,      setIsLoading]      = useState(true);
-    const [filter, setFilter] = useState({
-        search:     '',
-        type_id:    '',
-        area_id:    '',
-        purpose:    '',
-        furnishing: '',
-        bathrooms:  '',
-        rooms:      '',
-        min_price:  '',
-        max_price:  '',
-        sort_by:    'properties.id',
-        sort_dir:   'desc',
-    });
+    const [filter, setFilter] = useState({ search: '', type_id: '', area_id: '', purpose: '', furnishing: '', bathrooms: '', rooms: '', min_price: '', max_price: '', sort_by: 'properties.id', sort_dir: 'desc', });
 
     const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     const hasFilter = (f: typeof filter) =>
-        !!(f.search || f.type_id || f.area_id || f.purpose ||
-           f.furnishing || f.bathrooms || f.rooms || f.min_price || f.max_price);
+        !!(f.search || f.type_id || f.area_id || f.purpose || f.furnishing || f.bathrooms || f.rooms || f.min_price || f.max_price);
 
     const fetchData = (currentFilter: typeof filter) => {
         setIsLoading(true);
@@ -44,12 +31,10 @@ const PropertyPage = () => {
             .finally(() => setIsLoading(false));
     };
 
-    // initial load
     useEffect(() => {
         fetchData(filter);
     }, []);
 
-    // pick up filters from router state (e.g. home hero search)
     useEffect(() => {
         if (!location.state?.filters) return;
         const { search, type_id, area_id, purpose } = location.state.filters;
@@ -63,7 +48,6 @@ const PropertyPage = () => {
         navigate(location.pathname, { replace: true, state: null });
     }, [location.state]);
 
-    // re-fetch on filter change (debounced for search typing)
     useEffect(() => {
         if (debounceRef.current) clearTimeout(debounceRef.current);
         debounceRef.current = setTimeout(() => fetchData(filter), 400);
