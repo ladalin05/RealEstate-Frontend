@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
 import { PropertyDetail } from "../components/sections/PropertyDetail";
-import { propertiesData } from "../utils/data";
 import { useEffect, useState } from "react";
 import { PropertyService } from "../services/property.service";
 import { AuthService } from "../services/auth.service";

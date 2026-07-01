@@ -49,7 +49,6 @@ export const PropImags = ({images, latitude, longitude}: {images: string[], lati
     const handleOptionChange = (option: string) => {
         setOption(option);
     }
-    console.log('image : ', image)
 
     return (
         <>
@@ -66,7 +65,13 @@ export const PropImags = ({images, latitude, longitude}: {images: string[], lati
                             <button className="w-10 h-10 flex justify-center items-center bg-blue-400/50 hover:bg-blue-400/70 rounded-sm" onClick={() => handlePreImage()}> <ChevronLeft size={40} className="text-white font-bold" /> </button>
                             <button className="w-10 h-10 flex justify-center items-center bg-blue-400/50 hover:bg-blue-400/70 rounded-sm" onClick={() => handleNextImage()}> <ChevronRight size={40} className="text-white font-bold" /> </button>
                         </div>
-                        <img src={image} alt="Property Image" className="w-full h-full object-cover" />
+                        {image ? (
+                            <img src={image} alt="Property Image" className="w-full h-full object-cover" />
+                        ) : (
+                            <div className="w-full h-full bg-gray-200 dark:bg-slate-700 flex items-center justify-center">
+                                <span className="text-gray-400 text-sm">No image</span>
+                            </div>
+                        )}
                     </>
                 )}
                 {option == "map" && (

@@ -2,9 +2,11 @@ import { ArrowsAngleExpand, Heart, PlusCircle, GeoAlt} from "react-bootstrap-ico
 import { BedDouble, ShowerHead, TriangleRight, Paperclip, ChevronLeft, ChevronRight  } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 export const PropertyCardV2 = ({ property }: { property: any }) => {
     const navigation = useNavigate();
+    const { t, i18n } = useTranslation();
     const scrollImageRef = useRef(null);
     const handleNextImage = () => {
         const container = scrollImageRef.current;
@@ -40,7 +42,7 @@ export const PropertyCardV2 = ({ property }: { property: any }) => {
         <div className="relative bg-white flex shadow-md rounded-md overflow-hidden p-2 h-76">
             <div className="relative w-2/6 group cursor-pointer rounded-lg overflow-hidden" onClick={() => toPropDetail(property.id)}>
                 { property.featured && (
-                    <p className="absolute top-4 left-4 z-10 bg-lime-500 text-white text-sm font-thin py-1 px-1 rounded-sm uppercase">Featured</p>
+                    <p className="absolute top-4 left-4 z-10 bg-lime-500 text-white text-sm font-thin py-1 px-1 rounded-sm uppercase">{t('property.featured')}</p>
                 )}
                 <div className="w-full h-full relative flex justify-start overflow-hidden" ref={scrollImageRef} >
                     <img  src={property.image}alt={property.name} className="w-full h-full object-cover flex-shrink-0" />
@@ -89,7 +91,7 @@ export const PropertyCardV2 = ({ property }: { property: any }) => {
                     }
                     <p className="flex items-center text-md text-gray-600"><TriangleRight size={28} className="mr-2" />{property.size}</p>
                 </div>
-                <p className="text-md font-bold text-black-500 flex items-center uppercase">{property.category}</p>
+                <p className="text-md font-bold text-black-500 flex items-center uppercase">{property[`category_${i18n.language}`]}</p>
                 <div className="py-4 flex items-center justify-between">
                     <div className="flex items-center">
                         <div className="rounded-full w-8 h-8">
@@ -98,12 +100,12 @@ export const PropertyCardV2 = ({ property }: { property: any }) => {
                         <span className="text-gray-500 ms-2 text-sm">{property.agent.name}</span>
                         <div className="flex items-center text-gray-400 ms-6">
                             <Paperclip size={14}/>
-                            <span className="ms-2 text-sm">{property.agent.experience} ago</span>
+                            <span className="ms-2 text-sm">{property.agent.experience == "new_agent" ? t('agents.new_agent') : (property.agent.experience + ' ' + t('property.ago'))}</span>
                         </div>
                     </div>
                     <div className="flex items-center text-gray-400">
-                        <button className="font-bold text-md py-2 px-3 bg-sky-400 rounded-md text-white">
-                            Details
+                        <button className="font-bold text-md py-2 px-3 bg-sky-400 rounded-md text-white" onClick={()=> {toPropDetail(property.id)}}>
+                            {t('general.details')}
                         </button>
                     </div>
                 </div>

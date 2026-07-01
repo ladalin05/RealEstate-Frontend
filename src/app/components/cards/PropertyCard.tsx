@@ -1,8 +1,10 @@
 import { ArrowsAngleExpand, Heart, PlusCircle, GeoAlt, HeartFill} from "react-bootstrap-icons";
 import { BedDouble, ShowerHead, TriangleRight, Paperclip, ChevronLeft, ChevronRight} from "lucide-react";
 import { useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 export const PropertyCard = ({ property }: { property: any }) => { 
+    const { t, i18n } = useTranslation();
     const scrollImageRef = useRef(null);
     const handleNextImage = () => {
         const container = scrollImageRef.current;
@@ -38,7 +40,7 @@ export const PropertyCard = ({ property }: { property: any }) => {
         <div className="h-full relative bg-white shadow-lg rounded-md overflow-hidden">
             <div className="relative w-full h-68 group cursor-pointer overflow-hidden" onClick={() => toPropDetail(property.id)}>
                 { property.featured && (
-                    <p className="absolute top-4 left-4 z-10 bg-lime-500 text-white text-[9px] font-bold py-1 px-1 rounded-sm uppercase">Featured</p>
+                    <p className="absolute top-4 left-4 z-10 bg-lime-500 text-white text-[9px] font-bold py-1 px-1 rounded-sm uppercase">{t('property.featured')}</p>
                 )}
                 <p className="absolute top-4 right-4 z-10 bg-black/65 text-white text-[9px] font-bold py-1 px-1 rounded-sm uppercase">{property.status}</p>
                 <div className="w-full h-full relative flex justify-start overflow-hidden" ref={scrollImageRef} >
@@ -87,7 +89,7 @@ export const PropertyCard = ({ property }: { property: any }) => {
                     }
                     <p className="flex items-center text-gray-600"><TriangleRight className="mr-2" />{property.size}</p>
                 </div>
-                <p className="text-xs font-bold text-black-500 flex items-center uppercase">{property.category}</p>
+                <p className="text-sm font-bold text-black-500 flex items-center uppercase">{property[`category_${i18n.language}`]}</p>
             </div>
             <hr className="w-full border-gray-400 mt-2" />
             <div className="px-6 py-4 flex items-center justify-between">
@@ -99,7 +101,7 @@ export const PropertyCard = ({ property }: { property: any }) => {
                 </div>
                 <div className="flex items-center text-gray-400">
                     <Paperclip size={14}/>
-                    <span className="ms-2 text-sm">{property.agent.experience} ago</span>
+                    <span className="ms-2 text-sm">{property.agent.experience == "new_agent" ? t('agents.new_agent') : (property.agent.experience + ' ' + t('property.ago'))}</span>
                 </div>
             </div>
         </div>

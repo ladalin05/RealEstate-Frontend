@@ -5,6 +5,7 @@
   src: url('./font/SourceSans3.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -12,4 +13,5 @@
   src: url('./font/Hanuman.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }

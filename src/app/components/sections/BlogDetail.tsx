@@ -3,7 +3,7 @@ import { CalendarEventFill, Chat, Tag } from "react-bootstrap-icons";
 import { convertFromISO } from "../../utils/helper";
 
 export const BlogDetailSection = ({blog, relatedBlogs}: {blog: any, relatedBlogs: any}) => {
-    console.log(relatedBlogs);
+    
     return (
         <>
             <div className="w-full lg:w-4/5 mx-auto bg-white mb-12 p-8 rounded-md ">

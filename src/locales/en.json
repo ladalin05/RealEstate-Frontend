@@ -104,6 +104,21 @@
     "property": {
         "title": "Property List",
         "clear_filter": "Clear Filters",
+        "ago": "ago",
+        "featured": "Featured",
+        "bedrooms": "Bedrooms",
+        "bathrooms": "Bathrooms",
+        "garage": "Garage",
+        "area_size": "Area Size",
+        "year_build": "Year Built",
+        "property_id": "Property Id",
+        "open_on_map": "Open on Google Maps",
+        "updated_on": "Updated on",
+        "features": "Features",
+        "contact_information": "Contact Information",
+        "no_amenties_available": "No amenities available",
+        "video": "Video",
+        "additional_details": "Additional details",
         "no_properties_found": "No properties found",
         "try_adjusting_filters": "Try adjusting your filters",
         "properties_found": "properties found",
@@ -130,6 +145,7 @@
         "office_phone": "Office Phone",
         "about": "About",
         "contact_me": "Contact me",
+        "new_agent": "New Agent",
         "profile": {
             "title": "Agent",
             "subtitle": "Agent profile page"
@@ -141,6 +157,12 @@
         "get_started": "Get Started",
         "load_more": "Load More",
         "listing": "Listing",
-        "listed_properties": "Listed Properties"
+        "listed_properties": "Listed Properties",
+        "overview": "Overview",
+        "description": "Description",
+        "address": "Address",
+        "details": "Details",
+        "view_listing": "View Listing",
+        "similar_listings": "Similar Listings"
     }
 }

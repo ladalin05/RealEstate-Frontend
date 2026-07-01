@@ -8,7 +8,6 @@ import { useTranslation } from "react-i18next";
 export const AgentProfile = ({ agent, properties }: { agent: any, properties: any }) => {
 
     const { t } = useTranslation();
-    console.log(agent, properties)
 
     return (
         <div className="w-full">

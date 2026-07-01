@@ -104,6 +104,21 @@
     "property": {
         "title": "បញ្ជីអចលនទ្រព្យ",
         "clear_filter": "សម្អាតតម្រង",
+        "ago": "កន្លងទៅ",
+        "featured": "អចលនទ្រព្យពិសេស",
+        "bedrooms": "បន្ទប់គេង",
+        "bathrooms": "បន្ទប់ទឹក",
+        "garage": "ហ្គារាស",
+        "area_size": "ទំហំផ្ទៃដី",
+        "year_build": "ឆ្នាំសាងសង់",
+        "property_id": "លេខសម្គាល់អចលនទ្រព្យ",
+        "open_on_map": "បើកលើ Google Maps",
+        "updated_on": "បានធ្វើបច្ចុប្បន្នភាពនៅ",
+        "features": "លក្ខណៈពិសេស",
+        "contact_information": "ព័ត៌មានទំនាក់ទំនង",
+        "no_amenties_available": "គ្មានសម្ភារៈបរិក្ខារ",
+        "video": "វីដេអូ",
+        "additional_details": "ព័ត៌មានលម្អិតបន្ថែម",
         "no_properties_found": "រកមិនឃើញអចលនទ្រព្យទេ",
         "try_adjusting_filters": "សូមព្យាយាមកែសម្រួលតម្រងរបស់អ្នក",
         "properties_found": "អចលនទ្រព្យដែលបានរកឃើញ",
@@ -130,6 +145,7 @@
         "office_phone": "ទូរស័ព្ទការិយាល័យ",
         "about": "អំពី",
         "contact_me": "ទាក់ទងខ្ញុំ",
+        "new_agent": "ភ្នាក់ងារថ្មី",
         "profile": {
             "title": "ភ្នាក់ងារ",
             "subtitle": "ប្រវត្តិរូបភ្នាក់ងារ"
@@ -141,6 +157,12 @@
         "get_started": "ចាប់ផ្ដើម",
         "load_more": "មើលបន្ថែមទៀត",
         "listing": "បញ្ជី",
-        "listed_properties": "អចលនទ្រព្យដែលបានចុះបញ្ជី"
+        "listed_properties": "អចលនទ្រព្យដែលបានចុះបញ្ជី",
+        "overview": "ទិដ្ឋភាពទូទៅ",
+        "description": "ការពិពណ៌នា",
+        "address": "អាសយដ្ឋាន",
+        "details": "ព័ត៌មានលម្អិត",
+        "view_listing": "មើលបញ្ជី",
+        "similar_listings": "បញ្ជីស្រដៀងគ្នា"
     }
 }
