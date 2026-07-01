@@ -13,6 +13,17 @@ export class PropertyService {
         }
     }
 
+    static async getPropertyDetail({ propertyId, userId = null }: { propertyId: number, userId?: number }): Promise<any> {
+        try {
+            const response = await fetch(`${API_URL}/property/detail?property_id=${propertyId}&user_id=${userId}`);
+            const result = await response.json(); 
+            return result.data;
+        } catch (error) {
+            console.error('Error fetching property detail:', error);
+            return [];
+        }
+    }
+
     static async getDataFillter(): Promise<any> {
         try {
             const response = await fetch(`${API_URL}/property/get-data-fillter`);

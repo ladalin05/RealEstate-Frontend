@@ -1,16 +1,12 @@
 import { useEffect, useState } from "react";
-import { CalendarEventFill, Chat, Tag } from "react-bootstrap-icons";
-import { Pagination } from "../components/ui/Pagination";
 import { BlogService } from "../services/blogs.service";
-import { useNavigate } from "react-router-dom";
-import { blogData } from "../utils/data";
+import { BlogSetion } from "../components/sections/BlogSection";
+import { Loading } from "../components/ui/Loading";
 
 const BlogsPage = () => {
-    const itemsPerPage = 4
-    const navigate = useNavigate();
-    const [currentPage, setCurrentPage] = useState(1);
     const [blogPosts, setBlogPosts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+
     useEffect(() => {
         setIsLoading(true);
         BlogService.getBlogs().then((data) => {
@@ -20,68 +16,17 @@ const BlogsPage = () => {
         });
     }, []);
 
-    const totalPages = Math.ceil(blogPosts.length / itemsPerPage);
-    const blogs = blogPosts.slice(
-        (currentPage - 1) * itemsPerPage,
-        currentPage * itemsPerPage
-    )
-
-    const toDetail = (id: number) => {
-        navigate(`/blogs/${id}`);
-    }
     
     if (isLoading) {
         return (
-            <div className="w-full min-h-screen flex items-center justify-center z-50 fixed top-0 bg-white">
-                <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-sky-500"></div>
-            </div>
+            <Loading />
         );
     }
 
     return (
         <div className="min-h-screen relative top-18 p-12 bg-slate-50 scroll-smooth" >
             <div className="w-full">
-                {blogs.map((blog, index) => (
-                    <div className="w-3/5 mx-auto bg-white mb-12 p-2 rounded-md " key={index}>
-                        <div className="w-full h-auto">
-                            <img src={blog.image} alt={blog.title} className="w-full h-auto object-cover rounded-md" />
-                        </div>
-                        <div className="w-full p-8">
-                            <h1 className="text-2xl text-medium">{blog.title}</h1>
-                            <p className="py-8 text-md font-thin text-gray-500">
-                                {blog.excerpt}
-                            </p>
-                        </div>
-                        <hr className="w-full border-gray-400 mt-2" />
-                        <div className="px-6 py-8 flex items-center justify-between">
-                            <div className="flex items-center gap-3">
-                                <div className="rounded-full w-10 h-10">
-                                    <img src={blog.author_image} alt={blog.author_name} className="rounded-full w-full h-full" />
-                                </div>
-                                <span className="text-gray-500 text-md font-normal"> by <span className="text-sky-400">{blog.author_name}</span></span>
-                                <span className="text-gray-500 text-md font-normal flex items-center"><CalendarEventFill className="me-1"/>{blog.since_posted}</span>
-                                <span className="text-gray-500 text-md font-normal flex items-center"><Tag className="me-1"/><span className="text-sky-400">{blog.category_name}</span></span>
-                                {/* <span className="text-gray-500 text-md font-normal flex items-center"><Chat className="me-1"/>{blog.comments}</span> */}
-                            </div>
-                            <div className="flex items-center">
-                                <button className="font-bold text-md py-2 px-3 bg-sky-400 rounded-md text-white" onClick={() => toDetail(blog.id)}>
-                                    Read More
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                ))}
-                                
-                <div className="flex justify-center mt-8">
-                    <Pagination
-                        currentPage={currentPage}
-                        totalPages={totalPages}
-                        onPageChange={(page) => {
-                            setCurrentPage(page);
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
-                        }}
-                    />
-                </div>
+                <BlogSetion blogsData={blogPosts} />
             </div>
         </div>
     )

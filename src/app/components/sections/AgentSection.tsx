@@ -1,5 +1,5 @@
 import { ArrowRight } from "react-bootstrap-icons";
-import { AgentCard } from "../forms/AgentCard"
+import { AgentCard } from "../cards/AgentCard"
 
 export const AgentSection = ({agents}: {agents: any}) => {
 

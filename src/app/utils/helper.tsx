@@ -120,8 +120,7 @@ export function convertFromISO({isoString}: {isoString: string}): string {
     month: "long",
     day: "numeric",
     hour: "numeric",
-    minute: "2-digit",
-    second: "2-digit",
+    minute: "2-digit", 
     hour12: true,
   });
 }

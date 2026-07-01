@@ -2,24 +2,19 @@ import { Share, GeoAlt, Heart, Printer, CarFrontFill } from "react-bootstrap-ico
 import { Map, BedDouble, ShowerHead, TriangleRight, CalendarDays, Paperclip, CircleCheck, User, Mail, Phone } from "lucide-react";
 import { useState } from "react";
 import { propertiesData } from "../../utils/data";
-import { PropertyCard } from "../forms/PropertyCard";
+import { PropertyCard } from "../cards/PropertyCard";
 import { RequestInfo, ScheduleTour } from "../forms/ScheduleTour";
 import { PropImags } from "./PropDetailCom";
 import { convertFromISO } from "../../utils/helper";
 
 
 
-export const PropertyDetail = ({ property }: { property: any }) => {
-
-    const relatedProperties = propertiesData .filter((p) => p.id !== property?.id).filter((p) => {
-                                                return (
-                                                    p.addressDetail.country === property?.addressDetail.country &&
-                                                    p.status === property?.status
-                                                );
-                                            }).slice(0, 4);
+export const PropertyDetail = ({ property, relatedProperties, latestProperties }: { property: any, relatedProperties: any[], latestProperties: any[] }) => {
 
     const [tourOpen, setTourOpen] = useState(false);
+
     const images = [property?.image, ...(property?.gallery || [])] as string[];
+
     const handleScheduleTour = () => {
         setTourOpen(true);
     };
@@ -39,8 +34,8 @@ export const PropertyDetail = ({ property }: { property: any }) => {
     const addressDetails = [
         { label: "Address", value: property?.address },
         { label: "State/county", value: property?.addressDetail?.state },
-        { label: "Area", value: property?.addressDetail?.city },
-        { label: "City", value: property?.addressDetail?.city },
+        { label: "Area", value: property?.addressDetail?.area },
+        { label: "Province", value: property?.addressDetail?.province },
         { label: "Zip/Postal Code", value: property?.addressDetail?.zip },
         { label: "Country", value: property?.addressDetail?.country },
     ];
@@ -49,13 +44,13 @@ export const PropertyDetail = ({ property }: { property: any }) => {
         {label: "Property ID", value: property?.code},
         {label: "Property Size", value: property?.size},
         {label: "Bathroom", value: property?.bathrooms},
-        {label: "Garage Size", value: "200 SqFt"},
+        {label: "Garage Size", value: ""},
         {label: "Property Type", value: property?.category},
         {label: "Price", value: property?.price},
         {label: "Bedrooms", value: property?.bedrooms},
         {label: "Garage", value: property?.garages},
         {label: "Year Built", value: property?.yearBuilt},
-        {label: "Property Status", value: property?.status},
+        {label: "Property Status", value: property?.purpose},
     ]
 
     return (
@@ -83,7 +78,7 @@ export const PropertyDetail = ({ property }: { property: any }) => {
             <div className="w-full mt-8 mx-auto">
                 <div className="flex items-start justify-between gap-4">
                     <div className="w-4/6">
-                        <PropImags images={images} />
+                        <PropImags images={images} latitude={property?.latitude} longitude={property?.longitude} />
                         <div className="mt-8 mx-auto p-5 bg-white rounded-sm shadow-sm">
                             <div className="flex items-center justify-between mb-4">
                                 <h2 className="text-md font-medium text-gray-800 dark:text-gray-200 mb-2">Overview</h2>
@@ -141,7 +136,7 @@ export const PropertyDetail = ({ property }: { property: any }) => {
                         <div className="mt-8 mx-auto p-6 bg-white rounded-sm shadow-sm">
                             <div className="flex items-center justify-between mb-4">
                                 <h2 className="text-md font-medium text-gray-800 dark:text-gray-200 mb-2">Details</h2>
-                                <a href="#" className="text-xs text-gray-600 dark:text-gray-400 flex items-center gap-1"><Paperclip size={14} /> Updated on {convertFromISO({ isoString: property?.updateDate })}</a>
+                                <a href="#" className="text-xs text-gray-600 dark:text-gray-400 flex items-center gap-1"><Paperclip size={14} /> Updated on {property?.updateDate ? convertFromISO({ isoString: (property?.updateDate as string) }) : ''}</a>
                             </div>
                             <hr className="border-gray-400 mb-6"/>
                             <div className="border-1 border-sky-400 rounded-sm p-4 bg-sky-50">
@@ -195,12 +190,15 @@ export const PropertyDetail = ({ property }: { property: any }) => {
                             </div>
                             <hr className="border-gray-400 mb-6"/>
                             <div className="grid grid-cols-3 gap-4">
-                                {property?.amenities.map((feature, index) => (
+                                {property?.amenities ? property.amenities.map((feature: string, index: number) => (
                                     <div key={index} className="flex items-center">
                                         <CircleCheck size={16} className="text-green-500 mr-2" />
                                         <span className="text-sm text-gray-600 dark:text-gray-400">{feature}</span>
                                     </div>
-                                ))}
+                                )) : <div>
+                                    <CircleCheck size={16} className="text-green-500 mr-2" />
+                                        <span className="text-sm text-gray-600 dark:text-gray-400">No amenities available</span>
+                                </div>}
                             </div>
                         </div>
                         <div className="mt-8 mx-auto p-6 bg-white rounded-sm shadow-sm">

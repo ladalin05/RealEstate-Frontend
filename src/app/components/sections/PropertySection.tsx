@@ -1,5 +1,5 @@
 import { ArrowRight } from "react-bootstrap-icons";
-import { PropertyCard } from "../forms/PropertyCard";
+import { PropertyCard } from "../cards/PropertyCard";
 import { useState } from "react";
 
 

@@ -1,5 +1,5 @@
 
-import { AgentCardV2 } from "../forms/AgentCardV2";
+import { AgentCardV2 } from "../cards/AgentCardV2";
 import { Minus } from "lucide-react";
 import { FeatureProperty } from "../forms/FeatureProperty";
 

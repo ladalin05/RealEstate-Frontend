@@ -1,6 +1,7 @@
 import { Grid, ListUl } from "react-bootstrap-icons";
 import { PropertyListSection } from "../components/sections/PropertyListSection";
 import { Filter as FilterSection } from "../components/sections/Filter";
+import { Loading } from "../components/ui/Loading";
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ScrollToTop } from "../utils/helper";
@@ -10,25 +11,39 @@ const PropertyPage = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const [viewMode,       setViewMode]       = useState<"grid" | "list">("grid");
-    const [propertiesData, setPropertiesData] = useState<any[]>([]);
-    const [isLoading,      setIsLoading]      = useState(true);
+    const [viewMode,         setViewMode]         = useState<"grid" | "list">("grid");
+    const [propertiesData,   setPropertiesData]   = useState<any[]>([]);
+    const [isInitialLoading, setIsInitialLoading] = useState(true); // first page load
+    const [isFilterLoading,  setIsFilterLoading]  = useState(false); // subsequent filter fetches
     const [filter, setFilter] = useState({ search: '', type_id: '', area_id: '', purpose: '', furnishing: '', bathrooms: '', rooms: '', min_price: '', max_price: '', sort_by: 'properties.id', sort_dir: 'desc', });
 
     const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const isFirstRun = useRef(true);
 
     const hasFilter = (f: typeof filter) =>
         !!(f.search || f.type_id || f.area_id || f.purpose || f.furnishing || f.bathrooms || f.rooms || f.min_price || f.max_price);
 
     const fetchData = (currentFilter: typeof filter) => {
-        setIsLoading(true);
+        if (isFirstRun.current) {
+            setIsInitialLoading(true);
+        } else {
+            setIsFilterLoading(true);
+        }
+
         const request = hasFilter(currentFilter)
             ? PropertyService.filterProperties(currentFilter)
             : PropertyService.getProperties();
 
         request
             .then((data) => setPropertiesData(data))
-            .finally(() => setIsLoading(false));
+            .finally(() => {
+                if (isFirstRun.current) {
+                    setIsInitialLoading(false);
+                    isFirstRun.current = false;
+                } else {
+                    setIsFilterLoading(false);
+                }
+            });
     };
 
     useEffect(() => {
@@ -49,10 +64,15 @@ const PropertyPage = () => {
     }, [location.state]);
 
     useEffect(() => {
+        if (isFirstRun.current) return; // already handled by the mount effect
         if (debounceRef.current) clearTimeout(debounceRef.current);
         debounceRef.current = setTimeout(() => fetchData(filter), 400);
         return () => { if (debounceRef.current) clearTimeout(debounceRef.current); };
     }, [filter]);
+
+    if (isInitialLoading) {
+        return <Loading />;
+    }
 
     return (
         <main className="min-h-screen bg-gray-50 dark:bg-slate-900 relative top-18 py-12 px-22">
@@ -79,7 +99,7 @@ const PropertyPage = () => {
                 <div className="property w-4/6">
                     <div className="flex w-full justify-between items-center mb-3">
                         <p className="text-sm text-gray-400">
-                            {isLoading
+                            {isFilterLoading
                                 ? "Loading..."
                                 : `${propertiesData.length} propert${propertiesData.length === 1 ? "y" : "ies"} found`}
                         </p>
@@ -97,7 +117,7 @@ const PropertyPage = () => {
                         </div>
                     </div>
 
-                    {isLoading ? (
+                    {isFilterLoading ? (
                         <div className="w-full flex items-center justify-center py-32">
                             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-500" />
                         </div>

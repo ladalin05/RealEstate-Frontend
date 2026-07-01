@@ -5,10 +5,10 @@ import { CategorySection } from "../components/sections/CategorySection";
 import { PropertySection } from "../components/sections/PropertySection";
 import { PropertyForRent } from "../components/sections/PropertyForRent";
 import { AgentSection } from "../components/sections/AgentSection";
-import { categoriesData } from "../utils/data";
 import { AboutRealEsteteSection } from "../components/sections/AboutRealEsteteSection";
 import { useEffect, useState } from "react";
 import { CMSService } from "../services/cms.service";
+import { Loading } from "../components/ui/Loading";
 
 const HomePage = () => {
     const [areas, setAreas] = useState([]);
@@ -36,9 +36,7 @@ const HomePage = () => {
 
     if (isLoading) {
         return (
-            <div className="w-full min-h-screen flex items-center justify-center z-50 fixed top-0 bg-white">
-                <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-sky-500"></div>
-            </div>
+            <Loading />
         );
     }
 

@@ -1,5 +1,5 @@
-import { PropertyCard } from "../forms/PropertyCard";
-import { PropertyCardV2 } from "../forms/PropertyCardV2";
+import { PropertyCard } from "../cards/PropertyCard";
+import { PropertyCardV2 } from "../cards/PropertyCardV2";
 import { Pagination } from "../ui/Pagination";
 import { useState } from "react";
 

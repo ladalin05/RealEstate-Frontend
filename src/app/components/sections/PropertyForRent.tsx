@@ -1,6 +1,6 @@
 import { ArrowRight } from "react-bootstrap-icons";
 import { useEffect } from 'react';
-import { PropertyCard } from "../forms/PropertyCard";
+import { PropertyCard } from "../cards/PropertyCard";
 import { useAutoScrollCarousel } from "../../utils/helper";
 import { useNavigate } from "react-router-dom";
 

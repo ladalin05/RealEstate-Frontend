@@ -1,10 +1,30 @@
-import { BlogCard } from "../components/forms/BlogCard";
-import { ourTeamData, blogData } from "../utils/data";
+import { BlogCard } from "../components/cards/BlogCard";
+import { ourTeamData } from "../utils/data";
+import { useEffect, useState } from "react";
+import { BlogService } from "../services/blogs.service";
+import { TeamCard } from "../components/cards/TeamCard";
+import { Loading } from "../components/ui/Loading";
 
 const AboutUsPage = () => {
 
     const ourTeam = ourTeamData.slice(0, 4);
-    const blogs = blogData.slice(0, 4);
+    const [blogs, setBlogs] = useState<any>([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        setIsLoading(true);
+        BlogService.getBlogs().then((data) => {
+            setBlogs(data.blogs);
+        }).finally(() => {
+            setIsLoading(false);
+        });
+    }, []);
+
+    if (isLoading) {
+        return (
+            <Loading />
+        );
+    }
 
     return (
         <div className="min-h-screen relative top-18"
@@ -16,7 +36,7 @@ const AboutUsPage = () => {
             <div className="w-full py-20 bg-sky-900/50 flex items-center backdrop-blur-sx px-28">
                 <h1 className="text-3xl text-white font-medium">About Us</h1>
             </div>
-            <div className="w-full h-full bg-white py-18 px-28">
+            <div className="w-full h-full bg-white py-18 px-20">
                 <h2 className="text-2xl font-thin">Your Vision Unrestricted</h2>
                 <div className="w-full grid grid-cols-2 gap-16 mt-6">
                     <span className="text-md text-gray-500">
@@ -40,40 +60,19 @@ const AboutUsPage = () => {
             <div className="w-full h-full bg-slate-50 py-18 px-28">
                 <h1 className="text-4xl font-thin">Meet our Team</h1>
                 <p className="text-gray-400 mt-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-                <div className="flex gap-12 p-12">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mt-12 ">
                     {ourTeam.map((team, index) => (
-                        <div className="w-100 h-97 relative group overflow-hidden rounded-sm" key={index}>
-                            <div className="absolute inset-0 z-0  bg-gradient-to-b from-black/10 via-transparent to-black/60 "></div>
-                            <img src={team.image} alt="" className="w-full h-full" />
-                            <div className="absolute bottom-4 w-full text-center text-white">
-                                <h1 className="text-lg font-bold">{team.name}</h1>
-                                <h6 className="text-md">{team.role}</h6>
-                            </div>
-                            <div className="w-full h-full absolute bottom-0 bg-white/80 flex items-end translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-in-out">
-                                <div className="text-center py-12 px-7 leading-7">
-                                    <h1 className="text-lg text-black font-bold">{team.name}</h1>
-                                    <h6 className="text-md text-gray-400 mb-2">{team.role}</h6>
-                                    <p className="text-md text-gray-400 mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In malesuada, odio sit amet pharetra vehicula, sapien leo egestas magna, vitae auctor diam magna cursus arcu.</p>
-                                    <div className="flex gap-4 justify-center">
-                                        {team.social.map((social, index) => (
-                                            <a href={social.link} key={index} >
-                                                <social.icon size={18} />
-                                            </a>
-                                        ))}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <TeamCard team={team} key={index}/>
                     ))}
                 </div>
             </div>
             <div className="w-full h-full bg-white py-18 px-28">
                 <h1 className="text-4xl font-thin">Read From Our Blog</h1>
                 <p className="text-gray-400 mt-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-                <div className="flex gap-6 p-12">
-                    {blogs.map((blog, index) => (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-12 ">
+                    {blogs && (blogs.slice(0, 4).map((blog, index) => (
                         <BlogCard blog={blog} key={index}/>
-                    ))}
+                    )))}
                 </div>
             </div>
         </div>

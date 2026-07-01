@@ -11,4 +11,15 @@ export class BlogService {
             return [];
         }
     }
+
+    static async getBlogDetail(id: number): Promise<any> {
+        try {
+            const response = await fetch(`${API_URL}/blogs/detail?id=${id}`);
+            const result = await response.json();
+            return result.data;
+        } catch (error) {
+            console.error('Error fetching blog:', error);
+            return [];
+        }
+    }
 }

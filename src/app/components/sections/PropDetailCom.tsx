@@ -3,7 +3,7 @@ import { Geo } from "react-bootstrap-icons";
 import { ChevronLeft, ChevronRight, Image, Map, Clapperboard} from "lucide-react";
 
 
-export const PropImags = ({images}: {images: string[]}) => {
+export const PropImags = ({images, latitude, longitude}: {images: string[], latitude: string, longitude: string}) => {
     
     const imageRef = useRef<HTMLDivElement>(null);
     const [image, setImage] = useState(images[0] || "");
@@ -49,6 +49,7 @@ export const PropImags = ({images}: {images: string[]}) => {
     const handleOptionChange = (option: string) => {
         setOption(option);
     }
+    console.log('image : ', image)
 
     return (
         <>
@@ -72,7 +73,7 @@ export const PropImags = ({images}: {images: string[]}) => {
                     <div className="absolute inset-0">
                         <iframe
                             className="w-full h-full rounded-sm"
-                            src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3582.441419644714!2d-87.6684526849778!3d41.80920397922195!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x880e2cbbd9b9a7b5%3A0x6c8e5c8a9e7b8c9b!2s8100%20S%20Ashland%20Ave%2C%20Chicago%2C%20IL%2060620%2C%20USA!5e0!3m2!1sen!2s!4v1587654321234!5m2!1sen!2s`}
+                            src={`https://maps.google.com/maps?q=${latitude},${longitude}&z=15&output=embed`}
                             title="Google Map"
                             frameBorder="0"
                             allowFullScreen

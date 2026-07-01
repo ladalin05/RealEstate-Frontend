@@ -53,7 +53,7 @@ export const FeatureProperty = ({ properties }: { properties: any[] }) => {
                                 </p>
                             </div>
 
-                            <img src={property.image} alt={property.name} className="rounded-lg w-full object-cover h-56" />
+                            <img src={property.image} alt={property.name} className="rounded-lg w-full object-cover h-65" />
                         </div>
                     </div>
                 ))}

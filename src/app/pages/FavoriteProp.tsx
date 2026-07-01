@@ -1,7 +1,7 @@
 import { Camera } from "lucide-react";
 import { useState } from "react";
 import { propertiesData } from "../utils/data";
-import { PropertyCard } from "../components/forms/PropertyCard";
+import { PropertyCard } from "../components/cards/PropertyCard";
 
 const FavoritePropPage = () => {
 

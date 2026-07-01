@@ -13,4 +13,15 @@ export class AgentService {
         }
     }
 
+    static async getAgetDetail(id: number): Promise<any> {
+        try { 
+            const response = await fetch(`${API_URL}/user-management/agent-detail?id=${id}`);
+            const result = await response.json(); 
+            return result.data;
+        } catch (error) {
+            console.error('Error fetching agent detail:', error);
+            return null;
+        }
+    }
+
 }
