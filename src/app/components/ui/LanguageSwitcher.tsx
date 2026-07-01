@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-const languages = [
-  { code: 'en', label: 'English', shortLabel: 'EN', flag: '🇺🇸', native: 'English' },
-  { code: 'km', label: 'Khmer',   shortLabel: 'KH', flag: '🇰🇭', native: 'ខ្មែរ' },
-];
 
 export function LanguageSwitcher({ showFullLabel = false }: { showFullLabel?: boolean }) {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
+  const languages = [
+    { code: 'en', label: 'English', shortLabel: 'EN', flag: '🇺🇸', native: t('nav.language.en') },
+    { code: 'km', label: 'Khmer',   shortLabel: 'KH', flag: '🇰🇭', native: t('nav.language.km') },
+  ];
   const current = languages.find(l => i18n.language.startsWith(l.code)) ?? languages[0];
 
   return (

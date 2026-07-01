@@ -6,8 +6,10 @@ import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ScrollToTop } from "../utils/helper";
 import { PropertyService } from "../services/property.service";
+import { useTranslation } from "react-i18next";
 
 const PropertyPage = () => {
+    const { t } = useTranslation();
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -75,11 +77,11 @@ const PropertyPage = () => {
     }
 
     return (
-        <main className="min-h-screen bg-gray-50 dark:bg-slate-900 relative top-18 py-12 px-22">
+        <main className="min-h-screen bg-gray-50 dark:bg-slate-900 relative top-18 py-12 px-10">
             <ScrollToTop />
 
-            <div className="flex w-full items-center justify-between mb-4">
-                <h2 className="text-3xl font-bold">Property List</h2>
+            <div className="flex w-full items-center justify-between mb-4 px-4">
+                <h2 className="text-3xl font-bold">{t('property.title')}</h2>
                 {hasFilter(filter) && (
                     <button
                         onClick={() => setFilter({
@@ -90,18 +92,18 @@ const PropertyPage = () => {
                         })}
                         className="text-sm text-red-400 border border-red-300 px-3 py-1 rounded-sm hover:bg-red-50 transition"
                     >
-                        Clear Filters
+                        {t('property.clear_filter')}
                     </button>
                 )}
             </div>
 
-            <section className="flex w-full">
-                <div className="property w-4/6">
-                    <div className="flex w-full justify-between items-center mb-3">
+            <section className="grid lg:grid-cols-6 grid-cols-1">
+                <div className="col-span-4">
+                    <div className="flex w-full justify-between items-center mb-3 ps-4">
                         <p className="text-sm text-gray-400">
                             {isFilterLoading
                                 ? "Loading..."
-                                : `${propertiesData.length} propert${propertiesData.length === 1 ? "y" : "ies"} found`}
+                                : `${propertiesData.length} ${t('property.properties_found')}`}
                         </p>
                         <div className="flex items-center gap-3 me-6">
                             <ListUl
@@ -123,15 +125,15 @@ const PropertyPage = () => {
                         </div>
                     ) : propertiesData.length === 0 ? (
                         <div className="w-full flex flex-col items-center justify-center py-32 text-gray-400">
-                            <p className="text-lg font-medium mb-1">No properties found</p>
-                            <p className="text-sm">Try adjusting your filters.</p>
+                            <p className="text-lg font-medium mb-1">{t('property.no_properties_found')}</p>
+                            <p className="text-sm">{t('property.try_adjusting_filters')}</p>
                         </div>
                     ) : (
                         <PropertyListSection propertiesData={propertiesData} viewMode={viewMode} />
                     )}
                 </div>
 
-                <div className="w-2/6 min-h-12 mt-10 py-4">
+                <div className="col-span-2 min-h-12 mt-10 py-4">
                     <FilterSection filter={filter} setFilter={setFilter} />
                 </div>
             </section>

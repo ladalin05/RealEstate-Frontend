@@ -1,11 +1,9 @@
 import { ArrowsAngleExpand, Heart, PlusCircle, GeoAlt, HeartFill} from "react-bootstrap-icons";
 import { BedDouble, ShowerHead, TriangleRight, Paperclip, ChevronLeft, ChevronRight} from "lucide-react";
 import { useRef } from "react";
-import { useNavigate } from "react-router-dom";
 
 export const PropertyCard = ({ property }: { property: any }) => { 
     const scrollImageRef = useRef(null);
-    const navigation = useNavigate();
     const handleNextImage = () => {
         const container = scrollImageRef.current;
         if (!container) return;
@@ -45,8 +43,8 @@ export const PropertyCard = ({ property }: { property: any }) => {
                 <p className="absolute top-4 right-4 z-10 bg-black/65 text-white text-[9px] font-bold py-1 px-1 rounded-sm uppercase">{property.status}</p>
                 <div className="w-full h-full relative flex justify-start overflow-hidden" ref={scrollImageRef} >
                     <img  src={property.image}alt={property.name} className="w-full h-full object-cover flex-shrink-0" />
-                    {property.gallery.map((img, index) => (
-                        <img key={index} src={img} alt={`${property.name} ${index + 1}`} className="w-full h-full object-cover flex-shrink-0" />
+                    {Object.entries(JSON.parse(property.gallery)).map(([index, img]) => (
+                        <img key={index} src={img as string} alt={`${property.name} ${index + 1}`} className="w-full h-full object-cover flex-shrink-0" />
                     ))}
                 </div>
                 <div className="w-full flex items-center justify-between absolute top-1/2 -translate-y-1/2 z-10 px-3">

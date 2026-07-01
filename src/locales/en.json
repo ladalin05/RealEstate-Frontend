@@ -1,7 +1,146 @@
 {
     "nav": {
         "home": "Home",
-        "services": "Services",
-        "pricing": "Pricing"
+        "property": "Property",
+        "agents": "Agents",
+        "about_us": "About Us",
+        "blog": "Blog",
+        "contact_us": "Contact Us",
+        "register":"Register",
+        "sign_in":"Sign In",
+        "sign_out":"Sign Out",
+        "language": {
+            "km": "Khmer",
+            "en": "English"
+        }
+    },
+    "footer": {
+        "platform": "Real Estate Platform",
+        "stayInLoop": "Stay in the loop",
+        "getLatestListings": "Get the latest listings and market updates.",
+        "subscribed": "You're subscribed — thanks!",
+        "placeholder_email": "Your email address",
+        "subscribe": "Subscribe",
+        "follow_us": "Follow us",
+        "freeCustomerCare": "Free customer care",
+        "live_support": "Live support",
+        "popular_search": "Popular search",
+        "quick_link": "Quick links",
+        "discover": "Discover",
+        "all_rights_reserved": "All rights reserved",
+        "popular": {
+            "apartment_for_rent": "Apartment for Rent",
+            "affordable_listings": "Affordable Listings",
+            "offices_for_sale": "Offices for Sale",
+            "offices_for_rent": "Offices for Rent",
+            "studio_flats": "Studio Flats"
+        },
+        "quick_links": {
+            "terms_of_use": "Terms of Use",
+            "privacy_policy": "Privacy Policy",
+            "pricing_plans": "Pricing Plans",
+            "our_services": "Our Services",
+            "contact_support": "Contact Support",
+            "careers": "Careers",
+            "faqs": "FAQs"
+        },
+        "discovers": {
+            "miami": "Miami",
+            "los_angeles": "Los Angeles",
+            "new_york": "New York",
+            "chicago": "Chicago",
+            "houston": "Houston"
+        }
+    },
+    "filter": {
+        "all_areas":"All Areas",
+        "all_type":"All Type",
+        "bathrooms":"Bathrooms",
+        "all_features": "All Features",
+        "search_property": "Search Property",
+        "find_your_home": "Find Your Home",
+        "rooms":"Rooms",
+        "all":"All",
+        "price":"Price",
+        "purpose": {
+            "all_purpose": "All Purpose",
+            "for_sale": "For Sale",
+            "for_rent": "For Rent",
+            "sale_rent": "Sale & Rent"
+        }
+    },
+    "social_link": {
+        "facebook": "Facebook",
+        "twitter": "Twitter",
+        "instagram": "Instagram",
+        "linkedin": "LinkedIn"
+    },
+    "home": {
+        "valuation": {
+            "title": "Know What Your Home Is Worth Today",
+            "description": "Thinking about selling or just curious about your home’s value? Get a professional, no-obligation valuation backed by real market insights—fast, accurate, and 100% free.",
+            "button": "Get a Free Valuation"
+        }
+    },
+    "hero": {
+        "tagline": "✨ THE BEST WAY TO",
+        "title1": "Find Your",
+        "title2": "Dream Home",
+        "description": "Explore over 2,000+ luxury properties with verified listings.",
+        "search_location": "Location...",
+        "property_type": "Property Type"
+    },
+    "area": {
+        "title": "Explore by",
+        "title_2": "Area",
+        "description": "Highlight the best of your properties by using the List Category shortcode. You can list categories, types, cities, areas and states of your choice."
+    },
+    "aboutRealEstate": {
+        "title":"About",
+        "subtitle":"Built for Real Estate Experts, Trusted Worldwide",
+        "description":"Houzez helps you create, manage, and scale your property business with confidence.",
+        "note":"Take your next step in real estate!"
+    },
+    "property": {
+        "title": "Property List",
+        "clear_filter": "Clear Filters",
+        "no_properties_found": "No properties found",
+        "try_adjusting_filters": "Try adjusting your filters",
+        "properties_found": "properties found",
+        "feature_title":"Featured properties",
+        "feature_description":"Explore a curated selection of properties that showcase the best opportunities for living and investing.",
+        "for_rent_title": "Properties for Rent",
+        "for_rent_description": "These are the latest properties in the Sales category. You can create the list using the \"latest listing shortcode\" and show items by specific categories."
+    },
+    "property_category": {
+        "title": "Properties by ",
+        "title_2": "Category",
+        "description": "Highlight the best of your properties by using the List Category shortcode. You can list specific properties categories, types, cities, areas."
+    },
+    "agents": {
+        "title": "Agents List",
+        "featured_properties": "Featured Properties",
+        "property_types": "Property Types",
+        "section_title":"Meet Our Team of Local Experts",
+        "section_description":"Connect with experienced agents who know your neighborhood inside and out.",
+        "find_more_agents":"Find more agents",
+        "company_agent_at_the": "Company Agent at The",
+        "mobile_phone": "Mobile Phone",
+        "email": "Email",
+        "office_phone": "Office Phone",
+        "about": "About",
+        "contact_me": "Contact me",
+        "profile": {
+            "title": "Agent",
+            "subtitle": "Agent profile page"
+        }
+    },
+    "general": {
+        "see_more": "See more",
+        "properties": "Properties",
+        "get_started": "Get Started",
+        "load_more": "Load More",
+        "listing": "Listing",
+        "listed_properties": "Listed Properties"
     }
 }

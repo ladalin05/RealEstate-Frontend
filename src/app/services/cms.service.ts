@@ -13,5 +13,16 @@ export class CMSService {
         }
     }
 
+    static async getFeaturedProperties(limit: number) {
+        try {
+            const response = await fetch(`${API_URL}/cms/featured-properties?limit=${limit}`);
+            const result = await response.json();
+            return result.data;
+        } catch (error) {
+            console.error('CMS Fetch Error:', error);
+            throw error;
+        }
+    }
+
 
 }

@@ -3,34 +3,7 @@ import { BedDouble, ShowerHead, TriangleRight, Paperclip, ChevronLeft, ChevronRi
 import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
 
-interface Property {
-  id: number;
-  name: string;
-  category: string;
-  status: string;
-  price: string;
-  image: string;
-  gallery: string[];
-  address: string;
-  size: string;
-  bedrooms: number;
-  bathrooms: number;
-  garages: number;
-  yearBuilt: number;
-  featured: boolean;
-  rating: number;
-  description: string;
-  amenities: string[];
-  agent: {
-        name: string;
-        image: string;
-        phone: string;
-        experience: string;
-        email: string;
-    };
-}
-
-export const PropertyCardV2 = ({ property }: { property: Property }) => {
+export const PropertyCardV2 = ({ property }: { property: any }) => {
     const navigation = useNavigate();
     const scrollImageRef = useRef(null);
     const handleNextImage = () => {
@@ -71,8 +44,8 @@ export const PropertyCardV2 = ({ property }: { property: Property }) => {
                 )}
                 <div className="w-full h-full relative flex justify-start overflow-hidden" ref={scrollImageRef} >
                     <img  src={property.image}alt={property.name} className="w-full h-full object-cover flex-shrink-0" />
-                    {property.gallery.map((img, index) => (
-                        <img key={index} src={img} alt={`${property.name} ${index + 1}`} className="w-full h-full object-cover flex-shrink-0" />
+                    {Object.entries(JSON.parse(property.gallery)).map(([index, img]) => (
+                        <img key={index} src={img as string} alt={`${property.name} ${index + 1}`} className="w-full h-full object-cover flex-shrink-0" />
                     ))}
                 </div>
                 <div className="w-full flex items-center justify-between absolute top-1/2 -translate-y-1/2 z-10 px-3">

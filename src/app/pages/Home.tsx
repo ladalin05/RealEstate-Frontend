@@ -9,8 +9,10 @@ import { AboutRealEsteteSection } from "../components/sections/AboutRealEsteteSe
 import { useEffect, useState } from "react";
 import { CMSService } from "../services/cms.service";
 import { Loading } from "../components/ui/Loading";
+import { useTranslation } from "react-i18next";
 
 const HomePage = () => {
+    const { t } = useTranslation();
     const [areas, setAreas] = useState([]);
     const [stats, setStats] = useState([]);
     const [featuredProperties, setFeaturedProperties] = useState([]);
@@ -56,12 +58,12 @@ const HomePage = () => {
                     </div>
                     <div className="absolute top-0 w-full h-full flex justify-center items-center">
                         <div className="w-2/5 mx-auto">
-                            <h2 className="text-4xl font-bold text-white text-center">Know What Your Home Is Worth Today</h2>
+                            <h2 className="lg:text-4xl text-2xl font-bold text-white text-center">{t("home.valuation.title")}</h2>
                             <p className="text-md text-white text-center mt-6">
-                                Thinking about selling or just curious about your home’s value? Get a professional, no-obligation valuation backed by real market insights—fast, accurate, and 100% free.
+                                {t("home.valuation.description")}
                             </p>
                             <button className="mt-6 rounded-full bg-sky-500 text-white font-bold py-3 px-6 flex mx-auto">
-                                Get a Free Valuation <ArrowRight className="ms-3"/>
+                                {t("home.valuation.button")} <ArrowRight className="ms-3"/>
                             </button>
                         </div>
                     </div>

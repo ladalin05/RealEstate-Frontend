@@ -3,8 +3,10 @@ import { useEffect, useState } from "react";
 import { ProfileDropdown } from "./ui/ProfileDropdown";
 import { LanguageSwitcher } from "./ui/LanguageSwitcher";
 import { AuthService } from "../services/auth.service";
+import { useTranslation } from "react-i18next";
 
 const Navigation = () => {
+    const { t } = useTranslation();
     const location = useLocation();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
@@ -12,12 +14,12 @@ const Navigation = () => {
     const user = AuthService.getUser();
     const isLoggedIn = AuthService.isAuthenticated();
     const links = [
-        { id: 1, menu_title: 'Home', menu_link: '/home' },
-        { id: 3, menu_title: 'Property', menu_link: '/property' },
-        { id: 5, menu_title: 'Agents', menu_link: '/agents' },
-        { id: 2, menu_title: 'About Us', menu_link: '/about-us' },
-        { id: 4, menu_title: 'Blog', menu_link: '/blogs' },
-        { id: 6, menu_title: 'Contact Us', menu_link: '/contact-us' },
+        { id: 1, menu_title: t('nav.home'), menu_link: '/home' },
+        { id: 3, menu_title: t('nav.property'), menu_link: '/property' },
+        { id: 5, menu_title: t('nav.agents'), menu_link: '/agents' },
+        { id: 2, menu_title: t('nav.about_us'), menu_link: '/about-us' },
+        { id: 4, menu_title: t('nav.blog'), menu_link: '/blogs' },
+        { id: 6, menu_title: t('nav.contact_us'), menu_link: '/contact-us' },
     ];
 
 
@@ -70,7 +72,7 @@ const Navigation = () => {
                                                                                                 e.preventDefault();
                                                                                                 window.location.href = link.menu_link;
                                                                                             }}
-                                            className={({ isActive }) => `nav-link inline-block px-4 py-2 transition-colors text-sm uppercase
+                                            className={({ isActive }) => `nav-link inline-block lg:px-4 py-2 transition-colors text-sm uppercase
                                                 ${isActive  ? 'text-[#00C2E0] font-semibold before:content-[""] before:absolute before:bottom-0 before:left-4 before:right-4 before:h-0.5 before:bg-[#00C2E0] before:rounded-full' : 'hover:text-[#00C2E0]' }`
                                             }>
                                             {link.menu_title}
@@ -90,7 +92,7 @@ const Navigation = () => {
                                     <ProfileDropdown user={user} isScrolled={isScrolled} isHomePage={isHomePage} />
                                 ) : (
                                     <a href="/login" className="inline-block bg-[#007BFF] text-white hover:bg-[#0069D9] rounded-xl px-6 py-2 text-[15px] font-medium transition-colors">
-                                        Sign In
+                                        {t('nav.sign_in')}
                                     </a>
                                 )}
                             </div>

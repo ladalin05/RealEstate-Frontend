@@ -3,11 +3,13 @@ import { useEffect } from 'react';
 import { PropertyCard } from "../cards/PropertyCard";
 import { useAutoScrollCarousel } from "../../utils/helper";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const AUTO_SCROLL_INTERVAL = 3000;
 const GAP = 16;
 
 export const PropertyForRent = ({properties}: {properties: any}) => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const { scrollRef, innerRef, active, number, isPausedRef, calculateNumber, scrollToIndex, startAutoScroll, stopAutoScroll, handleScrollEvent,} = useAutoScrollCarousel(properties.length, AUTO_SCROLL_INTERVAL, GAP);
 
@@ -28,8 +30,6 @@ export const PropertyForRent = ({properties}: {properties: any}) => {
         el.addEventListener("scroll", handleScrollEvent);
         return () => el.removeEventListener("scroll", handleScrollEvent);
     }, []);
-
-
     
     const handleFiltter = () => {
         navigate('/property', { state: { filters: {status: 'for rent'} } })
@@ -39,11 +39,11 @@ export const PropertyForRent = ({properties}: {properties: any}) => {
         <section className="container py-12 px-6 mb-18">
             <div className="flex justify-between items-center mb-12">
                 <div>
-                    <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-200">Properties for Rent</h1>
-                    <p>These are the latest properties in the Sales category. You can create the list using the "latest listing shortcode" and show items by specific categories.</p>
+                    <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-200">{t('property.for_rent_title')}</h1>
+                    <p className="w-3/4">{t('property.for_rent_description')}</p>
                 </div>
-                <p onClick={() => handleFiltter()} className="text-blue-500 font-medium flex items-center cursor-pointer">
-                    See more <ArrowRight className="ml-2" />
+                <p onClick={() => handleFiltter()} className="text-blue-500 font-medium flex items-center cursor-pointer whitespace-nowrap">
+                    {t('general.see_more')} <ArrowRight className="ml-2" />
                 </p>
             </div>
 
@@ -54,7 +54,7 @@ export const PropertyForRent = ({properties}: {properties: any}) => {
                 onMouseLeave={() => { isPausedRef.current = false; }}>
                 <div ref={innerRef} className="flex gap-4 px-2 items-center">
                     {properties.map((property) => (
-                        <div key={property.id} className="flex-shrink-0 w-[25.8%]">
+                        <div key={property.id} className="flex-shrink-0 lg:w-[25.8%] w-[50%]">
                             <PropertyCard property={property} />
                         </div>
                     ))}

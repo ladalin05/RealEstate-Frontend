@@ -1,13 +1,16 @@
 import { TelephoneFill, EnvelopeFill } from 'react-bootstrap-icons';
 import { SocialIcon } from '../..//utils/helper';
+import { useTranslation } from "react-i18next";
+
 
 export const AgentCard = ({ agent }: { agent: any } ) => {
 
+    const { t, i18n } = useTranslation();
 
     return (
         <div className="h-auto relative bg-white shadow-lg rounded-md overflow-hidden p-1">
             <div className="relative w-full h-88 group cursor-pointer flex justify-center ">
-                <p className="absolute bottom-4 left-4 bg-[#69c17d]/85 text-white text-[9px] font-bold py-1 px-1 rounded-sm uppercase">4 listings</p>
+                <p className="absolute bottom-4 left-4 bg-[#69c17d]/85 text-white text-[9px] font-bold py-1 px-1 rounded-sm uppercase">4 {t('general.listing')}</p>
                 <img src={agent.profile_image} alt={agent.name} className="w-full h-full object-cover" />
             </div>
             
@@ -19,7 +22,7 @@ export const AgentCard = ({ agent }: { agent: any } ) => {
                 </p>
                 <hr className="border-gray-100 mb-4" />
                 <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2"> 
                         {Object.entries(JSON.parse(agent.social_links ?? '{}')).map(([platform, url]) => (
                             <a href={url as string} target="_blank" rel="noreferrer" key={platform}>
                                 <SocialIcon platform={platform} size={12} className="text-gray-500 hover:text-blue-500" />
