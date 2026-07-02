@@ -9,8 +9,8 @@ export const AgentsList = ({agentsData, categories, featuredProperties}: {agents
     const { t, i18n } = useTranslation();
 
     return (
-        <section className="container lg:py-12 pt-4 grid grid-cols-1 lg:grid-cols-3">
-            <div className="lg:col-span-2 mx-auto py-3">
+        <section className="container xl:py-12 pt-4 grid grid-cols-1 xl:grid-cols-3">
+            <div className="xl:col-span-2 mx-auto py-3">
                 <div className="flex w-full items-center justify-between mb-6">
                     <h2 className="text-3xl font-bold">{t('agents.title')}</h2>
                 </div>
@@ -22,7 +22,7 @@ export const AgentsList = ({agentsData, categories, featuredProperties}: {agents
                     ))}
                 </div>
             </div>
-            <div className="lg:col-span-1 flex flex-col lg:pt-3 pt-12">
+            <div className="xl:col-span-1 flex flex-col xl:pt-3 pt-12">
                 <div className="flex w-full items-center justify-between mb-6">
                     <h2 className="text-3xl font-bold">{t('agents.featured_properties')}</h2>
                 </div>

@@ -9,8 +9,8 @@ export const AgentDetail = ({ agent, agentProperties, properties, categories }: 
     const { t, i18n } = useTranslation();
     
     return (
-        <section className="container py-12 grid grid-cols-1 lg:grid-cols-3">
-            <div className="lg:col-span-2 col-span-1 mx-auto py-3 lg:px-12 px-3">
+        <section className="container py-12 grid grid-cols-1 xl:grid-cols-3">
+            <div className="xl:col-span-2 col-span-1 mx-auto py-3 lg:px-12 px-3">
                 <AgentProfile agent={agent} properties={agentProperties} />
             </div> 
             <div className="col-span-1 flex flex-col p-3 lg:mt-0 mt-12">

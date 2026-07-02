@@ -1,10 +1,9 @@
-const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+import { apiFetch } from "../utils/api";
 
 export class BlogService {
     static async getBlogs(): Promise<any> {
         try {
-            const response = await fetch(`${API_URL}/blogs`);
-            const result = await response.json();
+            const result = await apiFetch(`/blogs`);
             return result.data;
         } catch (error) {
             console.error('Error fetching blogs:', error);
@@ -14,8 +13,7 @@ export class BlogService {
 
     static async getBlogDetail(id: number): Promise<any> {
         try {
-            const response = await fetch(`${API_URL}/blogs/detail?id=${id}`);
-            const result = await response.json();
+            const result = await apiFetch(`/blogs/detail?id=${id}`);
             return result.data;
         } catch (error) {
             console.error('Error fetching blog:', error);

@@ -8,11 +8,11 @@ export const AgentCardV2 = ({ agent }: { agent: any } ) => {
     const { t, i18n } = useTranslation();
 
     return (
-        <div className="h-72 relative flex bg-white shadow-lg rounded-md overflow-hidden p-1">
-            <div className="relative rounded-md overflow-hidden w-1/3 p-7">
+        <div className="md:h-72 h-auto relative grid md:grid-cols-3 grid-cols-1 bg-white shadow-lg rounded-md overflow-hidden p-1">
+            <div className="relative md:col-span-1 rounded-md overflow-hidden md:p-7 p-3">
                 <img src={agent.profile_image} alt={agent.name} className="w-full h-full object-cover rounded-lg" />
             </div>
-            <div className="w-2/3 flex flex-col justify-between px-2 py-3 ">
+            <div className="md:col-span-2 flex flex-col justify-between md:px-2 px-2 md:py-3 py-2 ">
                 <div className="flex-1">
                     <h2 className="text-2xl font-semibold mt-3 flex items-center gap-2 mb-1">{agent.name} <CheckCircle className="text-blue-500" size={25} /></h2>
                     <p className="text-md text-gray-500">{t('agents.company_agent_at_the')} {agent.company}</p>

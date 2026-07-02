@@ -24,7 +24,7 @@ export const PropertySection = ({propertiesData}: {propertiesData: any}) => {
                     setIsLoading(false);
                 });
         };
-    
+        
     return (
         <section className="container py-12 px-6">
             <div className="flex justify-between items-center mb-12">

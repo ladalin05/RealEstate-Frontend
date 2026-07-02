@@ -4,6 +4,7 @@ import { useState } from "react"
 import { ArrowsAngleExpand } from "react-bootstrap-icons"
 import { Heart, MapPin, PlusCircle, ChevronLeft, ChevronRight } from "lucide-react"
 import { useTranslation } from "react-i18next"
+import { formatPeriod } from "../../utils/helper"
 
 
 export const FeatureProperty = ({ properties }: { properties: any[] }) => {
@@ -17,46 +18,46 @@ export const FeatureProperty = ({ properties }: { properties: any[] }) => {
     if (!properties || total === 0) return null
 
     return (
-        <div className="relative w-full overflow-hidden rounded-2xl group">
+        <div className="relative w-full h-auto overflow-hidden rounded-2xl group">
             <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${current * 100}%)` }}>
                 {properties.map((property: any) => (
-                    <div key={property.id} className="min-w-full p-6 px-4 rounded-2xl bg-sky-500/30">
+                    <div key={property.id} className="min-w-full xl:p-6 xl:px-4 p-10 rounded-2xl bg-sky-500/30">
                         <h1 className="text-lg font-bold">{property.name}</h1>
                         <p className="text-md text-gray-500 flex items-center gap-2">
                             <MapPin className="text-blue-500" size={20} />
                             {property.address}
                         </p>
 
-                        <div className="relative mt-4">
+                        <div className="relative xl:mt-4 mt-6">
                             <div className="flex gap-2 absolute top-2 left-2 z-10">
-                                <p className="px-3 py-1 rounded-full bg-white text-gray-700 text-xs font-semibold">
-                                    {property.status}
+                                <p className="px-3 py-1 rounded-full bg-white text-gray-700 xl:text-xs text-md font-semibold">
+                                    {t(`status.${property.status}`)}
                                 </p>
                                 {property.featured && (
-                                    <p className="px-3 py-1 rounded-full bg-blue-500 text-white text-xs font-semibold">
+                                    <p className="px-3 py-1 rounded-full bg-blue-500 text-white xl:text-xs text-md font-semibold">
                                         {t('property.featured')}
                                     </p>
                                 )}
                             </div>
-                            <p className="absolute top-2 right-4 z-10 text-white text-md font-medium">
-                                {t('property.built')} {property.year}
+                            <p className="absolute top-2 right-4 z-10 text-white xl:text-md text-lg font-medium">
+                                {t('general.built')} {property.year}
                             </p>
-                            <p className="absolute bottom-4 left-4 z-10 text-xl font-medium text-white mb-2">
-                                {property.price}
+                            <p className="absolute bottom-4 left-4 z-10 xl:text-xl text-2xl font-medium text-white mb-2">
+                                {formatPeriod(property.price, t)}
                             </p>
                             <div className="absolute bottom-4 right-4 z-10 flex gap-2">
-                                <p className="w-8 h-8 bg-black/65 flex items-center justify-center rounded-md">
-                                    <ArrowsAngleExpand size={18} className="text-white" />
+                                <p className="xl:w-8 xl:h-8 w-9 h-9 bg-black/65 flex items-center justify-center rounded-md">
+                                    <ArrowsAngleExpand className="text-white xl:w-4 xl:h-4 w-5.5 h-5.5" />
                                 </p>
-                                <p className="w-8 h-8 bg-black/65 flex items-center justify-center rounded-md">
-                                    <Heart size={18} className="text-white" />
+                                <p className="xl:w-8 xl:h-8 w-9 h-9 bg-black/65 flex items-center justify-center rounded-md">
+                                    <Heart className="text-white xl:w-4 xl:h-4 w-5.5 h-5.5" />
                                 </p>
-                                <p className="w-8 h-8 bg-black/65 flex items-center justify-center rounded-md">
-                                    <PlusCircle size={18} className="text-white" />
+                                <p className="xl:w-8 xl:h-8 w-9 h-9 bg-black/65 flex items-center justify-center rounded-md">
+                                    <PlusCircle className="text-white xl:w-5 xl:h-5 w-6 h-6" />
                                 </p>
                             </div>
 
-                            <img src={property.image} alt={property.name} className="rounded-lg w-full object-cover h-65" />
+                            <img src={property.image} alt={property.name} className="rounded-lg w-full object-cover xl:h-65 h-120" />
                         </div>
                     </div>
                 ))}

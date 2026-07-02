@@ -1,6 +1,8 @@
 import { Facebook, Instagram, Linkedin, Telegram, Twitter, TwitterX, Youtube } from "react-bootstrap-icons";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { PropertyService } from "../services/property.service";
+import type { TFunction } from "i18next";
 
 export function ScrollToTop(){
   const { pathname } = useLocation();
@@ -10,6 +12,30 @@ export function ScrollToTop(){
   }, [pathname]);
 
   return null;
+}
+
+export function formatPeriod(text: string = "", t: TFunction) {
+  return text
+    .replace(/per day/g, t("general.per_day"))
+    .replace(/per month/g, t("general.per_month"))
+    .replace(/per yeear/g, t("general.per_year"))
+    .replace(/days?/g, t("general.day"))
+    .replace(/months?/g, t("general.month"))
+    .replace(/years?/g, t("general.year"));
+}
+
+export const toggleFavourite = (id: number) => {
+    try{
+        const user = JSON.parse(localStorage.getItem("user") || "null");
+        if(!user){
+          return window.location.href = "/login";
+        }
+        const response = PropertyService.toggleFavorite({ propertyId: id, userId: parseInt(user.id) });
+        return response;
+    }catch(error){
+        console.error('Error toggling favorite:', error);
+        return false;
+    }
 }
 
 

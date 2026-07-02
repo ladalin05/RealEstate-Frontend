@@ -36,9 +36,9 @@ const ContactUsPage = () => {
             <div className="w-full py-20 bg-sky-900/50 flex items-center backdrop-blur-sx px-28">
                 <h1 className="text-3xl text-white font-medium">{t("contact.title")}</h1>
             </div>
-            <div className="w-full h-full bg-slate-50 py-18 px-28">
-                <div className="flex justify-center gap-22">
-                    <div className="w-3/6 p-12 bg-white shadow-sm">
+            <div className="w-full h-full bg-slate-50 py-18 px-12">
+                <div className="grid xl:grid-cols-5 grid-cols-1 gap-12">
+                    <div className="xl:col-span-3 p-12 bg-white shadow-sm">
                         <p className="text-gray-500">{t("contact.description")}</p>
                         <form className="space-y-10 relative z-10 mt-18" onSubmit={handleSubmit}>
                             <div className="grid md:grid-cols-2 gap-10">
@@ -89,8 +89,8 @@ const ContactUsPage = () => {
                             </button>
                         </form>
                     </div>
-                    <div className="w-2/6">
-                        <div className="bg-white p-8 px-12 shadow-sm leading-7">
+                    <div className="xl:col-span-2 grid xl:grid-cols-1 grid-cols-5 gap-8">
+                        <div className="col-span-3 bg-white p-8 px-12 shadow-sm leading-7">
                             <h5 className="text-md font-semibold">{t('contact.inquiry_contact')}</h5>
                             <h5 className="text-md font-bold mt-4">Amy Miller</h5>
                             <p className="text-md text-gray-500 font-thin">Public Relations Manager <br />774 NE 84th St Miami, FL 33879</p>
@@ -99,26 +99,28 @@ const ContactUsPage = () => {
                             <p className="text-md text-gray-500 font-thin">Public Relations Associated <br />774 NE 84th St Miami, FL 33879</p>
                             <p className="text-md text-gray-500 font-thin">kyle.parker@houzez.com</p>
                         </div>
-                        <div className="bg-white p-8 px-12 mt-12 shadow-sm leading-7">
-                            <h5 className="text-md font-semibold">{t('contact.corporate_headquarters')}</h5>
-                            <p className="text-md text-gray-500 font-thin">1584 Biscayne Boulevard <br />Miami FL, 33176</p>
-                        </div>
-                        <div className="flex justify-center mt-8 gap-4">
-                            {socials.map((social, index) => (
-                                <button key={index} className={`${social.color} w-12 h-12 rounded-lg flex items-center justify-center transition-all duration-200 cursor-pointer`}>
-                                    <social.Icon color="white" size={20} />
-                                </button>
-                            ))}
+                        <div className="col-span-2">
+                            <div className="bg-white p-8 px-12 xl:mt-12 shadow-sm leading-7">
+                                <h5 className="text-md font-semibold">{t('contact.corporate_headquarters')}</h5>
+                                <p className="text-md text-gray-500 font-thin">1584 Biscayne Boulevard <br />Miami FL, 33176</p>
+                            </div>
+                            <div className="flex justify-center mt-8 gap-4">
+                                {socials.map((social, index) => (
+                                    <button key={index} className={`${social.color} w-12 h-12 rounded-lg flex items-center justify-center transition-all duration-200 cursor-pointer`}>
+                                        <social.Icon color="white" size={20} />
+                                    </button>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div className="w-full flex justify-center bg-slate-50">
-                    <div className="w-5/6 h-64 mt-26 overflow-hidden border border-gray-200">
+                    <div className="xl:w-5/6 w-full h-64 mt-26 overflow-hidden border border-gray-200">
                         <iframe src="https://maps.google.com/maps?q=1584%20Biscayne%20Blvd%2C%20Miami%2C%20FL%2033132&t=m&z=12&output=embed&iwloc=near" width="100%" height="100%" loading="lazy" allowFullScreen />
                     </div>
                 </div>
                 <div className="w-full flex justify-center">
-                    <div className="w-5/6 bg-white p-8 mt-1 shadow-sm">
+                    <div className="xl:w-5/6 w-full bg-white p-8 mt-1 shadow-sm">
                         <p><b>{t('general.address')}</b> 1584 Biscayne Blvd, Miami, FL 33132 – <span className="text-sky-400">{t('contact.get_directions')}</span></p>
                     </div>
                 </div>

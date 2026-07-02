@@ -1,11 +1,10 @@
-const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+import { apiFetch } from "../utils/api";
 
 export class PropertyService {
 
     static async getProperties(): Promise<any> {
         try {
-            const response = await fetch(`${API_URL}/property`);
-            const result = await response.json();
+            const result = await apiFetch('/property');
             return result.data;
         } catch (error) {
             console.error('Error fetching properties:', error);
@@ -20,13 +19,7 @@ export class PropertyService {
                 params.append('user_id', String(userId));
             }
 
-            const response = await fetch(`${API_URL}/property/detail?${params.toString()}`);
-
-            if (!response.ok) {
-                throw new Error(`Request failed with status ${response.status}`);
-            }
-
-            const result = await response.json();
+            const result = await apiFetch(`/property/detail?${params.toString()}`);
             return result.data;
         } catch (error) {
             console.error('Error fetching property detail:', error);
@@ -34,10 +27,22 @@ export class PropertyService {
         }
     }
 
+    static async toggleFavorite({ propertyId, userId }: { propertyId: number, userId: number }): Promise<any> {
+        try {
+            const result = await apiFetch('/property/toggle-favourite', {
+                method: 'POST',
+                body: JSON.stringify({ property_id: propertyId, user_id: userId }),
+            });
+            return result.data;
+        } catch (error) {
+            console.error('Error toggling favorite:', error);
+            return null;
+        }
+    }
+
     static async getFavoriteProperties(userId: number): Promise<any> {
         try {
-            const response = await fetch(`${API_URL}/property/favourite?user_id=${userId}`);
-            const result = await response.json();
+            const result = await apiFetch(`/property/favourite?user_id=${userId}`);
             return result.data;
         } catch (error) {
             console.error('Error fetching favorite properties:', error);
@@ -47,8 +52,7 @@ export class PropertyService {
 
     static async getDataFillter(): Promise<any> {
         try {
-            const response = await fetch(`${API_URL}/property/get-data-fillter`);
-            const result = await response.json();
+            const result = await apiFetch('/property/get-data-fillter');
             return result.data;
         } catch (error) {
             console.error('Error fetching data fillter:', error);
@@ -65,11 +69,7 @@ export class PropertyService {
                 }
             }); 
 
-            const response = await fetch(`${API_URL}/property/fillter-properties?${params.toString()}`, {
-                method:  'GET',
-                headers: { 'Content-Type': 'application/json' },
-            });
-            const result = await response.json();
+            const result = await apiFetch(`/property/fillter-properties?${params.toString()}`);
             return result.data ?? [];
         } catch (error) {
             console.error('Error fetching filtered properties:', error);

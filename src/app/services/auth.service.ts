@@ -20,12 +20,12 @@ export class AuthService {
     return localStorage.getItem("token");
   }
 
-  static async getProfileData(user_id: any) {
+  static async getProfileData() {
       const token = this.getToken();
 
       if (!token) return null;
 
-      const response = await fetch(`${API_URL}/users/${user_id}`, {
+      const response = await fetch(`${API_URL}/user-management/get-info`, {
           method: "GET",
           headers: {
               "Authorization": `Bearer ${token}`,
@@ -33,8 +33,7 @@ export class AuthService {
       });
 
       const result = await response.json();
-
-      return result;
+      return result.data;
   }
 
   static async updateProfile(user_id: any, data: { fullname: string; phone: string }) {
@@ -126,6 +125,29 @@ export class AuthService {
     this.setUser(result.data.user);
 
     return result;
+  }
+
+  static async UpdateInfo(userData: any) {
+    try {
+      const response = await fetch(`${API_URL}/user-management/update-info`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${this.getToken()}`,
+        },
+        body: JSON.stringify(userData),
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        throw data;
+      }
+
+      return data;
+    } catch (error) {
+      console.error("Error updating info:", error);
+      throw error;
+    }
   }
 
   static isAuthenticated() {

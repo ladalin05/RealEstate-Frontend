@@ -4,7 +4,7 @@ import { convertFromISO } from "../../utils/helper";
 import { useTranslation } from "react-i18next";
 
 export const BlogCardV2 = ({ blog}: { blog: any }) => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
 
     const toDetail = (id: number) => {
         window.location.href = `/blogs/${id}`;
@@ -28,8 +28,8 @@ export const BlogCardV2 = ({ blog}: { blog: any }) => {
                         <img src={blog.author_image} alt={blog.author_name} className="rounded-full w-full h-full" />
                     </div>
                     <span className="text-gray-500 text-md font-normal"> {t('general.by')} <span className="text-sky-400">{blog.author_name}</span></span>
-                    <span className="text-gray-500 text-md font-normal flex items-center"><CalendarEventFill className="me-1"/>{blog.since_posted}</span>
-                    <span className="text-gray-500 text-md font-normal flex items-center"><Tag className="me-1"/><span className="text-sky-400">{blog.category_name}</span></span>
+                    <span className="text-gray-500 text-md font-normal flex items-center"><CalendarEventFill className="me-1"/>{blog.since_posted.split(" ")[0]} {t(`general.${blog.since_posted.split(" ")[1] + ' ago'}`)}</span>
+                    <span className="text-gray-500 text-md font-normal flex items-center"><Tag className="me-1"/><span className="text-sky-400">{blog[`category_name_${i18n.language}`]}</span></span>
                     {/* <span className="text-gray-500 text-md font-normal flex items-center"><Chat className="me-1"/>{blog.comments}</span> */}
                 </div>
                 <div className="flex items-center">

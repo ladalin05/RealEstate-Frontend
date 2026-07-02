@@ -20,7 +20,6 @@ const HomePage = () => {
     const [propertiesForRent, setPropertiesForRent] = useState([]);
     const [agents, setAgents] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-
     useEffect(()=>{
         setIsLoading(true);
         CMSService.getHomePageData().then((data)=>{

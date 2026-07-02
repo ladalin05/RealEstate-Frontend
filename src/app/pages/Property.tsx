@@ -97,8 +97,8 @@ const PropertyPage = () => {
                 )}
             </div>
 
-            <section className="grid lg:grid-cols-6 grid-cols-1">
-                <div className="col-span-4">
+            <section className="grid xl:grid-cols-6 grid-cols-1">
+                <div className="xl:col-span-4"> 
                     <div className="flex w-full justify-between items-center mb-3 ps-4">
                         <p className="text-sm text-gray-400">
                             {isFilterLoading
@@ -133,7 +133,7 @@ const PropertyPage = () => {
                     )}
                 </div>
 
-                <div className="col-span-2 min-h-12 mt-10 py-4">
+                <div className="xl:col-span-2 min-h-12 mt-10 py-4">
                     <FilterSection filter={filter} setFilter={setFilter} />
                 </div>
             </section>

@@ -4,7 +4,7 @@ import { convertFromISO } from "../../utils/helper";
 import { useTranslation } from "react-i18next";
 
 export const BlogDetailSection = ({blog, relatedBlogs}: {blog: any, relatedBlogs: any}) => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     
     return (
         <>
@@ -20,7 +20,7 @@ export const BlogDetailSection = ({blog, relatedBlogs}: {blog: any, relatedBlogs
                             </div>
                             <span className="text-gray-500 text-md font-normal">{t('general.by')} <span className="text-sky-400">{blog.author_name}</span></span>
                             <span className="text-gray-500 text-md font-normal flex items-center"><CalendarEventFill className="me-1"/>{convertFromISO({isoString: blog.created_at})}</span>
-                            <span className="text-gray-500 text-md font-normal flex items-center"><Tag className="me-1"/><span className="text-sky-400">{blog.category_name}</span></span>
+                            <span className="text-gray-500 text-md font-normal flex items-center"><Tag className="me-1"/><span className="text-sky-400">{blog[`category_name_${i18n.language}`]}</span></span>
                         </div>
                     </div>
                     <img src={blog.image} alt={blog.title} className="w-full h-auto object-cover rounded-md" />

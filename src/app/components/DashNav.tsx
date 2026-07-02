@@ -3,7 +3,6 @@ import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { AuthService } from '../services/auth.service';
 
-
 export const DashNavigation = () => {
     const { t } = useTranslation();
     const location = useLocation();
@@ -17,41 +16,27 @@ export const DashNavigation = () => {
     };
 
     return (
-        <div className="fixed w-63 h-full bg-white border-r border-gray-200">
+        <div className="fixed bottom-0 left-0 z-40 w-full h-20 bg-white border-t border-gray-200 lg:top-20 lg:bottom-auto lg:h-[calc(100%-5rem)] lg:w-63 lg:border-r lg:border-t-0">
             {/* Navigation Links */}
-            <nav className="flex-1 p-4 space-y-2">
+            <nav className="flex h-full items-center justify-around p-2 lg:h-auto lg:flex-1 lg:flex-col lg:items-stretch lg:justify-start lg:space-y-2 lg:p-4">
                 {navLinks.map((link) => (
-                    <a
-                        key={link.id}
+                    
+                    <a key={link.id}
                         href={link.href}
-                        className={`flex items-center px-4 py-3 rounded-xl text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 transition-all ${location.pathname == link.href ? 'bg-indigo-50 text-indigo-600' : ''}`}
+                        className={`flex flex-col items-center justify-center px-3 py-2 rounded-xl text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 transition-all lg:flex-row lg:justify-start lg:px-4 lg:py-3 ${location.pathname == link.href ? 'bg-indigo-50 text-indigo-600' : ''}`}
                     >
                         <link.icon className="w-5 h-5" />
-                        <span className="font-medium ms-4">{link.label}</span>
+                        <span className="text-[11px] font-medium mt-1 lg:text-base lg:mt-0 lg:ms-4">{link.label}</span>
                     </a>
                 ))}
-                <a onClick={() => handleLogout()} className="flex items-center px-4 py-3 mt-2 rounded-xl text-red-600 hover:bg-indigo-50 hover:text-indigo-600 transition-all">
+                
+                <a onClick={() => handleLogout()}
+                    className="flex flex-col items-center justify-center px-3 py-2 rounded-xl text-red-600 hover:bg-indigo-50 hover:text-indigo-600 transition-all cursor-pointer lg:flex-row lg:justify-start lg:px-4 lg:py-3 lg:mt-2"
+                >
                     <LogOut className="w-5 h-5" />
-                    <span className="font-medium ms-4">{t('nav.sign_out')}</span>
+                    <span className="text-[11px] font-medium mt-1 lg:text-base lg:mt-0 lg:ms-4">{t('nav.sign_out')}</span>
                 </a>
             </nav>
-
-            {/* User Info */}
-            {/* <div className="p-4 border-t border-gray-100">
-                <div className="flex items-center p-3 bg-gray-50 rounded-xl">
-                    <div className="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center text-indigo-600 mr-3">
-                        {user.avatar ? (
-                            <img src={user.avatar} alt="Avatar" className="w-full h-full object-cover rounded-lg" />
-                        ) : (
-                            user.name.charAt(0).toUpperCase()
-                        )}
-                    </div>
-                    <div>
-                        <p className="text-sm font-semibold text-gray-800">{user.name}</p>
-                        <p className="text-xs text-gray-500">Admin</p>
-                    </div>
-                </div>
-            </div> */}
         </div>
     )
 }

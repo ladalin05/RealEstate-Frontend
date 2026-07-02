@@ -1,11 +1,10 @@
-const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+import { apiFetch } from "../utils/api";
 
 export class AgentService {
 
     static async getAgents(): Promise<any> {
         try {
-            const response = await fetch(`${API_URL}/user-management/agents`);
-            const result = await response.json();
+            const result = await apiFetch('/user-management/agents');
             return result.data;
         } catch (error) {
             console.error('Error fetching agents:', error);
@@ -15,8 +14,7 @@ export class AgentService {
 
     static async getAgetDetail(id: number): Promise<any> {
         try { 
-            const response = await fetch(`${API_URL}/user-management/agent-detail?id=${id}`);
-            const result = await response.json(); 
+            const result = await apiFetch(`/user-management/agent-detail?id=${id}`);
             return result.data;
         } catch (error) {
             console.error('Error fetching agent detail:', error);

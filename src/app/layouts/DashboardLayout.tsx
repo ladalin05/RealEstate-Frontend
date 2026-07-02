@@ -8,7 +8,7 @@ const DashboardLayout = () => {
     const [isHeaderFixed, setIsHeaderFixed] = useState(false);
 
     useEffect(() => {
-        const onScroll = () => { 
+        const onScroll = () => {
             setIsHeaderFixed(window.scrollY > 100);
         };
         window.addEventListener('scroll', onScroll);
@@ -19,10 +19,10 @@ const DashboardLayout = () => {
         <div className="container min-h-screen bg-white dark:bg-slate-950/95">
             <Navigation />
             <main className="min-h-screen overflow-x-hidden pt-20">
-                <aside className="h-full">
+                <aside className="lg:h-full h-auto">
                     <DashNavigation />
                 </aside>
-                <section className="w-full ps-64 bg-gray-100 ">
+                <section className="w-full pb-24 md:pb-0 md:ps-64 bg-gray-100">
                     <Outlet />
                 </section>
             </main>

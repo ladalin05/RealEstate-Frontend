@@ -4,7 +4,7 @@ import { useState } from "react";
 import { PropertyCard } from "../cards/PropertyCard";
 import { RequestInfo, ScheduleTour } from "../forms/ScheduleTour";
 import { PropImags } from "./PropDetailCom";
-import { convertFromISO } from "../../utils/helper";
+import { convertFromISO, formatPeriod } from "../../utils/helper";
 import { useTranslation } from "react-i18next";
  
 
@@ -46,7 +46,7 @@ export const PropertyDetail = ({ property, relatedProperties, latestProperties }
         {label: t('property.bathrooms'), value: property?.bathrooms},
         {label: t('property.garage_size'), value: "N/A"},
         {label: t('property.property_type'), value: property?.[`category_${i18n.language}`]},
-        {label: t('property.price'), value: property?.price},
+        {label: t('property.price'), value: formatPeriod(property?.price, t)},
         {label: t('property.bedrooms'), value: property?.bedrooms},
         {label: t('property.garage'), value: property?.garages},
         {label: t('property.year_built'), value: property?.yearBuilt},
@@ -63,7 +63,7 @@ export const PropertyDetail = ({ property, relatedProperties, latestProperties }
                         { property?.featured && (
                             <p className="z-10 bg-lime-500 text-white text-xs font-normal py-2 px-3 rounded-sm uppercase">{t('property.featured')}</p>
                         )}
-                        <p className="z-10 bg-black/65 text-white text-xs font-normal py-2 px-3 rounded-sm uppercase">{property?.status}</p>
+                        <p className="z-10 bg-black/65 text-white text-xs font-normal py-2 px-3 rounded-sm uppercase">{t(`status.${property?.status}`)}</p>
                     </div>
                 </div>
                 <div className="w-1/3">
@@ -72,11 +72,11 @@ export const PropertyDetail = ({ property, relatedProperties, latestProperties }
                         <p className="lg:w-9 lg:h-9 w-7 h-7 border border-black/65 flex items-center justify-center rounded-sm"> <Share className="text-black/65 lg:w-5 lg:h-5 w-3 h-3" /> </p>
                         <p className="lg:w-9 lg:h-9 w-7 h-7 border border-black/65 flex items-center justify-center rounded-sm"> <Printer className="text-black/65 lg:w-5 lg:h-5 w-3 h-3" /> </p>
                     </div>
-                    <p className="lg:text-3xl text-xl font-bold text-slate-800 mb-2 text-end">{property?.price}</p>
+                    <p className="lg:text-3xl text-xl font-bold text-slate-800 mb-2 text-end">{formatPeriod(property?.price, t)}</p>
                 </div>
             </div>
             <div className="w-full mt-8 mx-auto">
-                <div className="grid lg:grid-cols-6 grid-cols-1 gap-4">
+                <div className="grid xl:grid-cols-6 grid-cols-1 gap-4">
                     <div className="lg:col-span-4">
                         <PropImags images={images} latitude={property?.latitude} longitude={property?.longitude} />
                         <div className="mt-8 mx-auto p-5 bg-white rounded-sm shadow-sm">
@@ -256,10 +256,10 @@ export const PropertyDetail = ({ property, relatedProperties, latestProperties }
                         <div className="shadow-lg bg-white rounded-md overflow-hidden">
                             <div className="flex items-center">
                                 <div className="w-1/2 text-center" onClick={() => handleScheduleTour()}>
-                                    <p className={`text-md font-semibold ${tourOpen ? 'rounded-t-md text-gray-800 bg-white dark:text-gray-200' : 'text-sky-500 dark:text-sky-200 bg-gray-50'} py-4`}>Schedule a Tour</p>
+                                    <p className={`text-md font-semibold ${tourOpen ? 'rounded-t-md text-gray-800 bg-white dark:text-gray-200' : 'text-sky-500 dark:text-sky-200 bg-gray-50'} py-4`}>{t('schedule_tour.title')}</p>
                                 </div>
                                 <div className="w-1/2 text-center" onClick={() => handleRequestInfo()}> 
-                                    <p className={`text-md font-semibold ${tourOpen ? 'text-sky-500 dark:text-sky-200 bg-gray-50' : 'rounded-t-md text-gray-800 bg-white dark:text-gray-200'} py-4`}>Request Info</p>
+                                    <p className={`text-md font-semibold ${tourOpen ? 'text-sky-500 dark:text-sky-200 bg-gray-50' : 'rounded-t-md text-gray-800 bg-white dark:text-gray-200'} py-4`}>{t('request_info.title')}</p>
                                 </div>
                             </div>
                             {tourOpen ? (

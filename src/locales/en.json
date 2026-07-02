@@ -66,8 +66,8 @@
         "price":"Price",
         "purpose": {
             "all_purpose": "All Purpose",
-            "for_sale": "For Sale",
-            "for_rent": "For Rent",
+            "sale": "For Sale",
+            "rent": "For Rent",
             "sale_rent": "Sale & Rent"
         }
     },
@@ -222,12 +222,20 @@
             "about_me": "About Me",
             "bio": "Bio",
             "cancel": "Cancel",
+            "saving": "Saving",
             "save_changes": "Save Changes"
         },
         "favorite": {
             "title": "Favourite properties",
             "subtitle": "Manage your favorite properties"
         }
+    },
+    "status": {
+        "active": "Active",
+        "inactive": "Inactive",
+        "draft": "Draft",
+        "rented": "Rented",
+        "sold": "Sold"
     },
     "general": {
         "see_more": "See more",
@@ -251,6 +259,19 @@
         "built": "Built",
         "no_image": "No Image",
         "view_profile": "View Profile",
-        "favourites": "Favourites"
+        "favourites": "Favourites",
+        "year": "Year",
+        "month": "Month",
+        "day": "Day",
+        "per_month": "Per Month",
+        "per_year": "Per Year",
+        "per_day": "Per Day",
+        "continue_reading": "Continue reading",
+        "month ago": "Month ago",
+        "months ago": "Months ago",
+        "year ago": "Year ago",
+        "years ago": "Years ago",
+        "day ago": "Day ago",
+        "days ago": "Days ago"
     }
 }

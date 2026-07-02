@@ -1,12 +1,14 @@
-import { ArrowsAngleExpand, Heart, PlusCircle, GeoAlt} from "react-bootstrap-icons";
+import { ArrowsAngleExpand, Heart, PlusCircle, GeoAlt, HeartFill} from "react-bootstrap-icons";
 import { BedDouble, ShowerHead, TriangleRight, Paperclip, ChevronLeft, ChevronRight  } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { formatPeriod, toggleFavourite } from "../../utils/helper";
 
 export const PropertyCardV2 = ({ property }: { property: any }) => {
     const navigation = useNavigate();
     const { t, i18n } = useTranslation();
+    const [isFavorite, setIsFavorite] = useState(property.favorite);
     const scrollImageRef = useRef(null);
     const handleNextImage = () => {
         const container = scrollImageRef.current;
@@ -34,13 +36,21 @@ export const PropertyCardV2 = ({ property }: { property: any }) => {
         });
     }
     
+    const handleToggleFavourite = async (id: number) => {
+        setIsFavorite(!isFavorite);
+        const result = await toggleFavourite(id);
+        if (!result) {
+            setIsFavorite(!isFavorite);
+        }
+    };
+    
     const toPropDetail = (id: number) => {
         navigation(`/property/${id}`);
     }
 
     return (
-        <div className="relative bg-white flex shadow-md rounded-md overflow-hidden p-2 h-76">
-            <div className="relative w-2/6 group cursor-pointer rounded-lg overflow-hidden" onClick={() => toPropDetail(property.id)}>
+        <div className="relative bg-white shadow-md rounded-md overflow-hidden p-2 h-auto grid lg:grid-cols-5 md:grid-cols-3 grid-cols-1">
+            <div className="relative lg:col-span-2 md:col-span-1 group cursor-pointer rounded-lg overflow-hidden" onClick={() => toPropDetail(property.id)}>
                 { property.featured && (
                     <p className="absolute top-4 left-4 z-10 bg-lime-500 text-white text-sm font-thin py-1 px-1 rounded-sm uppercase">{t('property.featured')}</p>
                 )}
@@ -66,18 +76,24 @@ export const PropertyCardV2 = ({ property }: { property: any }) => {
                 </div>
                 <div className="absolute bottom-4 right-4 z-10 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                     <p className="w-7 h-7 bg-black/65 flex items-center justify-center rounded-md"> <ArrowsAngleExpand size={16} className="text-white" /> </p>
-                    <p className="w-7 h-7 bg-black/65 flex items-center justify-center rounded-md"> <Heart size={16} className="text-white" /> </p>
+                    <p className="w-7 h-7 bg-black/65 flex items-center justify-center rounded-md" 
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            handleToggleFavourite(property.id);
+                        }}>
+                            {isFavorite ? <HeartFill size={16} className="text-red-500" /> : <Heart size={16} className="text-white" />} 
+                    </p>
                     <p className="w-7 h-7 bg-black/65 flex items-center justify-center rounded-md"> <PlusCircle size={16} className="text-white" /> </p>
                 </div>
                 <div className="absolute inset-0 z-0  bg-gradient-to-b from-black/10 via-transparent to-black/40 group-hover:opacity-0 transition-opacity"></div>
             </div>
-            <div className="w-4/6 p-4 px-8 py06">
+            <div className="lg:col-span-3 md:col-span-2 p-4 px-8 py06">
                 <div className="w-full flex items-center justify-between mb-3">
-                    <p className="bg-black/65 text-white text-sm font-thin py-1 px-1 rounded-sm uppercase">{property.status}</p>
-                    <p className="text-xl font-bold text-slate-800 mb-2">{property.price}</p>
+                    <p className="bg-black/65 text-white lg:text-sm text-xs font-thin p-2 rounded-sm uppercase">{t(`status.${property.status}`)}</p>
+                    <p className="text-xl font-bold text-slate-800 mb-2">{formatPeriod(property.price, t)}</p>
                 </div>
-                <h3 className="text-lg font-medium text-gray-800 mb-3 hover:text-blue-500 cursor-pointer" onClick={() => toPropDetail(property.id)}>{property.name}</h3>
-                <p className="text-md font-medium text-gray-500 mb-3 flex items-center"><GeoAlt className="me-2"/> {property.address}</p>
+                <h3 className="lg:text-lg text-md font-medium text-gray-800 mb-3 hover:text-blue-500 cursor-pointer" onClick={() => toPropDetail(property.id)}>{property.name}</h3>
+                <p className="lg:text-md text-sm font-medium text-gray-500 mb-3 flex items-center"><GeoAlt className="me-2"/> {property.address}</p>
                 <div className="flex items-center mb-3">
                     { 
                         property.bedrooms > 0 
@@ -91,7 +107,7 @@ export const PropertyCardV2 = ({ property }: { property: any }) => {
                     }
                     <p className="flex items-center text-md text-gray-600"><TriangleRight size={28} className="mr-2" />{property.size}</p>
                 </div>
-                <p className="text-md font-bold text-black-500 flex items-center uppercase">{property[`category_${i18n.language}`]}</p>
+                <p className="lg:text-md text-sm font-bold text-black-500 flex items-center uppercase">{property[`category_${i18n.language}`]}</p>
                 <div className="py-4 flex items-center justify-between">
                     <div className="flex items-center">
                         <div className="rounded-full w-8 h-8">
@@ -100,11 +116,11 @@ export const PropertyCardV2 = ({ property }: { property: any }) => {
                         <span className="text-gray-500 ms-2 text-sm">{property.agent.name}</span>
                         <div className="flex items-center text-gray-400 ms-6">
                             <Paperclip size={14}/>
-                            <span className="ms-2 text-sm">{property.agent.experience == "new_agent" ? t('agents.new_agent') : (property.agent.experience + ' ' + t('property.ago'))}</span>
+                            <span className="ms-2 text-sm">{property.agent.experience == "new_agent" ? t('agents.new_agent') : (formatPeriod(property.agent.experience, t) + ' ' + t('property.ago'))}</span>
                         </div>
                     </div>
                     <div className="flex items-center text-gray-400">
-                        <button className="font-bold text-md py-2 px-3 bg-sky-400 rounded-md text-white" onClick={()=> {toPropDetail(property.id)}}>
+                        <button className="font-bold text-md py-1 px-3 bg-sky-400 rounded-sm text-white" onClick={()=> {toPropDetail(property.id)}}>
                             {t('general.details')}
                         </button>
                     </div>

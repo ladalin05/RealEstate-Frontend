@@ -50,15 +50,15 @@ const Navigation = () => {
 
                         {/* Mobile Toggle Button */}
                         <button 
-                            className="p-2 text-lg bg-transparent md:hidden block focus:outline-none" 
+                            className="p-2 text-lg md:hidden block focus:outline-none" 
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                             aria-label="Toggle navigation"
                         >
                             {/* Modern Tailwind hamburger menu */}
                             <div className="space-y-1.5 w-6 h-5 flex flex-col justify-between">
-                                <span className={`block h-0.5 bg-white rounded-full transition-transform duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-[8.5px]' : ''}`}></span>
-                                <span className={`block h-0.5 bg-white rounded-full transition-opacity duration-300 ${isMobileMenuOpen ? 'opacity-0' : ''}`}></span>
-                                <span className={`block h-0.5 bg-white rounded-full transition-transform duration-300 ${isMobileMenuOpen ? '-rotate-45 -translate-y-[8.5px]' : ''}`}></span>
+                                <span className={`block h-0.5 bg-gray-700 rounded-full transition-transform duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-[8.5px]' : ''}`}></span>
+                                <span className={`block h-0.5 bg-gray-700 rounded-full transition-opacity duration-300 ${isMobileMenuOpen ? 'opacity-0' : ''}`}></span>
+                                <span className={`block h-0.5 bg-gray-700 rounded-full transition-transform duration-300 ${isMobileMenuOpen ? '-rotate-45 -translate-y-[8.5px]' : ''}`}></span>
                             </div>
                         </button>
 
@@ -72,7 +72,7 @@ const Navigation = () => {
                                                                                                 e.preventDefault();
                                                                                                 window.location.href = link.menu_link;
                                                                                             }}
-                                            className={({ isActive }) => `nav-link inline-block lg:px-4 py-2 transition-colors text-sm uppercase
+                                            className={({ isActive }) => `nav-link inline-block lg:px-2 py-2 transition-colors text-sm uppercase
                                                 ${isActive  ? 'text-[#00C2E0] font-semibold before:content-[""] before:absolute before:bottom-0 before:left-4 before:right-4 before:h-0.5 before:bg-[#00C2E0] before:rounded-full' : 'hover:text-[#00C2E0]' }`
                                             }>
                                             {link.menu_title}
@@ -82,19 +82,33 @@ const Navigation = () => {
                             </ul>
                         </div>
                         <div className={`w-full md:flex md:items-center md:w-auto mt-4 md:mt-0 bg-dark ${isMobileMenuOpen ? 'block' : 'hidden'}`}> 
+                            <div className="flex flex-col md:hidden items-center justify-center py-3">
+                                <LanguageSwitcher />
+                                <div className="md:hidden block mt-6">
+                                    {isLoggedIn ? (
+                                        <ProfileDropdown user={user} isScrolled={isScrolled} isHomePage={isHomePage} />
+                                    ) : (
+                                        <a href="/login" className="inline-block bg-[#007BFF] text-white hover:bg-[#0069D9] rounded-xl px-6 py-2 text-[15px] font-medium transition-colors">
+                                            {t('nav.sign_in')}
+                                        </a>
+                                    )}
+                                </div>
+                            </div>
                             {/* Right Side / Auth */}
                             <div className="flex items-center justify-between mt-4 md:mt-0 ml-8 md:ml-12 relative">
                                 {/* Desktop i18n */}
                                 <div className="hidden me-8 md:flex items-center">
                                     <LanguageSwitcher />
                                 </div>
-                                {isLoggedIn ? (
-                                    <ProfileDropdown user={user} isScrolled={isScrolled} isHomePage={isHomePage} />
-                                ) : (
-                                    <a href="/login" className="inline-block bg-[#007BFF] text-white hover:bg-[#0069D9] rounded-xl px-6 py-2 text-[15px] font-medium transition-colors">
-                                        {t('nav.sign_in')}
-                                    </a>
-                                )}
+                                <div className="md:block hidden">
+                                    {isLoggedIn ? (
+                                        <ProfileDropdown user={user} isScrolled={isScrolled} isHomePage={isHomePage} />
+                                    ) : (
+                                        <a href="/login" className="inline-block bg-[#007BFF] text-white hover:bg-[#0069D9] rounded-xl px-6 py-2 text-[15px] font-medium transition-colors">
+                                            {t('nav.sign_in')}
+                                        </a>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </div>
