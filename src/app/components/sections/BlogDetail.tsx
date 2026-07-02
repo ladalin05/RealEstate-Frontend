@@ -1,8 +1,10 @@
 import { BlogCard } from "../cards/BlogCard";
 import { CalendarEventFill, Chat, Tag } from "react-bootstrap-icons";
 import { convertFromISO } from "../../utils/helper";
+import { useTranslation } from "react-i18next";
 
 export const BlogDetailSection = ({blog, relatedBlogs}: {blog: any, relatedBlogs: any}) => {
+    const { t } = useTranslation();
     
     return (
         <>
@@ -16,7 +18,7 @@ export const BlogDetailSection = ({blog, relatedBlogs}: {blog: any, relatedBlogs
                             <div className="rounded-full w-10 h-10">
                                 <img src={blog.author_image} alt={blog.author_name} className="rounded-full w-full h-full" />
                             </div>
-                            <span className="text-gray-500 text-md font-normal"> by <span className="text-sky-400">{blog.author_name}</span></span>
+                            <span className="text-gray-500 text-md font-normal">{t('general.by')} <span className="text-sky-400">{blog.author_name}</span></span>
                             <span className="text-gray-500 text-md font-normal flex items-center"><CalendarEventFill className="me-1"/>{convertFromISO({isoString: blog.created_at})}</span>
                             <span className="text-gray-500 text-md font-normal flex items-center"><Tag className="me-1"/><span className="text-sky-400">{blog.category_name}</span></span>
                         </div>
@@ -54,7 +56,7 @@ export const BlogDetailSection = ({blog, relatedBlogs}: {blog: any, relatedBlogs
                 ))}
                 <hr className="w-full border-gray-400 mt-2" />
                 <div className="px-6 py-8">
-                    <h2 className="text-xl font-bold mb-4">Tags</h2>
+                    <h2 className="text-xl font-bold mb-4">{t('blogs.tags')}</h2>
                     <div className="flex flex-wrap gap-2">
                         {blog.tags.map((tag, index) => (
                             <span key={index} className="bg-sky-100 text-sky-800 text-sm font-medium px-3 py-1 rounded-sm">
@@ -73,7 +75,7 @@ export const BlogDetailSection = ({blog, relatedBlogs}: {blog: any, relatedBlogs
             </div>
 
             <div className="w-4/5 mx-auto bg-white p-8 ">
-                <h2 className="text-xl font-bold mb-4">Related posts</h2>
+                <h2 className="text-xl font-bold mb-4">{t('blogs.related_posts')}</h2>
                 <div className="flex items-center gap-2">
                     {relatedBlogs?.map((relatedBlog, index) => (
                         <BlogCard blog={relatedBlog} key={index}/>

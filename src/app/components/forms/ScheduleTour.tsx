@@ -2,10 +2,11 @@ import { useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, User} from "lucide-react";
 import { TimeSelect } from "../ui/TimeSelect";
 import { SelectForm } from "../ui/SelectForm";
+import { useTranslation } from "react-i18next";
 
 
 export const ScheduleTour = ({ agent }: { agent: any }) => {
-    
+    const { t } = useTranslation();
     const dateRef = useRef<HTMLDivElement>(null);
     const [time, setTime] = useState<string | null>(null);
     const [tourType, setTourType] = useState<string | null>("in-person");
@@ -65,7 +66,7 @@ export const ScheduleTour = ({ agent }: { agent: any }) => {
                     </div>
                     <div className="px-6">
                         <p className="text-lg text-gray-800 dark:text-gray-200 flex items-center gap-1"><User size={20} /> {agent?.name}</p>
-                        <button className="text-md font-semibold text-sky-500 mt-2">View Listings</button>
+                        <button className="text-md font-semibold text-sky-500 mt-2">{t('general.view_listing')}</button>
                     </div>
                 </div>
             </div>
@@ -76,7 +77,7 @@ export const ScheduleTour = ({ agent }: { agent: any }) => {
                 </div>
                 <div className="flex gap-1 overflow-x-auto scrollbar-hide">
                     {dateData.map((date) => (
-                        <div key={date.id} className="flex-shrink-0 w-22 py-4 text-center rounded-sm border border-gray-300 cursor-pointer hover:bg-gray-100 px-2 py-1">
+                        <div key={date.id} className="flex-shrink-0 w-22 py-4 text-center rounded-sm border border-gray-300 cursor-pointer hover:bg-gray-100 px-2">
                             <p className="text-sm font-medium text-gray-800">{date.day}</p>
                             <p className="text-xl font-bold text-gray-800 dark:text-gray-200">{date.date}</p>
                             <p className="text-sm font-medium text-gray-800">{date.month}</p>
@@ -85,18 +86,18 @@ export const ScheduleTour = ({ agent }: { agent: any }) => {
                 </div>
             </div>
             <div className="w-full p-9 ">
-                <h2 className="text-md font-bold text-gray-800 dark:text-gray-200 mb-2">Tour Type</h2>
+                <h2 className="text-md font-bold text-gray-800 dark:text-gray-200 mb-2">{t('schedule_tour.tour_type')}</h2>
                 <form className="flex flex-col gap-4">
                     <div className="flex justify-between gap-3 h-12 mt-6"> 
-                        <div onClick={() => setTourType("in-person")} className={`w-1/2 text-sm font-bold rounded-sm flex items-center justify-center cursor-pointer ${tourType === "in-person" ? "border border-sky-400 text-sky-400" : "text-gray-800 border border-gray-300"} hover:text-sky-400`}>In Person</div> 
-                        <div onClick={() => setTourType("video-chat")} className={`w-1/2 text-sm font-bold rounded-sm flex items-center justify-center cursor-pointer ${tourType === "video-chat" ? "border border-sky-400 text-sky-400" : "text-gray-800 border border-gray-300"} hover:text-sky-400`}>Video Chat</div>
+                        <div onClick={() => setTourType("in-person")} className={`w-1/2 text-sm font-bold rounded-sm flex items-center justify-center cursor-pointer ${tourType === "in-person" ? "border border-sky-400 text-sky-400" : "text-gray-800 border border-gray-300"} hover:text-sky-400`}>{t('schedule_tour.in_person')}</div> 
+                        <div onClick={() => setTourType("video-chat")} className={`w-1/2 text-sm font-bold rounded-sm flex items-center justify-center cursor-pointer ${tourType === "video-chat" ? "border border-sky-400 text-sky-400" : "text-gray-800 border border-gray-300"} hover:text-sky-400`}>{t('schedule_tour.video_chart')}</div>
                     </div>
                     <TimeSelect value={time} onChange={setTime} />
-                    <input type="text" name="name" placeholder="Your Name" className="w-full h-12 border border-gray-300 rounded-sm px-3 focus:outline-none focus:ring-1 focus:ring-sky-300" />
-                    <input type="tel" name="phone" placeholder="Your Phone" className="w-full h-12 border border-gray-300 rounded-sm px-3 focus:outline-none focus:ring-1 focus:ring-sky-300" />
-                    <input type="email" name="email" placeholder="Your Email" className="w-full h-12 border border-gray-300 rounded-sm px-3 focus:outline-none focus:ring-1 focus:ring-sky-300" />
-                    <textarea name="message" placeholder="Your Message" className="w-full h-24 border border-gray-300 rounded-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-sky-300 resize-none" />
-                    <button type="submit" className="w-full h-12 bg-green-400 text-white font-bold rounded-sm hover:bg-green-500">Submit</button>
+                    <input type="text" name="name" placeholder={t('schedule_tour.your_name')} className="w-full h-12 border border-gray-300 rounded-sm px-3 focus:outline-none focus:ring-1 focus:ring-sky-300" />
+                    <input type="tel" name="phone" placeholder={t('schedule_tour.your_phone')} className="w-full h-12 border border-gray-300 rounded-sm px-3 focus:outline-none focus:ring-1 focus:ring-sky-300" />
+                    <input type="email" name="email" placeholder={t('schedule_tour.your_email')} className="w-full h-12 border border-gray-300 rounded-sm px-3 focus:outline-none focus:ring-1 focus:ring-sky-300" />
+                    <textarea name="message" placeholder={t('schedule_tour.your_message')} className="w-full h-24 border border-gray-300 rounded-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-sky-300 resize-none" />
+                    <button type="submit" className="w-full h-12 bg-green-400 text-white font-bold rounded-sm hover:bg-green-500">{t('general.submit')}</button>
                 </form>
             </div>
         </>
@@ -104,7 +105,7 @@ export const ScheduleTour = ({ agent }: { agent: any }) => {
 }
 
 export const RequestInfo = ({ agent }: { agent: any }) => {
-    
+    const { t } = useTranslation();
     const options = ["I'm a buyer", "I'm a tennant", "I'm an agent", "Other"];
     const [role, setRole] = useState("");   
 
@@ -117,20 +118,20 @@ export const RequestInfo = ({ agent }: { agent: any }) => {
                     </div>
                     <div className="px-6">
                         <p className="text-lg text-gray-800 dark:text-gray-200 flex items-center gap-1"><User size={20} /> {agent?.name}</p>
-                        <button className="text-md font-semibold text-sky-500 mt-2">View Listings</button>
+                        <button className="text-md font-semibold text-sky-500 mt-2">{t('general.view_listing')}</button>
                     </div>
                 </div>
             </div>
             <div className="w-full px-9 py-6">
                 <form className="flex flex-col gap-4">
-                    <input type="text" name="name" placeholder="Your Name" className="w-full h-12 border border-gray-300 rounded-sm px-3 focus:outline-none focus:ring-1 focus:ring-sky-300" />
-                    <input type="tel" name="phone" placeholder="Your Phone" className="w-full h-12 border border-gray-300 rounded-sm px-3 focus:outline-none focus:ring-1 focus:ring-sky-300" />
-                    <input type="email" name="email" placeholder="Your Email" className="w-full h-12 border border-gray-300 rounded-sm px-3 focus:outline-none focus:ring-1 focus:ring-sky-300" />
-                    <textarea name="message" placeholder="Your Message" className="w-full h-24 border border-gray-300 rounded-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-sky-300 resize-none" />
+                    <input type="text" name="name" placeholder={t('schedule_tour.your_name')} className="w-full h-12 border border-gray-300 rounded-sm px-3 focus:outline-none focus:ring-1 focus:ring-sky-300" />
+                    <input type="tel" name="phone" placeholder={t('schedule_tour.your_phone')} className="w-full h-12 border border-gray-300 rounded-sm px-3 focus:outline-none focus:ring-1 focus:ring-sky-300" />
+                    <input type="email" name="email" placeholder={t('schedule_tour.your_email')} className="w-full h-12 border border-gray-300 rounded-sm px-3 focus:outline-none focus:ring-1 focus:ring-sky-300" />
+                    <textarea name="message" placeholder={t('schedule_tour.your_message')} className="w-full h-24 border border-gray-300 rounded-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-sky-300 resize-none" />
                     <SelectForm options={options} value={role} onChange={setRole} />
                     <div className="flex justify-between gap-3">
-                        <button type="submit" className="w-full h-12 bg-green-600 text-white font-bold rounded-sm hover:bg-green-500">Send Message</button>
-                        <button type="submit" className="w-full h-12 border border-green-500 text-green-500 font-bold rounded-sm hover:bg-green-500 hover:text-white">Call</button>
+                        <button type="submit" className="w-full h-12 bg-green-600 text-white font-bold rounded-sm hover:bg-green-500">{t('general.send_message')}</button>
+                        <button type="submit" className="w-full h-12 border border-green-500 text-green-500 font-bold rounded-sm hover:bg-green-500 hover:text-white">{t('general.call')}</button>
                     </div>
                 </form>
             </div>

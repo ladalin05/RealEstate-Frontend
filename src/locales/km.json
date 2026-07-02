@@ -6,6 +6,8 @@
         "about_us": "អំពីពួកយើង",
         "blog": "អត្ថបទអនឡាញ",
         "contact_us": "ទំនាក់ទំនង",
+        "my_profile": "ប្រវត្តិរូបរបស់ខ្ញុំ",
+        "favorite": "ចំណូលចិត្ត",
         "register":"ចុះឈ្មោះ",
         "sign_in":"ចូល",
         "sign_out":"ចេញ",
@@ -82,6 +84,14 @@
             "button": "ទទួលបានការវាយតម្លៃឥតគិតថ្លៃ"
         }
     },
+    "about_us": {
+        "title": "អំពីយើង",
+        "your_vision_unrestricted": "ចក្ខុវិស័យរបស់អ្នកដោយគ្មានដែនកំណត់",
+        "meet_our_team": "ជួបក្រុមការងាររបស់យើង",
+        "desc_about_team": "Lorem ipsum dolor sit amet, consectetur adipisicing elit",
+        "read_from_our_blog": "អានពីប្លុករបស់យើង",
+        "desc_about_blog": "Lorem ipsum dolor sit amet, consectetur adipisicing elit"
+    },
     "hero": {
         "tagline": "✨ វិធីដ៏ល្អបំផុតក្នុងការ",
         "title1": "ស្វែងរក",
@@ -108,7 +118,7 @@
         "featured": "អចលនទ្រព្យពិសេស",
         "bedrooms": "បន្ទប់គេង",
         "bathrooms": "បន្ទប់ទឹក",
-        "garage": "ហ្គារាស",
+        "garage": "យានដ្ឋាន",
         "area_size": "ទំហំផ្ទៃដី",
         "year_build": "ឆ្នាំសាងសង់",
         "property_id": "លេខសម្គាល់អចលនទ្រព្យ",
@@ -118,6 +128,17 @@
         "contact_information": "ព័ត៌មានទំនាក់ទំនង",
         "no_amenties_available": "គ្មានសម្ភារៈបរិក្ខារ",
         "video": "វីដេអូ",
+        "state_county": "រដ្ឋ/ស្រុក",
+        "area": "តំបន់",
+        "province": "ខេត្ត",
+        "zip_postal_code": "លេខកូដប្រៃសណីយ៍",
+        "country": "ប្រទេស",
+        "property_size": "ទំហំអចលនទ្រព្យ",
+        "garage_size": "ទំហំយានដ្ឋាន",
+        "property_type": "ប្រភេទអចលនទ្រព្យ",
+        "price": "តម្លៃ",
+        "year_built": "ឆ្នាំសាងសង់",
+        "property_status": "ស្ថានភាពអចលនទ្រព្យ",
         "additional_details": "ព័ត៌មានលម្អិតបន្ថែម",
         "no_properties_found": "រកមិនឃើញអចលនទ្រព្យទេ",
         "try_adjusting_filters": "សូមព្យាយាមកែសម្រួលតម្រងរបស់អ្នក",
@@ -151,6 +172,62 @@
             "subtitle": "ប្រវត្តិរូបភ្នាក់ងារ"
         }
     },
+    "schedule_tour": {
+        "title": "កំណត់កាលវិភាគទស្សនកិច្ច",
+        "tour_type": "ប្រភេទទស្សនកិច្ច",
+        "in_person": "ជួបផ្ទាល់",
+        "video_chart": "ជជែកតាមវីដេអូ",
+        "select_time": "ជ្រើសរើសម៉ោង",
+        "your_name": "ឈ្មោះរបស់អ្នក",
+        "your_phone": "លេខទូរស័ព្ទរបស់អ្នក",
+        "your_email": "អ៊ីមែលរបស់អ្នក",
+        "your_message": "សាររបស់អ្នក"
+    },
+    "request_info": {
+        "title": "ស្នើសុំព័ត៌មាន",
+        "name": "ឈ្មោះ",
+        "phone": "ទូរស័ព្ទ",
+        "email": "អ៊ីមែល",
+    "message": "សារ"
+    },
+    "blogs": {
+        "tags": "ស្លាក",
+        "related_posts": "អត្ថបទពាក់ព័ន្ធ"
+    },
+    "contact": {
+        "title": "ទាក់ទងយើង",
+        "description": "រចនាទម្រង់ទំនាក់ទំនងផ្ទាល់ខ្លួនរបស់អ្នកជាមួយធាតុផ្សំ Houzez Elementor ផ្ទាល់ខ្លួននេះ ហើយភ្ជាប់អតិថិជនសក្តានុពលរបស់អ្នកជាមួយប្រព័ន្ធ Houzez CRM ដែលបានរួមបញ្ចូល។",
+        "inquiry_contact": "សម្រាប់សំណួរទាក់ទង:",
+        "corporate_headquarters": "ការិយាល័យកណ្តាល",
+        "get_directions": "រកទិសដៅ",
+        "form": {
+            "name": "ឈ្មោះ",
+            "phone": "ទូរស័ព្ទ",
+            "email": "អ៊ីមែល",
+            "message": "សារ",
+            "gdpr": "កិច្ចព្រមព្រៀង GDPR",
+            "gdpr_description": "ខ្ញុំយល់ព្រមឱ្យគេហទំព័រនេះរក្សាទុកព័ត៌មានដែលខ្ញុំបានផ្តល់ ដើម្បីឱ្យពួកគេឆ្លើយតបទៅនឹងសំណួររបស់ខ្ញុំ។",
+            "first_name": "នាមខ្លួន",
+            "last_name": "នាមត្រកូល",
+            "email_address": "អាសយដ្ឋានអ៊ីមែល"
+        }
+    },
+    "user_dashboard": {
+        "profile": {
+            "title": "ព័ត៌មានផ្ទាល់ខ្លួន",
+            "subtitle": "គ្រប់គ្រងព័ត៌មាន និងចំណូលចិត្តគណនីរបស់អ្នក",
+            "user_name": "ឈ្មោះអ្នកប្រើប្រាស់",
+            "personal_info": "ព័ត៌មានផ្ទាល់ខ្លួន",
+            "about_me": "អំពីខ្ញុំ",
+            "bio": "ប្រវត្តិសង្ខេប",
+            "cancel": "បោះបង់",
+            "save_changes": "រក្សាទុកការផ្លាស់ប្តូរ"
+        },
+        "favorite": {
+            "title": "អចលនទ្រព្យសំណព្វ",
+            "subtitle": "គ្រប់គ្រងអចលនទ្រព្យសំណព្វរបស់អ្នក"
+        }
+    },
     "general": {
         "see_more": "មើលបន្ថែម",
         "properties": "អចលនទ្រព្យ",
@@ -163,6 +240,16 @@
         "address": "អាសយដ្ឋាន",
         "details": "ព័ត៌មានលម្អិត",
         "view_listing": "មើលបញ្ជី",
-        "similar_listings": "បញ្ជីស្រដៀងគ្នា"
+        "similar_listings": "បញ្ជីស្រដៀងគ្នា",
+        "submit": "បញ្ជូន",
+        "select_an_option": "សូមជ្រើសរើស",
+        "send_message": "ផ្ញើសារ",
+        "call": "ហៅ",
+        "by": "ដោយ",
+        "read_more": "អានបន្ថែម",
+        "built": "បានសាងសង់",
+        "no_image": "គ្មានរូបភាព",
+        "view_profile": "មើលប្រវត្តិរូប",
+        "favourites": "ចំណូលចិត្ត"
     }
 }

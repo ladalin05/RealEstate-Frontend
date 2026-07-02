@@ -1,7 +1,9 @@
 import { useState, useRef, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 export const SelectForm = ({options, value, onChange}: { options: string[]; value: string; onChange: (value: string) => void }) => {
     const [isOpen, setIsOpen] = useState(false);
+    const { t } = useTranslation();
     const selectRef = useRef<HTMLDivElement>(null);
     const listRef = useRef<HTMLDivElement>(null);
 
@@ -31,7 +33,7 @@ export const SelectForm = ({options, value, onChange}: { options: string[]; valu
             <button type="button" onClick={() => setIsOpen((prev) => !prev)} className={`w-full flex items-center justify-between h-12 px-3 border rounded-sm text-sm transition-all outline-none
                 ${isOpen ? "border-sky-400 ring-1 ring-sky-300" : "border-gray-300"}
                 ${value ? "text-gray-900" : "text-gray-400"}`}>
-                {value || "Select an option"}
+                {value || t('general.select_an_option')}
                 <svg className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
                     fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} >
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />

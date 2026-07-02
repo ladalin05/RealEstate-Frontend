@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 import { BlogService } from "../services/blogs.service";
 import { TeamCard } from "../components/cards/TeamCard";
 import { Loading } from "../components/ui/Loading";
+import { useTranslation } from "react-i18next";
 
 const AboutUsPage = () => {
-
+    const {t} = useTranslation();
     const ourTeam = ourTeamData.slice(0, 4);
     const [blogs, setBlogs] = useState<any>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -34,10 +35,10 @@ const AboutUsPage = () => {
                 backgroundRepeat: 'no-repeat',
                 backgroundAttachment: 'fixed', }} >
             <div className="w-full py-20 bg-sky-900/50 flex items-center backdrop-blur-sx px-28">
-                <h1 className="text-3xl text-white font-medium">About Us</h1>
+                <h1 className="text-3xl text-white font-medium">{t('about_us.title')}</h1>
             </div>
             <div className="w-full h-full bg-white py-18 px-20">
-                <h2 className="text-2xl font-thin">Your Vision Unrestricted</h2>
+                <h2 className="text-2xl font-thin">{t('about_us.your_vision_unrestricted')}</h2>
                 <div className="w-full grid grid-cols-2 gap-16 mt-6">
                     <span className="text-md text-gray-500">
                         <p className="leading-7">
@@ -58,8 +59,8 @@ const AboutUsPage = () => {
                 </div>
             </div>
             <div className="w-full h-full bg-slate-50 py-18 px-28">
-                <h1 className="text-4xl font-thin">Meet our Team</h1>
-                <p className="text-gray-400 mt-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+                <h1 className="text-4xl font-thin">{t('about_us.meet_our_team')}</h1>
+                <p className="text-gray-400 mt-3">{t('about_us.desc_about_team')}</p>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mt-12 ">
                     {ourTeam.map((team, index) => (
                         <TeamCard team={team} key={index}/>
@@ -67,8 +68,8 @@ const AboutUsPage = () => {
                 </div>
             </div>
             <div className="w-full h-full bg-white py-18 px-28">
-                <h1 className="text-4xl font-thin">Read From Our Blog</h1>
-                <p className="text-gray-400 mt-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+                <h1 className="text-4xl font-thin">{t('about_us.read_from_our_blog')}</h1>
+                <p className="text-gray-400 mt-3">{t('about_us.desc_about_blog')}</p>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-12 ">
                     {blogs && (blogs.slice(0, 4).map((blog, index) => (
                         <BlogCard blog={blog} key={index}/>

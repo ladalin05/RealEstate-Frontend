@@ -1,14 +1,20 @@
 import { User, Heart, LogOut } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { AuthService } from '../services/auth.service';
 
 
 export const DashNavigation = () => {
-    
+    const { t } = useTranslation();
     const location = useLocation();
     const navLinks = [
-        { id: 1, label: 'My Profile', href: '/dashboard/profile', icon: User },
-        { id: 2, label: 'Favorites', href: '/dashboard/favorite', icon: Heart },
+        { id: 1, label: t('nav.my_profile'), href: '/dashboard/profile', icon: User },
+        { id: 2, label: t('nav.favorite'), href: '/dashboard/favorite', icon: Heart },
     ];
+    const handleLogout = async () => {
+        await AuthService.logout();
+        window.location.href = "/";
+    };
 
     return (
         <div className="fixed w-63 h-full bg-white border-r border-gray-200">
@@ -24,9 +30,9 @@ export const DashNavigation = () => {
                         <span className="font-medium ms-4">{link.label}</span>
                     </a>
                 ))}
-                <a href="#" className="flex items-center px-4 py-3 mt-2 rounded-xl text-red-600 hover:bg-indigo-50 hover:text-indigo-600 transition-all">
+                <a onClick={() => handleLogout()} className="flex items-center px-4 py-3 mt-2 rounded-xl text-red-600 hover:bg-indigo-50 hover:text-indigo-600 transition-all">
                     <LogOut className="w-5 h-5" />
-                    <span className="font-medium ms-4">Logout</span>
+                    <span className="font-medium ms-4">{t('nav.sign_out')}</span>
                 </a>
             </nav>
 

@@ -6,6 +6,8 @@
         "about_us": "About Us",
         "blog": "Blog",
         "contact_us": "Contact Us",
+        "my_profile": "My Profile",
+        "favorite": "Favorite",
         "register":"Register",
         "sign_in":"Sign In",
         "sign_out":"Sign Out",
@@ -82,6 +84,15 @@
             "button": "Get a Free Valuation"
         }
     },
+    "about_us":{
+        "title": "About Us",
+        "your_vision_unrestricted": "Your Vision Unrestricted",
+        "meet_our_team": "Meet Our Team",
+        "desc_about_team": "Lorem ipsum dolor sit amet, consectetur adipisicing elit",
+        "read_from_our_blog": "Read From Our Blog",
+        "desc_about_blog": "Lorem ipsum dolor sit amet, consectetur adipisicing elit"
+        
+    },
     "hero": {
         "tagline": "✨ THE BEST WAY TO",
         "title1": "Find Your",
@@ -118,6 +129,17 @@
         "contact_information": "Contact Information",
         "no_amenties_available": "No amenities available",
         "video": "Video",
+        "state_county": "State/County",
+        "area": "Area",
+        "province": "Province",
+        "zip_postal_code": "Zip/Postal Code",
+        "country": "Country",
+        "property_size": "Property Size",
+        "garage_size": "Garage Size",
+        "property_type": "Property Type",
+        "price": "Price",
+        "year_built": "Year Built",
+        "property_status": "Property Status",
         "additional_details": "Additional details",
         "no_properties_found": "No properties found",
         "try_adjusting_filters": "Try adjusting your filters",
@@ -151,6 +173,62 @@
             "subtitle": "Agent profile page"
         }
     },
+    "schedule_tour": {
+        "title": "Schedule a Tour",
+        "tour_type": "Tour Type",
+        "in_person": "In Person",
+        "video_chart": "Video Chart",
+        "select_time": "Select Time",
+        "your_name": "Your Name",
+        "your_phone": "Your Phone",
+        "your_email": "Your Email",
+        "your_message": "Your Message"
+    },
+    "request_info": {
+        "title": "Request Information",
+        "name": "Name",
+        "phone": "Phone",
+        "email": "Email",
+        "message": "Message"
+    },
+    "blogs": {
+        "tags": "Tags",
+        "related_posts": "Related posts"
+    },
+    "contact": {
+        "title": "Contact Us",
+        "description": "Design your custom contact forms with this Houzez Elementor custom widget and connect your leads with the integrated Houzez CRM.",
+        "inquiry_contact": "For inquiries contact:",
+        "corporate_headquarters": "Corporate Headquarters",
+        "get_directions": "Get Directions",
+        "form": {
+            "name": "Name",
+            "phone": "Phone",
+            "email": "Email",
+            "message": "Message",
+            "gdpr": "GDPR Agreement",
+            "gdpr_description": "I consent to having this website store my submitted information so they can respond to my inquiry.",
+            "first_name": "First Name",
+            "last_name": "Last Name",
+            "email_address": "Email Address"
+        }
+    },
+    "user_dashboard": {
+        "profile": {
+            "title": "My Profile",
+            "subtitle": "Manage your profile information and preferences",
+            "user_name": "User Name",
+            "personal_info": "Personal Information",
+            "about_me": "About Me",
+            "bio": "Bio",
+            "cancel": "Cancel",
+            "save_changes": "Save Changes"
+        },
+        "favorite": {
+            "title": "Favourite properties",
+            "subtitle": "Manage your favorite properties"
+        }
+    },
     "general": {
         "see_more": "See more",
         "properties": "Properties",
@@ -163,6 +241,16 @@
         "address": "Address",
         "details": "Details",
         "view_listing": "View Listing",
-        "similar_listings": "Similar Listings"
+        "similar_listings": "Similar Listings",
+        "submit": "Submit",
+        "select_an_option": "Select an option",
+        "send_message": "Send Message",
+        "call": "Call",
+        "by": "by",
+        "read_more": "Read More",
+        "built": "Built",
+        "no_image": "No Image",
+        "view_profile": "View Profile",
+        "favourites": "Favourites"
     }
 }

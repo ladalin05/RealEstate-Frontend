@@ -32,25 +32,25 @@ export const PropertyDetail = ({ property, relatedProperties, latestProperties }
     ];
 
     const addressDetails = [
-        { label: "Address", value: property?.address },
-        { label: "State/county", value: property?.addressDetail?.state },
-        { label: "Area", value: property?.addressDetail?.area },
-        { label: "Province", value: property?.addressDetail?.province },
-        { label: "Zip/Postal Code", value: property?.addressDetail?.zip },
-        { label: "Country", value: property?.addressDetail?.country },
+        { label: t('general.address'), value: property?.address },
+        { label: t('property.state_county'), value: property?.addressDetail?.state },
+        { label: t('property.area'), value: property?.addressDetail?.area },
+        { label: t('property.province'), value: property?.addressDetail?.province },
+        { label: t('property.zip_postal_code'), value: property?.addressDetail?.zip },
+        { label: t('property.country'), value: property?.addressDetail?.country },
     ];
 
     const propertyDetails = [
-        {label: "Property ID", value: property?.code},
-        {label: "Property Size", value: property?.size},
-        {label: "Bathroom", value: property?.bathrooms},
-        {label: "Garage Size", value: ""},
-        {label: "Property Type", value: property?.category},
-        {label: "Price", value: property?.price},
-        {label: "Bedrooms", value: property?.bedrooms},
-        {label: "Garage", value: property?.garages},
-        {label: "Year Built", value: property?.yearBuilt},
-        {label: "Property Status", value: property?.purpose},
+        {label: t('property.property_id'), value: property?.code},
+        {label: t('property.property_size'), value: property?.size},
+        {label: t('property.bathrooms'), value: property?.bathrooms},
+        {label: t('property.garage_size'), value: "N/A"},
+        {label: t('property.property_type'), value: property?.[`category_${i18n.language}`]},
+        {label: t('property.price'), value: property?.price},
+        {label: t('property.bedrooms'), value: property?.bedrooms},
+        {label: t('property.garage'), value: property?.garages},
+        {label: t('property.year_built'), value: property?.yearBuilt},
+        {label: t('property.property_status'), value: t(`filter.purpose.${property?.purpose}`)},
     ]
 
     return (

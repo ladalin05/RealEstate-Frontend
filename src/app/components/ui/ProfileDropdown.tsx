@@ -2,8 +2,10 @@
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AuthService } from "../../services/auth.service";
+import { useTranslation } from "react-i18next";
 
 export const ProfileDropdown = ({ user, isScrolled, isHomePage }: { user: any, isScrolled: boolean, isHomePage: boolean }) => {
+  const { t } = useTranslation(); 
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef(null);
   const defaultUserImage = "https://ui-avatars.com/api/?name=User&background=dbeafe&color=1d4ed8&bold=true";
@@ -77,7 +79,7 @@ export const ProfileDropdown = ({ user, isScrolled, isHomePage }: { user: any, i
             className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
           >
             <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" strokeWidth="1.75" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-            View profile
+            {t('general.view_profile')}
           </Link>
           <Link
             to="/dashboard/favorite"
@@ -85,7 +87,7 @@ export const ProfileDropdown = ({ user, isScrolled, isHomePage }: { user: any, i
             className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
           >
             <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" strokeWidth="1.75" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            Favourites
+            {t('general.favourites')}
           </Link>
         </div>
 
@@ -96,7 +98,7 @@ export const ProfileDropdown = ({ user, isScrolled, isHomePage }: { user: any, i
             className="flex w-full items-center gap-3 px-4 py-2 text-sm text-red-500 hover:bg-red-50 cursor-pointer"
           >
             <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.75" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-            Log out
+            {t('nav.sign_out')}
           </button>
         </div>
       </div>

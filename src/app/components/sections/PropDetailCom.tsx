@@ -1,10 +1,11 @@
 import { useRef, useState } from "react";
 import { Geo } from "react-bootstrap-icons";
 import { ChevronLeft, ChevronRight, Image, Map, Clapperboard} from "lucide-react";
+import { useTranslation } from 'react-i18next';;
 
 
 export const PropImags = ({images, latitude, longitude}: {images: string[], latitude: string, longitude: string}) => {
-    
+    const { t } = useTranslation();
     const imageRef = useRef<HTMLDivElement>(null);
     const [image, setImage] = useState(images[0] || "");
     const [option, setOption] = useState("image");
@@ -69,7 +70,7 @@ export const PropImags = ({images, latitude, longitude}: {images: string[], lati
                             <img src={image} alt="Property Image" className="w-full h-full object-cover" />
                         ) : (
                             <div className="w-full h-full bg-gray-200 dark:bg-slate-700 flex items-center justify-center">
-                                <span className="text-gray-400 text-sm">No image</span>
+                                <span className="text-gray-400 text-sm">{t('general.no_image')}</span>
                             </div>
                         )}
                     </>

@@ -14,25 +14,36 @@ export class PropertyService {
     }
 
     static async getPropertyDetail({ propertyId, userId = null }: { propertyId: number, userId?: number | null }): Promise<any> {
-    try {
-        const params = new URLSearchParams({ property_id: String(propertyId) });
-        if (userId) {
-            params.append('user_id', String(userId));
+        try {
+            const params = new URLSearchParams({ property_id: String(propertyId) });
+            if (userId) {
+                params.append('user_id', String(userId));
+            }
+
+            const response = await fetch(`${API_URL}/property/detail?${params.toString()}`);
+
+            if (!response.ok) {
+                throw new Error(`Request failed with status ${response.status}`);
+            }
+
+            const result = await response.json();
+            return result.data;
+        } catch (error) {
+            console.error('Error fetching property detail:', error);
+            return null;
         }
-
-        const response = await fetch(`${API_URL}/property/detail?${params.toString()}`);
-
-        if (!response.ok) {
-            throw new Error(`Request failed with status ${response.status}`);
-        }
-
-        const result = await response.json();
-        return result.data;
-    } catch (error) {
-        console.error('Error fetching property detail:', error);
-        return null;
     }
-}
+
+    static async getFavoriteProperties(userId: number): Promise<any> {
+        try {
+            const response = await fetch(`${API_URL}/property/favourite?user_id=${userId}`);
+            const result = await response.json();
+            return result.data;
+        } catch (error) {
+            console.error('Error fetching favorite properties:', error);
+            return [];
+        }
+    }
 
     static async getDataFillter(): Promise<any> {
         try {

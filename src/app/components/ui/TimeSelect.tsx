@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 const generateTimes = () => {
   const times = [];
@@ -17,6 +18,7 @@ const generateTimes = () => {
 const times = generateTimes();
 
 export const TimeSelect = ({ value, onChange }: { value: string | null; onChange: (t: string) => void }) => {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
@@ -47,7 +49,7 @@ export const TimeSelect = ({ value, onChange }: { value: string | null; onChange
           ${open ? "border-sky-400 ring-1 ring-sky-300" : "border-gray-300"}
           ${value ? "text-gray-900" : "text-gray-400"}`}
       >
-        {value ?? "Select time"}
+        {value ?? t('schedule_tour.select_time')}
         <svg
           className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
           fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}

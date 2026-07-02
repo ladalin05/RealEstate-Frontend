@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import BACKGROUND_IMAGE_URL from '../../../assets/images/slider1.jpg';
 import { Search  } from 'react-bootstrap-icons'; 
 import { CustomSelect } from '../ui/CustomSelect';

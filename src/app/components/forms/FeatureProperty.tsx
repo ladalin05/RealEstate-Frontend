@@ -3,8 +3,11 @@
 import { useState } from "react"
 import { ArrowsAngleExpand } from "react-bootstrap-icons"
 import { Heart, MapPin, PlusCircle, ChevronLeft, ChevronRight } from "lucide-react"
+import { useTranslation } from "react-i18next"
+
 
 export const FeatureProperty = ({ properties }: { properties: any[] }) => {
+    const { t } = useTranslation()
     const [current, setCurrent] = useState(0)
     const total = properties.length
 
@@ -31,12 +34,12 @@ export const FeatureProperty = ({ properties }: { properties: any[] }) => {
                                 </p>
                                 {property.featured && (
                                     <p className="px-3 py-1 rounded-full bg-blue-500 text-white text-xs font-semibold">
-                                        Featured
+                                        {t('property.featured')}
                                     </p>
                                 )}
                             </div>
                             <p className="absolute top-2 right-4 z-10 text-white text-md font-medium">
-                                Built {property.year}
+                                {t('property.built')} {property.year}
                             </p>
                             <p className="absolute bottom-4 left-4 z-10 text-xl font-medium text-white mb-2">
                                 {property.price}
