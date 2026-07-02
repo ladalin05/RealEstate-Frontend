@@ -190,7 +190,7 @@ export const PropertyDetail = ({ property, relatedProperties, latestProperties }
                             </div>
                             <hr className="border-gray-400 mb-6"/>
                             <div className="grid grid-cols-3 gap-4">
-                                {property?.amenities ? property.amenities.map((feature: string, index: number) => (
+                                {property?.[`amenities_${i18n.language}`] ? property[`amenities_${i18n.language}`].map((feature: string, index: number) => (
                                     <div key={index} className="flex items-center">
                                         <CircleCheck size={16} className="text-green-500 mr-2" />
                                         <span className="text-sm text-gray-600 dark:text-gray-400">{feature}</span>
@@ -220,7 +220,7 @@ export const PropertyDetail = ({ property, relatedProperties, latestProperties }
                         <div className="mt-8 mx-auto p-6 bg-white rounded-sm shadow-sm">
                             <div className="flex items-center justify-between mb-4">
                                 <h2 className="text-md font-medium text-gray-800 dark:text-gray-200 mb-2">{t('property.contact_information')}</h2>
-                                <a href="#" className="text-sm font-medium bg-sky-400 p-1 rounded-sm  text-white flex items-center gap-1">{t('general.view_listing')}</a>
+                                <a href="#" className="text-sm font-medium bg-sky-400 p-1 px-2 rounded-sm  text-white flex items-center gap-1">{t('general.view_listing')}</a>
                             </div>
                             <hr className="border-gray-400 mb-6"/>
                             <div className="mt-4">
