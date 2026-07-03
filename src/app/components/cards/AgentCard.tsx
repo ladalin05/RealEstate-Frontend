@@ -10,7 +10,7 @@ export const AgentCard = ({ agent }: { agent: any } ) => {
     return (
         <div className="h-auto relative bg-white shadow-lg rounded-md overflow-hidden p-1">
             <div className="relative w-full h-88 group cursor-pointer flex justify-center ">
-                <p className="absolute bottom-4 left-4 bg-[#69c17d]/85 text-white text-[9px] font-bold py-1 px-1 rounded-sm uppercase">4 {t('general.listing')}</p>
+                <p className="absolute bottom-4 left-4 bg-[#69c17d]/85 text-white text-[9px] font-bold py-1 px-1 rounded-sm uppercase">{agent.properties_count} {t('general.listing')}</p>
                 <img src={agent.profile_image} alt={agent.name} className="w-full h-full object-cover" />
             </div>
             

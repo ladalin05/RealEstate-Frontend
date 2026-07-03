@@ -24,7 +24,7 @@ export const Filter = ({ filter, setFilter, }: {
 
     useEffect(() => {
         PropertyService.getDataFillter().then((data) => {
-            if (data) setFilterData(data);
+            setFilterData(data);
         });
     }, []);
 
@@ -42,14 +42,14 @@ export const Filter = ({ filter, setFilter, }: {
             key: "purpose",
             options: [
                 { label: t('filter.purpose.all_purpose'), value: "" },
-                { label: t('filter.purpose.for_sale'),    value: "sale" },
-                { label: t('filter.purpose.for_rent'),    value: "rent" },
+                { label: t('filter.purpose.sale'),    value: "sale" },
+                { label: t('filter.purpose.rent'),    value: "rent" },
                 { label: t('filter.purpose.sale_rent'), value: "sale_rent" },
             ],
         },
         Category: {
             icon: LayoutGrid,
-            key: "type_id",
+            key: "category_id",
             options: [
                 { label: t('filter.all_type'), value: "" },
                 ...filterData.categories.map((c) => ({ label: c[`name_${i18n.language}`], value: String(c.id) })),

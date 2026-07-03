@@ -8,9 +8,9 @@ import { useTranslation } from 'react-i18next';
 export const HeroSection = ({categories}: {categories: any[]}) => {
 
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [filters, setFilters] = useState({ search_address: "", category_id: "" });
-  const PROPERTY_TYPES = categories.map(category => ({ label: category.name, value: category.id }));
+  const PROPERTY_TYPES = categories.map(category => ({ label: category[`name_${i18n.language}`], value: category.id }));
 
   const handleFiltter = () => {
     navigate('/property', { state: { filters } })

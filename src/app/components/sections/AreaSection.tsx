@@ -1,7 +1,8 @@
 import { ArrowRight } from 'react-bootstrap-icons';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAutoScrollCarousel } from '../../utils/helper';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 const AUTO_SCROLL_INTERVAL = 3000;
 const GAP = 24;
@@ -10,7 +11,12 @@ export const AreaSection = ({ areas }: { areas: any[] }) => {
     const { t, i18n } = useTranslation();
 
     const { scrollRef, innerRef, active, number, isPausedRef, calculateNumber, scrollToIndex, startAutoScroll, stopAutoScroll, handleScrollEvent,} = useAutoScrollCarousel(areas.length, AUTO_SCROLL_INTERVAL, GAP);
+    const navigate = useNavigate();
 
+    const handleFiltterArea = ( area_id : string ) => {
+        navigate('/property', { state: { filters : {area_id : area_id} } })
+    }
+    
     useEffect(() => {
         calculateNumber();
         scrollToIndex(0);
@@ -58,6 +64,7 @@ export const AreaSection = ({ areas }: { areas: any[] }) => {
                     {areas.map((area, index) => (
                         <div
                             key={index}
+                            onClick={() => handleFiltterArea(area.id)}
                             className="flex items-center gap-3 bg-white shadow-lg rounded-xl p-4 min-w-[22rem] flex-shrink-0 cursor-pointer transition-all"
                         >
                             <img

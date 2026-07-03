@@ -25,7 +25,7 @@ export const AgentSection = ({agents}: {agents: any}) => {
                 </div>
             </div>
             <div className="w-full mx-auto py-3 px-12">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 h-auto">
+                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 h-auto">
                     { agents.map((agent, index) => (
                         <div key={index} className="w-full">
                             <AgentCard agent={agent} />

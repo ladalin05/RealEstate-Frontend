@@ -89,7 +89,7 @@ export const PropertyCardV2 = ({ property }: { property: any }) => {
             </div>
             <div className="lg:col-span-3 md:col-span-2 p-4 px-8 py06">
                 <div className="w-full flex items-center justify-between mb-3">
-                    <p className="bg-black/65 text-white lg:text-sm text-xs font-thin p-2 rounded-sm uppercase">{t(`status.${property.status}`)}</p>
+                    <p className="bg-black/65 text-white lg:text-sm text-xs font-thin p-2 rounded-sm uppercase">{t(`filter.purpose.${property.purpose}`)}</p>
                     <p className="text-xl font-bold text-slate-800 mb-2">{formatPeriod(property.price, t)}</p>
                 </div>
                 <h3 className="lg:text-lg text-md font-medium text-gray-800 mb-3 hover:text-blue-500 cursor-pointer" onClick={() => toPropDetail(property.id)}>{property.name}</h3>

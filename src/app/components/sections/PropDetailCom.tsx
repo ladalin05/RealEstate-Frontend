@@ -53,7 +53,7 @@ export const PropImags = ({images, latitude, longitude}: {images: string[], lati
 
     return (
         <>
-            <div className="relative w-full h-160 rounded-sm overflow-hidden">
+            <div className="relative w-full lg:h-160 md:h-100 h-80 rounded-sm overflow-hidden">
                 <div className="flex items-center gap-2 absolute top-4 right-4 z-10">
                     <button className="w-10 h-10 flex justify-center items-center bg-black/50 hover:bg-black/70 rounded-sm" onClick={() => handleOptionChange("image")}> <Image size={20} className="text-white font-bold" /> </button>
                     <button className="w-10 h-10 flex justify-center items-center bg-black/50 hover:bg-black/70 rounded-sm" onClick={() => handleOptionChange("map")}> <Map size={20} className="text-white font-bold" /> </button>

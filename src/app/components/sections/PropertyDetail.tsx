@@ -28,16 +28,16 @@ export const PropertyDetail = ({ property, relatedProperties, latestProperties }
         { icon: ShowerHead, value: property?.bathrooms, label: t('property.bathrooms') },
         { icon: CarFrontFill, value: property?.garages, label: t('property.garage') },
         { icon: TriangleRight, value: property?.size, label: t('property.area_size') },
-        { icon: CalendarDays, value: property?.yearBuilt, label: t('property.bathrooms') },
+        { icon: CalendarDays, value: property?.year_built, label: t('property.bathrooms') },
     ];
 
     const addressDetails = [
-        { label: t('general.address'), value: property?.address },
-        { label: t('property.state_county'), value: property?.addressDetail?.state },
-        { label: t('property.area'), value: property?.addressDetail?.area },
-        { label: t('property.province'), value: property?.addressDetail?.province },
-        { label: t('property.zip_postal_code'), value: property?.addressDetail?.zip },
-        { label: t('property.country'), value: property?.addressDetail?.country },
+        { label: t('general.address'), value: property?.[`address_${i18n.language}`] },
+        { label: t('property.state_county'), value: property?.addressDetail?.[`state_${i18n.language}`] },
+        { label: t('property.area'), value: property?.addressDetail?.[`area_${i18n.language}`] },
+        { label: t('property.province'), value: property?.addressDetail?.[`province_${i18n.language}`] },
+        { label: t('property.zip_postal_code'), value: property?.addressDetail?.zip_code },
+        { label: t('property.country'), value: property?.addressDetail?.[`country_${i18n.language}`] },
     ];
 
     const propertyDetails = [
@@ -49,21 +49,21 @@ export const PropertyDetail = ({ property, relatedProperties, latestProperties }
         {label: t('property.price'), value: formatPeriod(property?.price, t)},
         {label: t('property.bedrooms'), value: property?.bedrooms},
         {label: t('property.garage'), value: property?.garages},
-        {label: t('property.year_built'), value: property?.yearBuilt},
+        {label: t('property.year_built'), value: property?.year_built},
         {label: t('property.property_status'), value: t(`filter.purpose.${property?.purpose}`)},
     ]
-
+    
     return (
         <section className="container py-3 px-6 scroll-smooth">
             <div className="flex justify-between items-start mb-12 w-full mx-auto">
                 <div className="w-2/3">
-                    <h1 className="lg:text-3xl text-2xl font-medium text-gray-800 dark:text-gray-200 mb-3 break-normal">{property?.name}</h1>
-                    <p className="text-gray-600 dark:text-gray-400 flex items-center text-sm mb-5"><GeoAlt className="me-2" /><span>{property?.address}</span></p>
+                    <h1 className="lg:text-3xl md:text-2xl text-xl font-medium text-gray-800 dark:text-gray-200 mb-3 break-normal">{property?.[`name_${i18n.language}`]}</h1>
+                    <p className="text-gray-600 dark:text-gray-400 flex items-center lg:text-lg md:text-lg text-sm mb-5"><GeoAlt className="me-2" /><span>{property?.[`address_${i18n.language}`]}</span></p>
                     <div className="flex items-center gap-3">
                         { property?.featured && (
                             <p className="z-10 bg-lime-500 text-white text-xs font-normal py-2 px-3 rounded-sm uppercase">{t('property.featured')}</p>
                         )}
-                        <p className="z-10 bg-black/65 text-white text-xs font-normal py-2 px-3 rounded-sm uppercase">{t(`status.${property?.status}`)}</p>
+                        <p className="z-10 bg-black/65 text-white text-xs font-normal py-2 px-3 rounded-sm uppercase">{t(`filter.purpose.${property.purpose}`)}</p>
                     </div>
                 </div>
                 <div className="w-1/3">
@@ -85,14 +85,14 @@ export const PropertyDetail = ({ property, relatedProperties, latestProperties }
                                 <p className="text-sm text-gray-600 dark:text-gray-400"><span className="font-bold">{t('property.property_id')}</span>: {property?.code}</p>
                             </div>
                             <hr className="border-gray-400 "/>
-                            <div className="flex items-center justify-between gap-6 mt-4 px-6">
+                            <div className="flex flex-wrap items-center justify-between gap-6 mt-4 px-6">
                                 {details.map((detail, index) => (
                                     <div className="" key={index}>
-                                        <h2 className={`text-sm font-semibold mb-1${detail.icon ? ' flex items-center gap-2' : ''}`}>
+                                        <h2 className={`lg:text-lg text-xs font-semibold mb-1${detail.icon ? ' flex items-center gap-2' : ''}`}>
                                             {detail.icon ? <detail.icon size={20} className="text-gray-400 dark:text-gray-400" /> : null}
                                             {detail.value}
                                         </h2>
-                                        <p className="text-sm text-gray-400 dark:text-gray-400">{detail.label}</p>
+                                        <p className="lg:text-lg text-sm text-gray-400 dark:text-gray-400">{detail.label}</p>
                                     </div>
                                 ))}
                             </div>
@@ -103,7 +103,7 @@ export const PropertyDetail = ({ property, relatedProperties, latestProperties }
                             </div>
                             <hr className="border-gray-400 mb-6"/>
                             <p className="text-sm text-gray-600 dark:text-gray-400 leading-5">
-                                {property?.description}
+                                {property?.[`description_${i18n.language}`]}
                             </p>
                         </div>
                         <div className="mt-8 mx-auto p-6 bg-white rounded-sm shadow-sm">
@@ -113,7 +113,7 @@ export const PropertyDetail = ({ property, relatedProperties, latestProperties }
                             </div>
                             <hr className="border-gray-400 mb-6"/>
                             <div className="mt-4">
-                                <div className="grid grid-cols-2 gap-6 pb-2">
+                                <div className="grid lg:grid-cols-2 grid-cols-1 gap-6 pb-2">
                                     <div className="">
                                         {addressDetails.slice(0, 3).map((detail, index) => (
                                             <div className="flex justify-between items-center py-3 border-b border-gray-300" key={index}>
@@ -140,7 +140,7 @@ export const PropertyDetail = ({ property, relatedProperties, latestProperties }
                             </div>
                             <hr className="border-gray-400 mb-6"/>
                             <div className="border-1 border-sky-400 rounded-sm p-4 bg-sky-50">
-                                <div className="grid grid-cols-2 gap-6 pb-2">
+                                <div className="grid lg:grid-cols-2 grid-cols-1 gap-6 pb-2">
                                     <div className="">
                                         {propertyDetails.slice(0, 5).map((detail, index) => (
                                             <div key={index} className="flex justify-between items-center py-3 border-b border-gray-300">
@@ -244,7 +244,7 @@ export const PropertyDetail = ({ property, relatedProperties, latestProperties }
                                 <h2 className="text-md font-medium text-gray-800 dark:text-gray-200 mb-2">{t('general.similar_listings')}</h2>
                             </div>
                             <hr className="border-gray-400 mb-6"/>
-                            <div className="grid grid-cols-2 gap-6">
+                            <div className="grid lg:grid-cols-2 grid-cols-1 gap-6">
                                 {relatedProperties.map((properties, index) => (
                                     <PropertyCard key={index} property={properties} />
                                 ))}

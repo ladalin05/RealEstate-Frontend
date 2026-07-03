@@ -32,7 +32,7 @@ export const PropertyForRent = ({properties}: {properties: any}) => {
     }, []);
     
     const handleFiltter = () => {
-        navigate('/property', { state: { filters: {status: 'for rent'} } })
+        navigate('/property', { state: { filters: {purpose: 'rent'} } })
     }
 
     return (
@@ -54,7 +54,7 @@ export const PropertyForRent = ({properties}: {properties: any}) => {
                 onMouseLeave={() => { isPausedRef.current = false; }}>
                 <div ref={innerRef} className="flex gap-4 px-2 items-center">
                     {properties.map((property) => (
-                        <div key={property.id} className="flex-shrink-0 lg:w-[25.8%] w-[50%]">
+                        <div key={property.id} className="flex-shrink-0 xl:w-[25.8%] lg:w-[34%] w-[50%]">
                             <PropertyCard property={property} />
                         </div>
                     ))}

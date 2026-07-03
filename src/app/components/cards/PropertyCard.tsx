@@ -53,11 +53,11 @@ export const PropertyCard = ({ property }: { property: any }) => {
                 { property.featured && (
                     <p className="absolute top-4 left-4 z-10 bg-lime-500 text-white text-[9px] font-bold py-1 px-1 rounded-sm uppercase">{t('property.featured')}</p>
                 )}
-                <p className="absolute top-4 right-4 z-10 bg-black/65 text-white text-[9px] font-bold py-1 px-1 rounded-sm uppercase">{t(`status.${property.status}`)}</p>
+                <p className="absolute top-4 right-4 z-10 bg-black/65 text-white text-[9px] font-bold py-1 px-1 rounded-sm uppercase">{t(`filter.purpose.${property.purpose}`)}</p>
                 <div className="w-full h-full relative flex justify-start overflow-hidden" ref={scrollImageRef} >
-                    <img  src={property.image}alt={property.name} className="w-full h-full object-cover flex-shrink-0" />
+                    <img  src={property.image} alt={property[`name_${i18n.language}`]} className="w-full h-full object-cover flex-shrink-0" />
                     {Object.entries(JSON.parse(property.gallery)).map(([index, img]) => (
-                        <img key={index} src={img as string} alt={`${property.name} ${index + 1}`} className="w-full h-full object-cover flex-shrink-0" />
+                        <img key={index} src={img as string} alt={`${property[`name_${i18n.language}`]} ${index + 1}`} className="w-full h-full object-cover flex-shrink-0" />
                     ))}
                 </div>
                 <div className="w-full flex items-center justify-between absolute top-1/2 -translate-y-1/2 z-10 px-3">
@@ -90,9 +90,9 @@ export const PropertyCard = ({ property }: { property: any }) => {
             </div>
             <div className="p-6">
                 <h3 className="lg:text-lg text-md font-bold text-gray-800 mb-2 hover:text-blue-500 cursor-pointer" onClick={() => toPropDetail(property.id)}>
-                    {property.name}
+                    {property[`name_${i18n.language}`]}
                 </h3>
-                <p className="lg:text-md text-sm font-medium text-gray-500 mb-2 flex items-center"><GeoAlt className="me-2"/> {property.address}</p>
+                <p className="lg:text-md text-sm font-medium text-gray-500 mb-2 flex items-center"><GeoAlt className="me-2"/> {property[`address_${i18n.language}`]}</p>
                 <div className="flex items-center mb-2">
                     { 
                         property.bedrooms > 0 

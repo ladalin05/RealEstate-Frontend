@@ -8,6 +8,13 @@ import { ScrollToTop } from "../utils/helper";
 import { PropertyService } from "../services/property.service";
 import { useTranslation } from "react-i18next";
 
+const defaultFilter = {
+    search: '', category_id: '', area_id: '', purpose: '',
+    furnishing: '', bathrooms: '', rooms: '',
+    min_price: '', max_price: '',
+    sort_by: 'properties.id', sort_dir: 'desc',
+};
+
 const PropertyPage = () => {
     const { t } = useTranslation();
     const location = useLocation();
@@ -15,60 +22,61 @@ const PropertyPage = () => {
 
     const [viewMode,         setViewMode]         = useState<"grid" | "list">("grid");
     const [propertiesData,   setPropertiesData]   = useState<any[]>([]);
-    const [isInitialLoading, setIsInitialLoading] = useState(true); // first page load
-    const [isFilterLoading,  setIsFilterLoading]  = useState(false); // subsequent filter fetches
-    const [filter, setFilter] = useState({ search: '', type_id: '', area_id: '', purpose: '', furnishing: '', bathrooms: '', rooms: '', min_price: '', max_price: '', sort_by: 'properties.id', sort_dir: 'desc', });
+    const [isInitialLoading, setIsInitialLoading] = useState(true);
+    const [isFilterLoading,  setIsFilterLoading]  = useState(false);
+
+    const [filter, setFilter] = useState(() => {
+        const incoming = location.state?.filters;
+        console.log(incoming)
+        if (!incoming) return defaultFilter;
+        const { search_address, category_id, area_id, purpose } = incoming;
+        return {
+            ...defaultFilter,
+            ...(search_address  ? { search: search_address }  : {}),
+            ...(category_id     ? { category_id } : {}),
+            ...(area_id  ? { area_id }  : {}),
+            ...(purpose  ? { purpose }  : {}),
+        };
+    });
 
     const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const isFirstRun = useRef(true);
 
     const hasFilter = (f: typeof filter) =>
-        !!(f.search || f.type_id || f.area_id || f.purpose || f.furnishing || f.bathrooms || f.rooms || f.min_price || f.max_price);
+        !!(f.search || f.category_id || f.area_id || f.purpose || f.furnishing || f.bathrooms || f.rooms || f.min_price || f.max_price);
 
-    const fetchData = (currentFilter: typeof filter) => {
-        if (isFirstRun.current) {
-            setIsInitialLoading(true);
-        } else {
-            setIsFilterLoading(true);
-        }
-
-        const request = hasFilter(currentFilter)
-            ? PropertyService.filterProperties(currentFilter)
+    const fetchData = (dataFilter: typeof filter, setIsLoading: (value: boolean) => void) => {
+        const request = hasFilter(dataFilter)
+            ? PropertyService.filterProperties(dataFilter)
             : PropertyService.getProperties();
 
         request
             .then((data) => setPropertiesData(data))
-            .finally(() => {
-                if (isFirstRun.current) {
-                    setIsInitialLoading(false);
-                    isFirstRun.current = false;
-                } else {
-                    setIsFilterLoading(false);
-                }
-            });
+            .finally(() => setIsLoading(false));
     };
 
+    const filterData = (currentFilter: typeof filter) => {
+        setIsFilterLoading(true);
+        fetchData(currentFilter, setIsFilterLoading);
+    };
+
+
     useEffect(() => {
-        fetchData(filter);
+        if (location.state?.filters) {
+            navigate(location.pathname, { replace: true, state: null });
+        }
     }, []);
 
     useEffect(() => {
-        if (!location.state?.filters) return;
-        const { search, type_id, area_id, purpose } = location.state.filters;
-        setFilter((prev) => ({
-            ...prev,
-            ...(search   ? { search }   : {}),
-            ...(type_id  ? { type_id }  : {}),
-            ...(area_id  ? { area_id }  : {}),
-            ...(purpose  ? { purpose }  : {}),
-        }));
-        navigate(location.pathname, { replace: true, state: null });
-    }, [location.state]);
+        if (isFirstRun.current) {
+            isFirstRun.current = false;
+            setIsInitialLoading(true);
+            fetchData(filter, setIsInitialLoading);
+            return;
+        }
 
-    useEffect(() => {
-        if (isFirstRun.current) return; // already handled by the mount effect
         if (debounceRef.current) clearTimeout(debounceRef.current);
-        debounceRef.current = setTimeout(() => fetchData(filter), 400);
+        debounceRef.current = setTimeout(() => filterData(filter), 400);
         return () => { if (debounceRef.current) clearTimeout(debounceRef.current); };
     }, [filter]);
 
@@ -85,7 +93,7 @@ const PropertyPage = () => {
                 {hasFilter(filter) && (
                     <button
                         onClick={() => setFilter({
-                            search: '', type_id: '', area_id: '', purpose: '',
+                            search: '', category_id: '', area_id: '', purpose: '',
                             furnishing: '', bathrooms: '', rooms: '',
                             min_price: '', max_price: '',
                             sort_by: 'properties.id', sort_dir: 'desc',

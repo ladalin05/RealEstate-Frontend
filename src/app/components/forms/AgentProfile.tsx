@@ -72,7 +72,7 @@ export const AgentProfile = ({ agent, properties }: { agent: any, properties: an
             </div>
             <div className="mt-12 p-4 shadow-lg rounded-xl">
               <h3 className="font-bold text-2xl mb-4">{t('general.properties')}</h3>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid lg:grid-cols-2 col-span-1 gap-2">
                 {properties.map((property: any) => (
                     <PropertyCard key={property.id} property={property} />
                 ))}
