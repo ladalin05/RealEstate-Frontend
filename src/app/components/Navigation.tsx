@@ -4,6 +4,7 @@ import { ProfileDropdown } from "./ui/ProfileDropdown";
 import { LanguageSwitcher } from "./ui/LanguageSwitcher";
 import { AuthService } from "../services/auth.service";
 import { useTranslation } from "react-i18next";
+import logoImage from "../../assets/win-realty-logo.png";
 
 const Navigation = () => {
     const { t } = useTranslation();
@@ -45,7 +46,7 @@ const Navigation = () => {
                     <div className="flex flex-wrap items-center justify-between w-full max-w-7xl">
                         {/* Logo and Brand */}
                         <Link to="/home" className="inline-flex items-center gap-2 py-1 whitespace-nowrap">
-                            <img src="https://wpresidence.net/wp-content/uploads/2020/11/logo.png" alt="Real Estate Logo" className="h-9 w-auto" />
+                            <img src={logoImage} alt="Real Estate Logo" className="h-9 w-auto" />
                         </Link>
 
                         {/* Mobile Toggle Button */}
@@ -95,10 +96,10 @@ const Navigation = () => {
                                 </div>
                             </div>
                             {/* Right Side / Auth */}
-                            <div className="flex items-center justify-between mt-4 md:mt-0 ml-8 md:ml-12 relative">
+                            <div className="flex items-center justify-between mt-4 md:mt-0 ml-4 lg:ml-12 relative">
                                 {/* Desktop i18n */}
-                                <div className="hidden me-8 md:flex items-center">
-                                    <LanguageSwitcher />
+                                <div className="hidden lg:me-8 me-4 md:flex items-center">
+                                    <LanguageSwitcher /> 
                                 </div>
                                 <div className="md:block hidden">
                                     {isLoggedIn ? (

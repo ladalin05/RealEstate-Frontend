@@ -253,7 +253,7 @@ export const PropertyDetail = ({ property, relatedProperties, latestProperties }
                         </div>
                     </div>
                     <div className="lg:col-span-2 lg:mt-0 mt-10">
-                        <div className="shadow-lg bg-white rounded-md overflow-hidden">
+                        <div className="shadow-lg bg-white rounded-md ">
                             <div className="flex items-center">
                                 <div className="w-1/2 text-center" onClick={() => handleScheduleTour()}>
                                     <p className={`text-md font-semibold ${tourOpen ? 'rounded-t-md text-gray-800 bg-white dark:text-gray-200' : 'text-sky-500 dark:text-sky-200 bg-gray-50'} py-4`}>{t('schedule_tour.title')}</p>

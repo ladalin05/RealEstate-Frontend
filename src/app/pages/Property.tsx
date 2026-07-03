@@ -27,7 +27,6 @@ const PropertyPage = () => {
 
     const [filter, setFilter] = useState(() => {
         const incoming = location.state?.filters;
-        console.log(incoming)
         if (!incoming) return defaultFilter;
         const { search_address, category_id, area_id, purpose } = incoming;
         return {

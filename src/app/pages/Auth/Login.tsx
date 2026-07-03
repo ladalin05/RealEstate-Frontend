@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Facebook, Google } from "react-bootstrap-icons";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import { Link } from "react-router-dom";
 import { AuthService } from "../../services/auth.service";
+import GoogleLoginButton from "../../components/auth/GoogleLoginButton";
 
 interface LoginFormData {
   email: string;
@@ -198,20 +199,10 @@ const LoginPage = () => {
             </div>
 
             {/* OAuth */}
-            <div className="grid grid-cols-2 gap-2">
-              {[
-                { label: "Google", icon: <Google /> },
-                { label: "Facebook", icon: <Facebook /> },
-              ].map(({ label, icon }) => (
-                <button
-                  key={label}
-                  type="button"
-                  className="flex items-center justify-center gap-2 border-[1.5px] border-blue-100 bg-blue-50 hover:border-blue-400 hover:bg-white text-blue-700 text-xs font-semibold py-2.5 rounded-xl transition-all"
-                >
-                  {icon}
-                  {label}
-                </button>
-              ))}
+            <div className="grid grid-cols-1 gap-2">
+              <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+                <GoogleLoginButton />
+              </GoogleOAuthProvider>
             </div>
 
             <p className="text-center text-xs text-blue-400">

@@ -36,8 +36,6 @@ const PropertyDetailsPage = () => {
         )
     }
 
-
-
     return (
         <main className="min-h-screen bg-gray-50 dark:bg-slate-900 relative top-18 py-12 px-22">
             <PropertyDetail property={property} relatedProperties={relateProperties} latestProperties={lastProperties} />

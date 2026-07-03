@@ -108,7 +108,8 @@ export class AuthService {
   }
   
   static async googleLogin(accessToken: string) {
-    const response = await fetch(`${API_URL}/auth/google`, {
+    console.log("googleLogin",accessToken);
+    const response = await fetch(`${API_URL}/auth/google-login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -119,11 +120,16 @@ export class AuthService {
     });
 
     const result = await response.json();
+    console.log("googleLogin",result)
+
+    if (!response.ok) {
+      throw new Error(result?.message ?? "Google login failed");
+    }
 
     // store directly from login response
     this.setToken(result.data.token);
     this.setUser(result.data.user);
-
+    
     return result;
   }
 

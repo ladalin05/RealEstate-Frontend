@@ -273,6 +273,7 @@
         "year ago": "Year ago",
         "years ago": "Years ago",
         "day ago": "Day ago",
-        "days ago": "Days ago"
+        "days ago": "Days ago",
+        "loading": "Loading..."
     }
 }

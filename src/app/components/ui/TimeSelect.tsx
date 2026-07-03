@@ -49,7 +49,7 @@ export const TimeSelect = ({ value, onChange }: { value: string | null; onChange
           ${open ? "border-sky-400 ring-1 ring-sky-300" : "border-gray-300"}
           ${value ? "text-gray-900" : "text-gray-400"}`}
       >
-        {value ?? t('schedule_tour.select_time')}
+        {value || t('schedule_tour.select_time')}
         <svg
           className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
           fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}

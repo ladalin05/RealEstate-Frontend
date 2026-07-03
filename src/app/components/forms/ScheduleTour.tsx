@@ -1,31 +1,43 @@
-import { useRef, useState } from "react";
-import { ChevronLeft, ChevronRight, User} from "lucide-react";
+import { useState } from "react";
+import { User} from "lucide-react";
 import { TimeSelect } from "../ui/TimeSelect";
 import { SelectForm } from "../ui/SelectForm";
 import { useTranslation } from "react-i18next";
 import { DatePicker } from "../ui/DatePicker";
+import { InterestService } from "../../services/interest.service";
 
 
 export const ScheduleTour = ({ agent }: { agent: any }) => {
     const { t } = useTranslation();
-    const dateRef = useRef<HTMLDivElement>(null);
-    const [time, setTime] = useState<string | null>(null);
     const [tourType, setTourType] = useState<string | null>("in-person");
-    const [pickupDate, setPickupDate] = useState<string>(""); 
-    
-    const prevDate = () => {
-        const container = dateRef.current?.querySelector('.overflow-x-auto');
-        if (container) {
-            container.scrollBy({ left: -92, behavior: 'smooth' });
-        }
-    };
+    const [message, setMessage] = useState<string | null>(null);
+    const [error, setError] = useState<string | null>(null);
+    const [isloading, setIsLoading] = useState<boolean>(false);
+    const [form, setForm] = useState({
+        time: "",
+        date: "",
+        tourType: tourType,
+        name: "",
+        phone: "",
+        email: "",
+        message: ""
+    })
 
-    const nextDate = () => {
-        const container = dateRef.current?.querySelector('.overflow-x-auto');
-        if (container) {
-            container.scrollBy({ left: 92, behavior: 'smooth' });
+    const handleSubmit = async () => {
+        try {
+            setIsLoading(true)
+            InterestService.scheduleTour(form).then((res) => {
+                if(res?.status == "success") {
+                    setMessage(res?.message);
+                } else {
+                    setError(res?.message)
+                }
+            }).finally(() => {
+                setIsLoading(false)
+            });
+        } catch (error) {
         }
-    };
+    }
 
     return (
         <>
@@ -40,37 +52,38 @@ export const ScheduleTour = ({ agent }: { agent: any }) => {
                     </div>
                 </div>
             </div>
-            {/* <div className="w-full flex items-center justify-center gap-2 px-9 relative" ref={dateRef}>
-                <div className="w-full flex justify-between px-6 absolute ">
-                    <button className="w-8 h-8 flex justify-center items-center border border-gray-200 hover:bg-gray-300 rounded-full" onClick={() => prevDate()}> <ChevronLeft size={20} className="text-gray-600" /> </button>
-                    <button className="w-8 h-8 flex justify-center items-center border border-gray-200 hover:bg-gray-300 rounded-full" onClick={() => nextDate()}> <ChevronRight size={20} className="text-gray-600" /> </button>
-                </div>
-                <div className="flex gap-1 overflow-x-auto scrollbar-hide">
-                    {dateData.map((date) => (
-                        <div key={date.id} className="flex-shrink-0 w-22 py-4 text-center rounded-sm border border-gray-300 cursor-pointer hover:bg-gray-100 px-2">
-                            <p className="text-sm font-medium text-gray-800">{date.day}</p>
-                            <p className="text-xl font-bold text-gray-800 dark:text-gray-200">{date.date}</p>
-                            <p className="text-sm font-medium text-gray-800">{date.month}</p>
-                        </div>
-                    ))}
-                </div>
-            </div> */}
             <div className="w-full p-9 ">
                 <h2 className="text-md font-bold text-gray-800 dark:text-gray-200 mb-2">{t('schedule_tour.tour_type')}</h2>
                 <form className="flex flex-col gap-4">
-                    <div className="flex justify-between gap-3 h-12 mt-6"> 
-                        <div onClick={() => setTourType("in-person")} className={`w-1/2 text-sm font-bold rounded-sm flex items-center justify-center cursor-pointer ${tourType === "in-person" ? "border border-sky-400 text-sky-400" : "text-gray-800 border border-gray-300"} hover:text-sky-400`}>{t('schedule_tour.in_person')}</div> 
-                        <div onClick={() => setTourType("video-chat")} className={`w-1/2 text-sm font-bold rounded-sm flex items-center justify-center cursor-pointer ${tourType === "video-chat" ? "border border-sky-400 text-sky-400" : "text-gray-800 border border-gray-300"} hover:text-sky-400`}>{t('schedule_tour.video_chart')}</div>
+                    <div className="flex justify-between gap-3 h-12 mt-6">  
+                        <div onClick={() => {
+                                setForm({...form, tourType: "in-person"});
+                                setTourType("in-person");
+                            }} 
+                            className={`w-1/2 text-sm font-bold rounded-sm flex items-center justify-center cursor-pointer ${tourType === "in-person" ? "border border-sky-400 text-sky-400" : "text-gray-800 border border-gray-300"} hover:text-sky-400`}>{t('schedule_tour.in_person')}</div> 
+                        <div onClick={() => {
+                                setForm({...form, tourType: "video-chat"});
+                                setTourType("video-chat")
+                            }}
+                            className={`w-1/2 text-sm font-bold rounded-sm flex items-center justify-center cursor-pointer ${tourType === "video-chat" ? "border border-sky-400 text-sky-400" : "text-gray-800 border border-gray-300"} hover:text-sky-400`}>{t('schedule_tour.video_chart')}</div>
                     </div>
                     
-                     <DatePicker value={pickupDate} onChange={(value) => setPickupDate(value)} min={new Date().toISOString().split('T')[0]} placeholder={t('schedule_tour.select_date')}
+                    <DatePicker value={form.date} onChange={(value) => setForm({...form, date: value})} min={new Date().toISOString().split('T')[0]} placeholder={t('schedule_tour.select_date')}
                         className={`w-full px-4 py-4 rounded-xl bg-gray-50 border border-border focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 transition-all outline-none appearance-none cursor-pointer`} />
-                    <TimeSelect value={time} onChange={setTime} />
-                    <input type="text" name="name" placeholder={t('schedule_tour.your_name')} className="w-full h-12 border border-gray-300 rounded-sm px-3 focus:outline-none focus:ring-1 focus:ring-sky-300" />
-                    <input type="tel" name="phone" placeholder={t('schedule_tour.your_phone')} className="w-full h-12 border border-gray-300 rounded-sm px-3 focus:outline-none focus:ring-1 focus:ring-sky-300" />
-                    <input type="email" name="email" placeholder={t('schedule_tour.your_email')} className="w-full h-12 border border-gray-300 rounded-sm px-3 focus:outline-none focus:ring-1 focus:ring-sky-300" />
-                    <textarea name="message" placeholder={t('schedule_tour.your_message')} className="w-full h-24 border border-gray-300 rounded-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-sky-300 resize-none" />
-                    <button type="submit" className="w-full h-12 bg-green-400 text-white font-bold rounded-sm hover:bg-green-500">{t('general.submit')}</button>
+                    <TimeSelect value={form.time} onChange={(value) => setForm({...form, time: value})} />
+                    <input type="text" value={form.name} name="name" placeholder={t('schedule_tour.your_name')} onChange={(e) => setForm({...form, name: e.target.value})} className="w-full h-12 border border-gray-300 rounded-sm px-3 focus:outline-none focus:ring-1 focus:ring-sky-300" />
+                    <input type="tel" value={form.phone} name="phone" placeholder={t('schedule_tour.your_phone')} onChange={(e) => setForm({...form, phone: e.target.value})} className="w-full h-12 border border-gray-300 rounded-sm px-3 focus:outline-none focus:ring-1 focus:ring-sky-300" />
+                    <input type="email" value={form.email} name="email" placeholder={t('schedule_tour.your_email')} onChange={(e) => setForm({...form, email: e.target.value})} className="w-full h-12 border border-gray-300 rounded-sm px-3 focus:outline-none focus:ring-1 focus:ring-sky-300" />
+                    <textarea name="message" value={form.message} placeholder={t('schedule_tour.your_message')} onChange={(e) => setForm({...form, message: e.target.value})} className="w-full h-24 border border-gray-300 rounded-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-sky-300 resize-none" />
+                    <div className="w-full h-10 rounded-sm flex items-center justify-center cursor-pointer">
+                        {message && <p className="text-green-500 text-sm">{message}</p>}
+                        {error && <p className="text-red-500 text-sm">{error}</p>}
+                    </div>
+                    <button type="button" disabled={isloading} 
+                            onClick={() => handleSubmit()}
+                            className="w-full h-12 bg-green-400 text-white font-bold rounded-sm hover:bg-green-500">
+                            {isloading ? t('general.loading') : t('general.submit')}
+                    </button>
                 </form>
             </div>
         </>
@@ -80,7 +93,31 @@ export const ScheduleTour = ({ agent }: { agent: any }) => {
 export const RequestInfo = ({ agent }: { agent: any }) => {
     const { t } = useTranslation();
     const options = ["I'm a buyer", "I'm a tennant", "I'm an agent", "Other"];
-    const [role, setRole] = useState("");   
+    const [error, setError] = useState("");
+    const [message, setMessage] = useState("");
+    const [isloading, setIsLoading] = useState(false);
+    const [form, setForm] = useState({
+        name: "",
+        phone: "",
+        email: "",
+        message: "",
+        role: ""
+    })
+
+    const handleSubmit = () => {
+        setIsLoading(true)
+        try {
+            InterestService.requestInfo(form).then(res => {
+                setMessage(res?.message);
+            }).catch(err => {
+                setError(err);
+            })
+        } catch (error) {
+            setError(error);
+        } finally {
+            setIsLoading(false)
+        }
+    }
 
     return (
         <>
@@ -97,14 +134,22 @@ export const RequestInfo = ({ agent }: { agent: any }) => {
             </div>
             <div className="w-full px-9 py-6">
                 <form className="flex flex-col gap-4">
-                    <input type="text" name="name" placeholder={t('schedule_tour.your_name')} className="w-full h-12 border border-gray-300 rounded-sm px-3 focus:outline-none focus:ring-1 focus:ring-sky-300" />
-                    <input type="tel" name="phone" placeholder={t('schedule_tour.your_phone')} className="w-full h-12 border border-gray-300 rounded-sm px-3 focus:outline-none focus:ring-1 focus:ring-sky-300" />
-                    <input type="email" name="email" placeholder={t('schedule_tour.your_email')} className="w-full h-12 border border-gray-300 rounded-sm px-3 focus:outline-none focus:ring-1 focus:ring-sky-300" />
-                    <textarea name="message" placeholder={t('schedule_tour.your_message')} className="w-full h-24 border border-gray-300 rounded-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-sky-300 resize-none" />
-                    <SelectForm options={options} value={role} onChange={setRole} />
+                    <input type="text" onChange={(e) => setForm({...form, name: e.target.value})} value={form.name} name="name" placeholder={t('schedule_tour.your_name')} className="w-full h-12 border border-gray-300 rounded-sm px-3 focus:outline-none focus:ring-1 focus:ring-sky-300" />
+                    <input type="tel" onChange={(e) => setForm({...form, phone: e.target.value})} value={form.phone} name="phone" placeholder={t('schedule_tour.your_phone')} className="w-full h-12 border border-gray-300 rounded-sm px-3 focus:outline-none focus:ring-1 focus:ring-sky-300" />
+                    <input type="email" onChange={(e) => setForm({...form, email: e.target.value})} value={form.email} name="email" placeholder={t('schedule_tour.your_email')} className="w-full h-12 border border-gray-300 rounded-sm px-3 focus:outline-none focus:ring-1 focus:ring-sky-300" />
+                    <textarea onChange={(e) => setForm({...form, message: e.target.value})} value={form.message} name="message" placeholder={t('schedule_tour.your_message')} className="w-full h-24 border border-gray-300 rounded-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-sky-300 resize-none" />
+                    <SelectForm options={options} value={form.role} onChange={(value) => setForm({...form, role: value})} />
+                    <div className="w-full h-10 rounded-sm flex items-center justify-center cursor-pointer">
+                        {message && <p className="text-green-500 text-sm">{message}</p>}
+                        {error && <p className="text-red-500 text-sm">{error}</p>}
+                    </div>
                     <div className="flex justify-between gap-3">
-                        <button type="submit" className="w-full h-12 bg-green-600 text-white font-bold rounded-sm hover:bg-green-500">{t('general.send_message')}</button>
-                        <button type="submit" className="w-full h-12 border border-green-500 text-green-500 font-bold rounded-sm hover:bg-green-500 hover:text-white">{t('general.call')}</button>
+                        <button type="button" disabled={isloading}
+                                onClick={() => handleSubmit()}
+                                className="w-full h-12 bg-green-600 text-white font-bold rounded-sm hover:bg-green-500">
+                            {isloading ? t('general.loading') : t('general.send_message')}
+                        </button>
+                        <a href={`tel:${agent?.phone}`} className="w-full h-12 border border-green-500 text-green-500 font-bold rounded-sm hover:bg-green-500 hover:text-white flex items-center justify-center">{t('general.call')}</a>
                     </div>
                 </form>
             </div>
