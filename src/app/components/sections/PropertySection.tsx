@@ -1,4 +1,4 @@
-import { ArrowRight } from "react-bootstrap-icons";
+
 import { PropertyCard } from "../cards/PropertyCard";
 import { useState } from "react";
 import { CMSService } from "../../services/cms.service";
@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 
 export const PropertySection = ({propertiesData}: {propertiesData: any}) => {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     const [numOfProp, setNumOfProp] = useState(4);
     const [featuredProperties, setFeaturedProperties] = useState(propertiesData);
@@ -28,11 +28,11 @@ export const PropertySection = ({propertiesData}: {propertiesData: any}) => {
     return (
         <section className="container py-12 px-6">
             <div className="flex justify-between items-center mb-12">
-                <div className="">
-                    <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-200">{t('property.feature_title')} </h1>
-                    <p>{t('property.feature_description')}</p>
+                <div className="w-3/4">
+                    <h1 className="md:text-4xl text-2xl font-bold text-gray-800 dark:text-gray-200">{t('property.feature_title')} </h1>
+                    <p className="text-sm">{t('property.feature_description')}</p>
                 </div>
-                <a href="/property" className="text-blue-500 font-medium flex items-center">{t('general.see_more')} <ArrowRight className="ml-2" /></a>
+                <a href="/property" className="text-blue-500 md:text-sm text-xs font-medium flex items-center">{t('general.see_more')} →</a>
             </div>
             <div className="py-3">
                 {isLoading ? (

@@ -3,6 +3,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { Link } from "react-router-dom";
 import { AuthService } from "../../services/auth.service";
 import GoogleLoginButton from "../../components/auth/GoogleLoginButton";
+import { useTranslation } from "react-i18next";
 
 interface LoginFormData {
   email: string;
@@ -11,6 +12,7 @@ interface LoginFormData {
 }
 
 const LoginPage = () => {
+  const { t } = useTranslation();
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -55,18 +57,18 @@ const LoginPage = () => {
         <div className="hidden md:flex flex-col justify-center w-52 flex-shrink-0 bg-blue-600 p-8">
           <div className="mb-8">
             <h1 className="text-2xl font-extrabold text-white tracking-tight">
-              welcome<span className="text-blue-300">.</span>
+              {t("auth.welcome")} <span className="text-blue-300">.</span>
             </h1>
             <p className="text-[10px] uppercase tracking-widest text-blue-400 mt-1">
-              Access your portal
+              {t("auth.access")}
             </p>
           </div>
           <ul className="space-y-3">
             {[
-              "Real-time collaboration",
-              "End-to-end encryption",
-              "99.9% uptime SLA",
-              "Advanced analytics",
+              t('auth.real_time_collaboration'),
+              t('auth.end_to_end_encryption'),
+              t('auth.uptime_sla'),
+              t('auth.advanced_analytics'),
             ].map((f) => (
               <li key={f} className="flex items-center gap-2.5">
                 <span className="w-4 h-4 rounded-full bg-white/15 flex items-center justify-center flex-shrink-0">
@@ -83,10 +85,10 @@ const LoginPage = () => {
         {/* Right Panel */}
         <div className="flex-1 bg-white p-8">
           <h2 className="text-xl font-extrabold text-[#1e1b2e] tracking-tight mb-1">
-            Welcome back
+            {t("auth.welcome_back")}
           </h2>
           <p className="text-xs text-blue-600 mb-6">
-            Sign in to your account to continue
+            {t("auth.sign_in")}
           </p>
 
           {successMessage && (
@@ -107,7 +109,7 @@ const LoginPage = () => {
             {/* Email */}
             <div>
               <label className="block text-[10px] uppercase tracking-widest text-blue-500 font-bold mb-1.5">
-                Email
+                {t('auth.email')}
               </label>
               <div className="relative">
                 <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
@@ -127,7 +129,7 @@ const LoginPage = () => {
             {/* Password */}
             <div>
               <label className="block text-[10px] uppercase tracking-widest text-blue-500 font-bold mb-1.5">
-                Password
+                {t('auth.password')}
               </label>
               <div className="relative">
                 <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
@@ -165,13 +167,13 @@ const LoginPage = () => {
                   onChange={handleChange}
                   className="w-3.5 h-3.5 rounded border-blue-200 bg-blue-50 accent-blue-600"
                 />
-                <span className="text-xs text-blue-500">Remember me</span>
+                <span className="text-xs text-blue-500">{t('auth.remember_me')}</span>
               </label>
               <Link
                 to="/forgot-password"
                 className="text-xs text-blue-700 hover:text-blue-900 font-semibold transition-colors"
               >
-                Forgot password?
+                {t('auth.forgot_password')}?
               </Link>
             </div>
 
@@ -184,17 +186,17 @@ const LoginPage = () => {
               {isLoading ? (
                 <span className="flex items-center justify-center gap-2">
                   <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" /></svg>
-                  Signing in…
+                  {t('auth.sign_in')}…
                 </span>
               ) : (
-                "Sign in →"
+                `${t('auth.sign_in')} →`
               )}
             </button>
 
             {/* Divider */}
             <div className="flex items-center gap-3">
               <div className="flex-1 h-px bg-blue-100" />
-              <span className="text-[10px] text-blue-300 font-semibold tracking-widest uppercase">or continue with</span>
+              <span className="text-[10px] text-blue-300 font-semibold tracking-widest uppercase">{t('auth.or_sign_in_with')}</span>
               <div className="flex-1 h-px bg-blue-100" />
             </div>
 
@@ -206,9 +208,9 @@ const LoginPage = () => {
             </div>
 
             <p className="text-center text-xs text-blue-400">
-              No account?{" "}
+              {t('auth.don_not_have_an_account')}{" "}
               <Link to="/register" className="text-blue-700 hover:text-blue-900 font-bold transition-colors">
-                Create one
+                {t('auth.sign_up')}
               </Link>
             </p>
           </form>

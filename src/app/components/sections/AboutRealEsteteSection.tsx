@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react"
+
 import { useTranslation } from "react-i18next";
 
 export const AboutRealEsteteSection = ({ realEstateData }: { realEstateData: any[] }) => {
@@ -16,8 +16,8 @@ export const AboutRealEsteteSection = ({ realEstateData }: { realEstateData: any
                         <p className="text-gray-600 dark:text-gray-400 mb-6 pr-4">{t('aboutRealEstate.description')}</p>
                     </div>
                 </div>
-                <div className="col-span-2 bg-white lg:absolute relative bottom-4 right-4 lg:w-[64%] w-full lg:h-70 h-64 transform rounded-lg shadow-lg z-10">
-                    <div className="grid grid-cols-4 gap-8 px-8 pt-8">
+                <div className="col-span-2 bg-white lg:absolute relative bottom-4 right-4 lg:w-[64%] w-full md:h-70 sm:h-90 h-110 transform rounded-lg shadow-lg z-10">
+                    <div className="grid md:grid-cols-4 grid-cols-2 gap-8 px-8 pt-8">
                         {realEstateData.map((realEstate, index) => (
                             <div className="h-full rounded-lg" key={index}>
                                 <h1 className="lg:text-4xl font-bold text-gray-800 dark:text-gray-200">{realEstate.title}</h1>
@@ -34,7 +34,7 @@ export const AboutRealEsteteSection = ({ realEstateData }: { realEstateData: any
                             <p className="text-gray-600 dark:text-gray-400 text-sm ms-1 italic">{t('aboutRealEstate.note')}</p>
                         </div>
                         <button className="text-sky-500 flex items-center">
-                            {t('general.get_started')} <ArrowRight className="ml-2" />
+                            {t('general.get_started')} →
                         </button>
                     </div>
                 </div>

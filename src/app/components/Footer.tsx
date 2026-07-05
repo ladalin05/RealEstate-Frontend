@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Check, Envelope, Facebook, GeoAlt, Instagram, Linkedin, Twitter } from 'react-bootstrap-icons';
 import { useTranslation } from 'react-i18next';
+import logo from "../../assets/win-realty-icon.png"
 
 
 
@@ -69,12 +70,12 @@ const Footer = () => {
 
             {/* Logo */}
             <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-[14px] bg-gradient-to-br from-[#D85A30] to-[#E8774D] flex items-center justify-center text-white text-[22px] font-serif flex-shrink-0">
-                H
+              <div className="w-11 h-11 rounded-[14px] flex items-center justify-center text-white text-[22px] font-serif flex-shrink-0">
+                <img src={logo} alt="" />
               </div>
               <div>
                 <p className="m-0 font-serif text-[22px] text-[#2C2C2A] tracking-tight leading-none">
-                  homez
+                  Win Realty
                 </p>
                 <p className="m-0 text-[10px] text-[#B4B2A9] tracking-[0.06em] uppercase font-medium mt-0.5">
                   {t('footer.platform')}
@@ -104,7 +105,7 @@ const Footer = () => {
                     className="flex-1 bg-transparent border-none outline-none text-[13.5px] text-[#2C2C2A] placeholder-[#B4B2A9] min-w-0"
                   />
                   <button onClick={handleSubscribe}
-                    className="flex-shrink-0 bg-[#D85A30] hover:bg-[#C04D26] text-white text-[13px] font-semibold px-5 py-2.5 rounded-[10px] border-none cursor-pointer transition-colors duration-200 whitespace-nowrap" >
+                    className="flex-shrink-0 bg-blue-800 hover:bg-blue-900 text-white text-[13px] font-semibold px-5 py-2.5 rounded-[10px] border-none cursor-pointer transition-colors duration-200 whitespace-nowrap" >
                     {t('footer.subscribe')}
                   </button>
                 </div>

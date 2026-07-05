@@ -18,6 +18,7 @@ import AgentPage from './pages/Agents';
 import AgentDetailPage from './pages/AgentDetail';
 import PropertyCategoryPage from './pages/PropertyCategory';
 import GuestRoute from './utils/GuestRoute';
+import UserRoute from './utils/UserRoute';
 
 
 function App() {
@@ -47,9 +48,11 @@ function App() {
                 <Route path='/register' element={<RegisterPage />} />
             </Route>
         </Route>
-        <Route path='/dashboard' element={<DashboardLayout />}>
-            <Route path='/dashboard/profile' element={<ProfilePage />} />
-            <Route path='/dashboard/favorite' element={<FavoritePropPage />} />
+        <Route element={<UserRoute />}>
+            <Route path='/dashboard' element={<DashboardLayout />}>
+                <Route path='/dashboard/profile' element={<ProfilePage />} />
+                <Route path='/dashboard/favorite' element={<FavoritePropPage />} />
+            </Route>
         </Route>
       </Routes>
     </BrowserRouter>

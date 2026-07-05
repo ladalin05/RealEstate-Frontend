@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react";
+
 import { HeroSection } from "../components/sections/HeroSection";
 import { AreaSection } from "../components/sections/AreaSection";
 import { CategorySection } from "../components/sections/CategorySection";
@@ -57,12 +57,12 @@ const HomePage = () => {
                     </div>
                     <div className="absolute top-0 w-full h-full flex justify-center items-center">
                         <div className="w-2/5 mx-auto">
-                            <h2 className="lg:text-4xl text-2xl font-bold text-white text-center">{t("home.valuation.title")}</h2>
-                            <p className="text-md text-white text-center mt-6">
+                            <h2 className="lg:text-4xl md:text-2xl text-xl font-bold text-white text-center">{t("home.valuation.title")}</h2>
+                            <p className="md:text-md text-sm text-white text-center mt-6">
                                 {t("home.valuation.description")}
                             </p>
-                            <button className="mt-6 rounded-full bg-sky-500 text-white font-bold py-3 px-6 flex mx-auto">
-                                {t("home.valuation.button")} <ArrowRight className="ms-3"/>
+                            <button className="flex items-center mt-6 text-xs md:text-md lg:text-lg rounded-full bg-sky-500 text-white font-bold py-3 px-6 mx-auto">
+                                {t("home.valuation.button")} →
                             </button>
                         </div>
                     </div>
