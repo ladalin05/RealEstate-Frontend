@@ -43,7 +43,7 @@ export const AreaSection = ({ areas }: { areas: any[] }) => {
                     <h1 className="md:text-4xl text-2xl font-bold text-gray-800 dark:text-gray-200">
                         {t('area.title')} <span className="text-blue-500"> {t('area.title_2')} </span>
                     </h1>
-                    <p className="flex items-end md:text-sm text-xs">
+                    <div className="flex items-end md:text-sm text-xs">
                         <p className={`text-gray-600 dark:text-gray-400 mt-2 w-3/4 ${expanded ? '' : 'line-clamp-1'} md:line-clamp-none`}>
                             {t('area.description')}
                         </p>
@@ -52,7 +52,7 @@ export const AreaSection = ({ areas }: { areas: any[] }) => {
                             className="md:hidden text-sm text-blue-500 cursor-pointer" >
                             {expanded ? t('less') : t('more')}
                         </span>
-                    </p>
+                    </div>
                 </div>
                 <div>
                     <button className="flex items-center md:text-md text-sm text-blue-600 font-bold py-2 px-4 rounded-full whitespace-nowrap">

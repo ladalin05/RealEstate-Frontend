@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AuthService } from "../../services/auth.service";
 import { useTranslation } from "react-i18next";
+import { Grid1x2, Heart, Person } from "react-bootstrap-icons";
 
 export const ProfileDropdown = ({ user, isScrolled, isHomePage }: { user: any, isScrolled: boolean, isHomePage: boolean }) => {
   const { t } = useTranslation(); 
@@ -24,7 +25,7 @@ export const ProfileDropdown = ({ user, isScrolled, isHomePage }: { user: any, i
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
+console.log(user)
   return (
     <div ref={ref} className="relative">
 
@@ -35,13 +36,9 @@ export const ProfileDropdown = ({ user, isScrolled, isHomePage }: { user: any, i
         aria-expanded={isOpen}
         className="flex items-center gap-2 rounded-sm border border-gray-600 px-3 py-1.25 pl-1.5 text-sm font-medium text-gray-200 transition hover:border-gray-300"
       >
-        {user?.image ? (
-            <img src={user.image} alt="Profile" className="h-6 w-6 rounded-full object-cover" />
-        ) : (
-            <div className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 text-xs font-semibold text-blue-700">
-                {user?.name?.charAt(0)?.toUpperCase() ?? "U"}
-            </div>
-        )}
+        <div className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 text-xs font-semibold text-blue-700">
+            <img src="http://localhost:9000/images/profiles/no-image.png" alt="Profile" className="h-6 w-6 rounded-full object-cover" />
+        </div>
         <p className={`text-sm font-medium text-gray-400 ms-2`}>{user?.name ?? "User"}</p>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -59,26 +56,39 @@ export const ProfileDropdown = ({ user, isScrolled, isHomePage }: { user: any, i
 
       {/* Dropdown panel */}
       <div
-        className={`absolute -right-6 z-50 mt-2 w-40 rounded-xl overflow-hidden border border-gray-100 bg-white shadow-lg transition-all duration-150 ${
+        className={`absolute -right-6 z-50 mt-2 w-45 rounded-xl overflow-hidden border border-gray-100 bg-white shadow-lg transition-all duration-150 ${
           isOpen
             ? "scale-100 opacity-100"
             : "pointer-events-none scale-95 opacity-0"
         }`}
       >
         {/* User info header */}
-        <div className="flex flex-col items-start border-b border-gray-100 px-4 py-3 cursor-pointer"> 
-            <p className="text-sm font-semibold text-gray-500">{user?.name ?? "User"}</p>
-            <p className="text-xs font-normal text-gray-400">{user?.email ?? "user@gmail.com"}</p>
+        <div className="flex items-center border-b border-gray-100 px-4 py-3 cursor-pointer gap-2">
+            <div className="w-8 h-8 rounded-full overflow-hidden">
+                <img src={user?.profile_picture} alt={user?.name} className="w-full h-full object-cover" />
+            </div> 
+            <div className="w">
+              <p className="text-sm font-semibold text-gray-500">{user?.name ?? "User"}</p>
+              <p className="text-xs font-normal text-gray-400">{user?.email ?? "user@gmail.com"}</p>
+            </div>
         </div>
 
         {/* Menu items */}
         <div className="py-1.5">
           <Link
+            to="/dashboard"
+            onClick={() => setIsOpen(false)}
+            className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+          >
+            <Grid1x2 className="w-4 h-4 text-gray-500" />
+            {t('nav.dashboard')}
+          </Link>
+          <Link
             to="/dashboard/profile"
             onClick={() => setIsOpen(false)}
             className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
           >
-            <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" strokeWidth="1.75" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            <Person className="w-4 h-4 text-gray-500" />
             {t('general.view_profile')}
           </Link>
           <Link
@@ -86,7 +96,7 @@ export const ProfileDropdown = ({ user, isScrolled, isHomePage }: { user: any, i
             onClick={() => setIsOpen(false)}
             className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
           >
-            <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" strokeWidth="1.75" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            <Heart className="w-4 h-4 text-gray-500" />
             {t('general.favourites')}
           </Link>
         </div>
