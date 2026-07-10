@@ -108,7 +108,7 @@ export class AuthService {
   }
   
   static async googleLogin(accessToken: string) {
-    console.log("googleLogin",accessToken);
+    
     const response = await fetch(`${API_URL}/auth/google-login`, {
       method: "POST",
       headers: {
@@ -120,7 +120,7 @@ export class AuthService {
     });
 
     const result = await response.json();
-    console.log("googleLogin",result)
+    
 
     if (!response.ok) {
       throw new Error(result?.message ?? "Google login failed");

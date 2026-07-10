@@ -25,7 +25,7 @@ export const ProfileDropdown = ({ user, isScrolled, isHomePage }: { user: any, i
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-console.log(user)
+  
   return (
     <div ref={ref} className="relative">
 

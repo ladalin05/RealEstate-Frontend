@@ -151,6 +151,17 @@ export function convertFromISO({isoString}: {isoString: string}): string {
   });
 }
 
+export const formatTimeOnly = (timeStr: string) => {
+  if (!timeStr) return '';
+  const [hour, minute] = timeStr.split(':');
+  const date = new Date();
+  date.setHours(+hour, +minute);
+  return date.toLocaleTimeString('en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true,
+  });
+};
 
 export function filterProperty({filter, setPropertiesData, initialPropertiesData}: {filter: Record<string, string>, setPropertiesData: React.Dispatch<React.SetStateAction<any[]>>, initialPropertiesData: any[]}){
     let filtered = [...initialPropertiesData];

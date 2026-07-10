@@ -252,6 +252,18 @@
         }
     },
     "user_dashboard": {
+        "welcome_back": "Welcome back",
+        "manage_your_properties": "Manage your dream homes, scheduled tours, and inquiries here.",
+        "start_new_search": "Start New Search",
+        "recently_saved_properties": "Recently Saved Properties",
+        "manage_all_schedules": "Manage All Schedules",
+        "upcoming_tours": "Upcoming Tours",
+        "active_inquiries": "Active Inquiries",
+        "tour_schedules": "Tour Schedules", 
+        "tour_type": {
+            "in-person": "In Person Showing",
+            "video-chat": "Video Consultation"
+        },
         "profile": {
             "title": "My Profile",
             "subtitle": "Manage your profile information and preferences",
@@ -311,6 +323,8 @@
         "years ago": "Years ago",
         "day ago": "Day ago",
         "days ago": "Days ago",
-        "loading": "Loading..."
+        "loading": "Loading...",
+        "at": "at",
+        "view_all": "View All"
     }
 }

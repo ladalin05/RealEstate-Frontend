@@ -19,8 +19,9 @@ import AgentDetailPage from './pages/AgentDetail';
 import PropertyCategoryPage from './pages/PropertyCategory';
 import GuestRoute from './utils/GuestRoute';
 import UserRoute from './utils/UserRoute';
-import UserDashboard from './pages/UserDash';
+import UserDashboard from './pages/Dashboard';
 import InquiriesView from './pages/Inquiries';
+import TourSchedule from './pages/TourSchedule';
 
 
 function App() {
@@ -54,6 +55,7 @@ function App() {
             <Route path='/dashboard' element={<DashboardLayout />}>
                 <Route path='/dashboard' element={<UserDashboard />} />
                 <Route path='/dashboard/inquiries' element={<InquiriesView />} />
+                <Route path='/dashboard/tours' element={<TourSchedule />} />
                 <Route path='/dashboard/profile' element={<ProfilePage />} />
                 <Route path='/dashboard/favorite' element={<FavoritePropPage />} />
             </Route>

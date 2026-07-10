@@ -22,5 +22,16 @@ export class CMSService {
         }
     }
 
+    static async getUserDashboard() {
+        try {
+            
+            const result = await apiFetch(`/cms/user-dashboard`);
+            return result.data;
+        } catch (error) {
+            console.error('CMS Fetch Error:', error);
+            throw error;
+        }
+    }
+
 
 }
