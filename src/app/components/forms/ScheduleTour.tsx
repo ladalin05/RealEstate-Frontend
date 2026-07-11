@@ -6,13 +6,14 @@ import { useTranslation } from "react-i18next";
 import { DatePicker } from "../ui/DatePicker";
 import { InteractionService } from "../../services/interaction.service";
 import { buildPayload } from "../../utils/helper";
+import { MessageModal } from "./MessageModal";
 
 
 export const ScheduleTour = ({ agent, propertyId }: { agent: any, propertyId: string }) => {
     const { t } = useTranslation();
     const [tourType, setTourType] = useState<string | null>("in-person");
-    const [message, setMessage] = useState<string | null>(null);
-    const [error, setError] = useState<string | null>(null);
+    const [status, setStatus] = useState(null);
+    const [message, setMessage] = useState("");
     const [isloading, setIsLoading] = useState<boolean>(false);
     const [form, setForm] = useState({
         property_id: propertyId,
@@ -27,23 +28,37 @@ export const ScheduleTour = ({ agent, propertyId }: { agent: any, propertyId: st
     })
 
     const handleSubmit = async () => {
-        try {
-            setIsLoading(true)
-            InteractionService.scheduleTour(buildPayload(form)).then((res) => {
-                if(res?.status == "success") {
-                    setMessage(res?.message);
-                } else {
-                    setError(res?.message)
-                }
-            }).finally(() => {
-                setIsLoading(false)
-            });
-        } catch (error) {
-        }
-    }
+        setStatus("loading");
+        setMessage("");
+        InteractionService.scheduleTour(buildPayload(form)).then((res) => {
+            setStatus("success");
+            setMessage(res?.message || "Your request has been sent.");
+        }).catch(err => {
+            setStatus("danger");
+            setMessage(err?.message || "Something went wrong. Please try again.");
+        }).finally(() => {
+            setIsLoading(false)
+        });
+    };
+
+    const resetStatus = () => {
+        setStatus(null);
+        setMessage("");
+    };
 
     return (
         <>
+            {status && (
+                <MessageModal open={true} type={status}
+                    message={status === "loading" ? "" : message}
+                    onClose={resetStatus}
+                    autoCloseMs={3000}
+                    title={
+                        status === "loading" ? t('general.sending') || "Sending..." :
+                        status === "success" ? "Success" : "Error"
+                    }
+                />
+            )}
             <div className="w-full h-auto p-4 ">
                 <div className="flex items-center p-5">
                     <div className="w-18 h-18 rounded-sm overflow-hidden">
@@ -78,10 +93,6 @@ export const ScheduleTour = ({ agent, propertyId }: { agent: any, propertyId: st
                     <input type="tel" value={form.phone} name="phone" placeholder={t('schedule_tour.your_phone')} onChange={(e) => setForm({...form, phone: e.target.value})} className="w-full h-12 border border-gray-300 rounded-sm px-3 focus:outline-none focus:ring-1 focus:ring-sky-300" />
                     <input type="email" value={form.email} name="email" placeholder={t('schedule_tour.your_email')} onChange={(e) => setForm({...form, email: e.target.value})} className="w-full h-12 border border-gray-300 rounded-sm px-3 focus:outline-none focus:ring-1 focus:ring-sky-300" />
                     <textarea name="message" value={form.message} placeholder={t('schedule_tour.your_message')} onChange={(e) => setForm({...form, message: e.target.value})} className="w-full h-24 border border-gray-300 rounded-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-sky-300 resize-none" />
-                    <div className="w-full h-10 rounded-sm flex items-center justify-center cursor-pointer">
-                        {message && <p className="text-green-500 text-sm">{message}</p>}
-                        {error && <p className="text-red-500 text-sm">{error}</p>}
-                    </div>
                     <button type="button" disabled={isloading} 
                             onClick={() => handleSubmit()}
                             className="w-full h-12 bg-green-400 text-white font-bold rounded-sm hover:bg-green-500">
@@ -92,13 +103,11 @@ export const ScheduleTour = ({ agent, propertyId }: { agent: any, propertyId: st
         </>
     );
 }
-
 export const RequestInfo = ({ agent, propertyId }: { agent: any, propertyId: string }) => {
     const { t } = useTranslation();
     const options = ["I'm a buyer", "I'm a tennant", "I'm an agent", "Other"];
-    const [error, setError] = useState("");
+    const [status, setStatus] = useState(null);
     const [message, setMessage] = useState("");
-    const [isloading, setIsLoading] = useState(false);
     const [form, setForm] = useState({
         property_id: propertyId,
         agent_id: agent?.id,
@@ -107,25 +116,42 @@ export const RequestInfo = ({ agent, propertyId }: { agent: any, propertyId: str
         email: "",
         message: "",
         role: ""
-    })
+    });
 
     const handleSubmit = () => {
-        setIsLoading(true)
-        try {
-            InteractionService.requestInfo(form).then(res => {
-                setMessage(res?.message);
-            }).catch(err => {
-                setError(err);
+        setStatus("loading");
+        setMessage("");
+
+        InteractionService.requestInfo(form)
+            .then(res => {
+                setStatus("success");
+                setMessage(res?.message || "Your request has been sent.");
             })
-        } catch (error) {
-            setError(error);
-        } finally {
-            setIsLoading(false)
-        }
-    }
+            .catch(err => {
+                setStatus("danger");
+                setMessage(err?.message || "Something went wrong. Please try again.");
+            });
+    };
+
+    const resetStatus = () => {
+        setStatus(null);
+        setMessage("");
+    };
 
     return (
         <>
+            {status && (
+                <MessageModal open={true} type={status}
+                    message={status === "loading" ? "" : message}
+                    onClose={resetStatus}
+                    autoCloseMs={3000}
+                    title={
+                        status === "loading" ? t('general.sending') || "Sending..." :
+                        status === "success" ? "Success" : "Error"
+                    }
+                />
+            )}
+
             <div className="w-full h-auto p-4 ">
                 <div className="flex items-center p-5">
                     <div className="w-18 h-18 rounded-sm overflow-hidden">
@@ -144,15 +170,11 @@ export const RequestInfo = ({ agent, propertyId }: { agent: any, propertyId: str
                     <input type="email" onChange={(e) => setForm({...form, email: e.target.value})} value={form.email} name="email" placeholder={t('schedule_tour.your_email')} className="w-full h-12 border border-gray-300 rounded-sm px-3 focus:outline-none focus:ring-1 focus:ring-sky-300" />
                     <textarea onChange={(e) => setForm({...form, message: e.target.value})} value={form.message} name="message" placeholder={t('schedule_tour.your_message')} className="w-full h-24 border border-gray-300 rounded-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-sky-300 resize-none" />
                     <SelectForm options={options} value={form.role} onChange={(value) => setForm({...form, role: value})} />
-                    <div className="w-full h-10 rounded-sm flex items-center justify-center cursor-pointer">
-                        {message && <p className="text-green-500 text-sm">{message}</p>}
-                        {error && <p className="text-red-500 text-sm">{error}</p>}
-                    </div>
                     <div className="flex justify-between gap-3">
-                        <button type="button" disabled={isloading}
+                        <button type="button" disabled={status === "loading"}
                                 onClick={() => handleSubmit()}
                                 className="w-full h-12 bg-green-600 text-white font-bold rounded-sm hover:bg-green-500">
-                            {isloading ? t('general.loading') : t('general.send_message')}
+                            {t('general.send_message')}
                         </button>
                         <a href={`tel:${agent?.phone}`} className="w-full h-12 border border-green-500 text-green-500 font-bold rounded-sm hover:bg-green-500 hover:text-white flex items-center justify-center">{t('general.call')}</a>
                     </div>

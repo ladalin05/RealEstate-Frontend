@@ -1,19 +1,26 @@
-
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AuthService } from "../../services/auth.service";
+import { AuthAnimation } from "./AuthAnimation";
 import { useTranslation } from "react-i18next";
 import { Grid1x2, Heart, Person } from "react-bootstrap-icons";
 
 export const ProfileDropdown = ({ user, isScrolled, isHomePage }: { user: any, isScrolled: boolean, isHomePage: boolean }) => {
-  const { t } = useTranslation(); 
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
+  const [logoutStatus, setLogoutStatus] = useState<"idle" | "loading" | "done" | "error">("idle");
   const ref = useRef(null);
   const defaultUserImage = "https://ui-avatars.com/api/?name=User&background=dbeafe&color=1d4ed8&bold=true";
+
   const handleLogout = async () => {
-    await AuthService.logout();
     setIsOpen(false);
-    window.location.href = "/";
+    setLogoutStatus("loading");
+    try {
+      await AuthService.logout();
+      setLogoutStatus("done");
+    } catch {
+      setLogoutStatus("error");
+    }
   };
 
   useEffect(() => {
@@ -25,9 +32,29 @@ export const ProfileDropdown = ({ user, isScrolled, isHomePage }: { user: any, i
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-  
+
   return (
     <div ref={ref} className="relative">
+
+      {logoutStatus === "loading" && (
+        <AuthAnimation variant="logout" status="loading" />
+      )}
+      {logoutStatus === "done" && (
+        <AuthAnimation
+          variant="logout"
+          status="done"
+          message="See you soon!"
+          onDone={() => { window.location.href = "/"; }}
+        />
+      )}
+      {logoutStatus === "error" && (
+        <AuthAnimation
+          variant="logout"
+          status="error"
+          message="Couldn't sign you out. Try again."
+          onDone={() => setLogoutStatus("idle")}
+        />
+      )}
 
       {/* Trigger button */}
       <button
@@ -66,7 +93,7 @@ export const ProfileDropdown = ({ user, isScrolled, isHomePage }: { user: any, i
         <div className="flex items-center border-b border-gray-100 px-4 py-3 cursor-pointer gap-2">
             <div className="w-8 h-8 rounded-full overflow-hidden">
                 <img src={user?.profile_picture} alt={user?.name} className="w-full h-full object-cover" />
-            </div> 
+            </div>
             <div className="w">
               <p className="text-sm font-semibold text-gray-500">{user?.name ?? "User"}</p>
               <p className="text-xs font-normal text-gray-400">{user?.email ?? "user@gmail.com"}</p>

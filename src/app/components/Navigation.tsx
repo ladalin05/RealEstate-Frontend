@@ -5,6 +5,7 @@ import { LanguageSwitcher } from "./ui/LanguageSwitcher";
 import { AuthService } from "../services/auth.service";
 import { useTranslation } from "react-i18next";
 import logoImage from "../../assets/win-realty-logo.png";
+import logoWhiteImage from "../../assets/win-realty-white-logo.png";
 
 const Navigation = () => {
     const { t } = useTranslation();
@@ -53,7 +54,9 @@ const Navigation = () => {
                 <div className="flex flex-wrap items-center justify-between w-full max-w-7xl">
                     {/* Logo and Brand */}
                     <Link to="/home" className="inline-flex items-center gap-2 py-1 whitespace-nowrap">
-                        <img src={logoImage} alt="Real Estate Logo" className="h-9 w-auto" />
+                        {isHomePage ? isScrolled ? (<img src={logoImage} alt="Real Estate Logo" className="h-9 w-auto" />)
+                        : (<img src={logoWhiteImage} alt="Real Estate Logo" className="h-9 w-auto" />) 
+                        : (<img src={logoImage} alt="Real Estate Logo" className="h-9 w-auto" />)}
                     </Link>
 
                     {/* Mobile Toggle Button */}

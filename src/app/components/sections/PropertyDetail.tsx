@@ -3,7 +3,7 @@ import { Map, BedDouble, ShowerHead, TriangleRight, CalendarDays, Paperclip, Cir
 import { useState } from "react";
 import { PropertyCard } from "../cards/PropertyCard";
 import { RequestInfo, ScheduleTour } from "../forms/ScheduleTour";
-import { PropImags } from "./PropDetailCom";
+import { NoAmenitiesPlaceholder, NoFeaturesPlaceholder, NoVideoPlaceholder, PropImags } from "./PropDetailCom";
 import { convertFromISO, formatPeriod } from "../../utils/helper";
 import { useTranslation } from "react-i18next";
  
@@ -14,7 +14,7 @@ export const PropertyDetail = ({ property, relatedProperties, latestProperties }
     const [tourOpen, setTourOpen] = useState(false);
 
     const images = [property?.image, ...(property?.gallery || [])] as string[];
-
+    
     const handleScheduleTour = () => {
         setTourOpen(true);
     };
@@ -159,26 +159,37 @@ export const PropertyDetail = ({ property, relatedProperties, latestProperties }
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex items-center justify-between mt-9">
-                                <h2 className="text-md font-medium text-gray-800 dark:text-gray-200 mb-2">{t('property.additional_details')}</h2>
-                            </div>
-                            <hr className="border-gray-400 mb-6"/>
-                            <div className="mt-4">
-                                <div className="grid grid-cols-2 gap-6 pb-2">
-                                    {Object.entries(property?.additionalDetails || {}).map(([key, value]) => (
-                                        <div className="flex justify-between items-center py-1 border-b border-gray-300" key={key}>
-                                            <span className="text-sm font-semibold text-gray-900">{key}:</span>
-                                            <span className="text-sm text-gray-500">{value.toString()}</span>
+                            {property?.additionalDetails && (
+                                <>
+                                    <div className="flex items-center justify-between mt-9">
+                                        <h2 className="text-md font-medium text-gray-800 dark:text-gray-200 mb-2">{t('property.additional_details')}</h2>
+                                    </div>
+                                    <hr className="border-gray-400 mb-6"/>
+                                    <div className="mt-4">
+                                        <div className="grid grid-cols-2 gap-6 pb-2">
+                                            {Object.entries(property?.additionalDetails || {}).map(([key, value]) => (
+                                                <div className="flex justify-between items-center py-1 border-b border-gray-300" key={key}>
+                                                    <span className="text-sm font-semibold text-gray-900">{key}:</span>
+                                                    <span className="text-sm text-gray-500">{value.toString()}</span>
+                                                </div>
+                                            ))}
                                         </div>
-                                    ))}
-                                </div>
-                            </div>
+                                    </div>
+                                </>
+                            )}
                         </div>
                         <div className="mt-8">
                             <div className="grid grid-cols-3 gap-1">
                                 {images.map((image, index) => (
                                     <div key={index} className="w-full h-auto rounded-sm overflow-hidden">
-                                        <img key={index} src={image} alt={`Thumbnail ${index + 1}`} className="w-full h-full object-cover" />
+                                        <img key={index} 
+                                            src={image} 
+                                            alt={`Thumbnail ${index + 1}`} 
+                                            className="w-full h-full object-cover"
+                                            onError={(e) => {
+                                                e.currentTarget.onerror = null;
+                                                e.currentTarget.src = 'http://localhost:9000/images/properties/no-image-found.jpg';
+                                            }} />
                                     </div>
                                 ))}
                             </div>
@@ -186,19 +197,47 @@ export const PropertyDetail = ({ property, relatedProperties, latestProperties }
                         
                         <div className="mt-8 mx-auto p-6 bg-white rounded-sm shadow-sm">
                             <div className="flex items-center justify-between mb-4">
-                                <h2 className="text-md font-medium text-gray-800 dark:text-gray-200 mb-2">{t('property.features')}</h2>
+                                <h2 className="text-md font-medium text-gray-800 dark:text-gray-200 mb-2">
+                                    {t('property.features')}
+                                </h2>
                             </div>
                             <hr className="border-gray-400 mb-6"/>
                             <div className="grid grid-cols-3 gap-4">
-                                {property?.[`amenities_${i18n.language}`] ? property[`amenities_${i18n.language}`].map((feature: string, index: number) => (
-                                    <div key={index} className="flex items-center">
-                                        <CircleCheck size={16} className="text-green-500 mr-2" />
-                                        <span className="text-sm text-gray-600 dark:text-gray-400">{feature}</span>
+                                {property?.[`features_${i18n.language}`]?.length > 0 ? (
+                                    property[`features_${i18n.language}`].map((feature: string, index: number) => (
+                                        <div key={index} className="flex items-center">
+                                            <CircleCheck size={16} className="text-green-500 mr-2" />
+                                            <span className="text-sm text-gray-600 dark:text-gray-400">{feature}</span>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <div className="col-span-3">
+                                        <NoFeaturesPlaceholder />
                                     </div>
-                                )) : <div>
-                                    <CircleCheck size={16} className="text-green-500 mr-2" />
-                                        <span className="text-sm text-gray-600 dark:text-gray-400">{t('property.no_amenties_available')}</span>
-                                </div>}
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="mt-8 mx-auto p-6 bg-white rounded-sm shadow-sm">
+                            <div className="flex items-center justify-between mb-4">
+                                <h2 className="text-md font-medium text-gray-800 dark:text-gray-200 mb-2">
+                                    {t('property.amenities')}
+                                </h2>
+                            </div>
+                            <hr className="border-gray-400 mb-6"/>
+                            <div className="grid grid-cols-3 gap-4">
+                                {property?.[`amenities_${i18n.language}`]?.length > 0 ? (
+                                    property[`amenities_${i18n.language}`].map((item: string, index: number) => (
+                                        <div key={index} className="flex items-center">
+                                            <CircleCheck size={16} className="text-green-500 mr-2" />
+                                            <span className="text-sm text-gray-600 dark:text-gray-400">{item}</span>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <div className="col-span-3">
+                                        <NoAmenitiesPlaceholder />
+                                    </div>
+                                )}
                             </div>
                         </div>
                         <div className="mt-8 mx-auto p-6 bg-white rounded-sm shadow-sm">
@@ -206,16 +245,20 @@ export const PropertyDetail = ({ property, relatedProperties, latestProperties }
                                 <h2 className="text-md font-medium text-gray-800 dark:text-gray-200 mb-2">{t('property.video')}</h2>
                             </div>
                             <hr className="border-gray-400 mb-6"/>
-                            <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
-                                <iframe
-                                    className="absolute top-0 left-0 w-full h-full rounded-lg"
-                                    src={property?.videoTour}
-                                    title="YouTube video"
-                                    frameBorder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowFullScreen
-                                />
-                            </div>
+                            {property?.videoTour ? (
+                                <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+                                    <iframe
+                                        className="absolute top-0 left-0 w-full h-full rounded-lg"
+                                        src={property?.videoTour}
+                                        title="YouTube video"
+                                        frameBorder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen
+                                    />
+                                </div>
+                            ) : (
+                                <NoVideoPlaceholder />
+                            ) }
                         </div>
                         <div className="mt-8 mx-auto p-6 bg-white rounded-sm shadow-sm">
                             <div className="flex items-center justify-between mb-4">

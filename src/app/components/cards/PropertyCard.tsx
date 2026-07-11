@@ -55,8 +55,14 @@ export const PropertyCard = ({ property }: { property: any }) => {
                 )}
                 <p className="absolute top-4 right-4 z-10 bg-black/65 text-white text-[9px] font-bold py-1 px-1 rounded-sm uppercase">{t(`filter.purpose.${property.purpose}`)}</p>
                 <div className="w-full h-full relative flex justify-start overflow-hidden" ref={scrollImageRef} >
-                    <img  src={property.image} alt={property[`name_${i18n.language}`]} className="w-full h-full object-cover flex-shrink-0" />
-                    {Object.entries(JSON.parse(property.gallery)).map(([index, img]) => (
+                    <img src={property.image || 'http://localhost:9000/images/properties/no-image-found.jpg'} alt={property[`name_${i18n.language}`]}
+                        className="w-full h-full object-cover flex-shrink-0"
+                        onError={(e) => {
+                            e.currentTarget.onerror = null;
+                            e.currentTarget.src = 'http://localhost:9000/images/properties/no-image-found.jpg';
+                        }}
+                    />
+                    {property.gallery && Object.entries(JSON.parse(property.gallery)).map(([index, img]) => (
                         <img key={index} src={img as string} alt={`${property[`name_${i18n.language}`]} ${index + 1}`} className="w-full h-full object-cover flex-shrink-0" />
                     ))}
                 </div>

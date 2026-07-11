@@ -57,7 +57,13 @@ export const FeatureCard = ({ property }: { property: any }) => {
                     </p>
                 </div>
 
-                <img src={property.image} alt={property.name} className="rounded-lg w-full object-cover xl:h-65 h-120" />
+                <img src={property.image || 'http://localhost:9000/images/properties/no-image-found.jpg'} alt={property[`name_${i18n.language}`]}
+                    className="rounded-lg w-full object-cover xl:h-65 h-120"
+                    onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = 'http://localhost:9000/images/properties/no-image-found.jpg';
+                    }}
+                />
             </div>
         </div>
     )

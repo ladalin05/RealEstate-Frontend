@@ -1,7 +1,8 @@
 import { useRef, useState } from "react";
-import { Geo } from "react-bootstrap-icons";
+import { Geo, InfoCircle } from "react-bootstrap-icons";
 import { ChevronLeft, ChevronRight, Image, Map, Clapperboard} from "lucide-react";
-import { useTranslation } from 'react-i18next';;
+import { useTranslation } from 'react-i18next';
+import { CameraVideoOff } from "react-bootstrap-icons";
 
 
 export const PropImags = ({images, latitude, longitude}: {images: string[], latitude: string, longitude: string}) => {
@@ -67,7 +68,12 @@ export const PropImags = ({images, latitude, longitude}: {images: string[], lati
                             <button className="w-10 h-10 flex justify-center items-center bg-blue-400/50 hover:bg-blue-400/70 rounded-sm" onClick={() => handleNextImage()}> <ChevronRight size={40} className="text-white font-bold" /> </button>
                         </div>
                         {image ? (
-                            <img src={image} alt="Property Image" className="w-full h-full object-cover" />
+                            <img src={image} alt="Property Image" 
+                                className="w-full h-full object-cover" 
+                                onError={(e) => {
+                                    e.currentTarget.onerror = null;
+                                    e.currentTarget.src = 'http://localhost:9000/images/properties/no-image-found.jpg';
+                                }}/>
                         ) : (
                             <div className="w-full h-full bg-gray-200 dark:bg-slate-700 flex items-center justify-center">
                                 <span className="text-gray-400 text-sm">{t('general.no_image')}</span>
@@ -114,7 +120,14 @@ export const PropImags = ({images, latitude, longitude}: {images: string[], lati
                 <div className="flex gap-1 mt-2 w-full h-20 overflow-x-hidden" ref={imageRef}>
                     {images.map((image, index) => (
                         <div key={index} className="w-23 h-full flex-shrink-0 rounded-sm overflow-hidden" onClick={() => handleImage(index)}>
-                                <img key={index} src={image} alt={`Thumbnail ${index + 1}`} className="w-full h-full object-cover" />
+                                <img key={index} 
+                                    src={image} 
+                                    alt={`Thumbnail ${index + 1}`} 
+                                    className="w-full h-full object-cover"
+                                    onError={(e) => {
+                                        e.currentTarget.onerror = null;
+                                        e.currentTarget.src = 'http://localhost:9000/images/properties/no-image-found.jpg';
+                                    }} />
                         </div>
                     ))}
                 </div>
@@ -122,3 +135,67 @@ export const PropImags = ({images, latitude, longitude}: {images: string[], lati
         </>
     );
 }
+
+interface PlaceholderProps {
+  icon: React.ReactNode;
+  titleKey: string;
+  titleFallback: string;
+  subtitleKey: string;
+  subtitleFallback: string;
+  size?: 'sm' | 'lg';
+}
+
+const Placeholder = ({ icon, titleKey, titleFallback, subtitleKey, subtitleFallback, size = 'lg' }: PlaceholderProps) => {
+  const { t } = useTranslation();
+  const isLg = size === 'lg';
+
+  return (
+    <div className={
+      `w-full rounded-sm border border-dashed border-gray-300 bg-gray-50 dark:bg-gray-800/40 dark:border-gray-700 flex flex-col items-center justify-center gap-3 text-center
+      ${isLg ? 'h-full min-h-[220px] p-8' : 'p-6'} `}>
+      <div className={`
+        rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center
+        ${isLg ? 'w-14 h-14' : 'w-12 h-12'} `}>
+        {icon}
+      </div>
+      <p className="text-base font-semibold text-gray-700 dark:text-gray-200">
+        {t(titleKey) || titleFallback}
+      </p>
+      <p className="text-sm text-gray-500 dark:text-gray-400 ">
+        {t(subtitleKey) || subtitleFallback}
+      </p>
+    </div>
+  );
+};
+
+export const NoVideoPlaceholder = () => (
+  <Placeholder
+    icon={<CameraVideoOff size={26} className="text-gray-500 dark:text-gray-400" />}
+    titleKey="general.no_video_available"
+    titleFallback="No video available"
+    subtitleKey="general.no_video_subtitle"
+    subtitleFallback="This listing doesn't have a video tour yet."
+  />
+);
+
+export const NoFeaturesPlaceholder = () => (
+  <Placeholder
+    icon={<InfoCircle size={22} className="text-gray-500 dark:text-gray-400" />}
+    titleKey="general.no_features_title"
+    titleFallback="No additional features"
+    subtitleKey="general.no_features_subtitle"
+    subtitleFallback="The agent hasn't listed any extra features for this property yet."
+    size="sm"
+  />
+);
+
+export const NoAmenitiesPlaceholder = () => (
+  <Placeholder
+    icon={<InfoCircle size={22} className="text-gray-500 dark:text-gray-400" />}
+    titleKey="general.no_amenities_title"
+    titleFallback="No amenities"
+    subtitleKey="general.no_amenities_subtitle"
+    subtitleFallback="The agent hasn't listed any amenities for this property yet."
+    size="sm"
+  />
+);

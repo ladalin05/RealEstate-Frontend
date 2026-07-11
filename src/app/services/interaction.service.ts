@@ -16,13 +16,12 @@ export class InteractionService {
 
     static async requestInfo(data: any) {
         try {
-            console.log(data);
-            return
             const result = await apiFetch('/interaction/request-info', {
                 method: 'POST',
                 body: JSON.stringify(data)
             });
-            return result.data;
+            console.log(result);
+            return result;
         } catch (error) {
             console.error('CMS Fetch Error:', error);
             throw error;

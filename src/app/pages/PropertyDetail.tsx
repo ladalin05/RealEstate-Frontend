@@ -3,6 +3,7 @@ import { PropertyDetail } from "../components/sections/PropertyDetail";
 import { useEffect, useState } from "react";
 import { PropertyService } from "../services/property.service";
 import { AuthService } from "../services/auth.service";
+import { Loading } from "../components/ui/Loading";
 
 const PropertyDetailsPage = () => {
 
@@ -27,12 +28,8 @@ const PropertyDetailsPage = () => {
     }, []);
 
     if (loading) {
-        return (
-            <main className="min-h-full w-full fixed top-0  bg-gray-50 dark:bg-slate-900  py-12 px-22">
-                <div className="flex items-center justify-center h-screen">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
-                </div>
-            </main>
+        return ( 
+            <Loading />
         )
     }
 

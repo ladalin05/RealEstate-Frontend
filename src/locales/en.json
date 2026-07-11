@@ -31,7 +31,19 @@
         "real_time_collaboration": "Real-time collaboration",
         "end_to_end_encryption": "End-to-end encryption",
         "uptime_sla": "99.9% uptime SLA",
-        "advanced_analytics": "Advanced analytics"
+        "advanced_analytics": "Advanced analytics",
+        "find_your_next_home": "Find your next home",
+        "tagline": "Sign in to save listings, message agents, and track your property tours.",
+        "verified_listings": "2000+ Verified Listings",
+        "easy_scheduling": "Easy Scheduling",
+        "trusted_agents": "Trusted Agents",
+        "sign_in_subtitle": "Enter your details to access your account.",
+        "join_us": "Join WIN Realty.",
+        "start_searching": "Start your search today.",
+        "register_tagline": "Create a free account to save your favorite listings, connect with agents, and get updates on new properties.",
+        "save_favorite_listings": "Save your favorite listings",
+        "connect_with_agents": "Connect with agents",
+        "get_new_listing_alerts": "Get alerts on new listings"
     },
     "nav": {
         "home": "Home",
@@ -154,6 +166,7 @@
         "clear_filter": "Clear Filters",
         "ago": "ago",
         "featured": "Featured",
+        "amenities": "Amenities",
         "bedrooms": "Bedrooms",
         "bathrooms": "Bathrooms",
         "garage": "Garage",
@@ -325,6 +338,13 @@
         "days ago": "Days ago",
         "loading": "Loading...",
         "at": "at",
-        "view_all": "View All"
+        "view_all": "View All",
+        "sending": "Sending...",
+        "no_video_available": "No video available",
+        "no_video_subtitle": "This listing doesn't have a video tour yet.",
+        "no_features_title": "No additional features",
+        "no_features_subtitle": "The agent hasn't listed any extra features for this property yet.",
+        "no_amenities_title": "No amenities",
+        "no_amenities_subtitle": "The agent hasn't listed any amenities for this property yet."
     }
 }

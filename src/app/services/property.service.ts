@@ -2,13 +2,14 @@ import { apiFetch } from "../utils/api";
 
 export class PropertyService {
 
-    static async getProperties(): Promise<any> {
+    static async getProperties(page: number = 1, limit: number = 10): Promise<any> {
         try {
-            const result = await apiFetch('/property');
+            console.log(page, limit);
+            const result = await apiFetch(`/property?page=${page}&limit=${limit}`);
             return result.data;
         } catch (error) {
             console.error('Error fetching properties:', error);
-            return [];
+            return { data: [], current_page: 1, last_page: 1, total: 0 };
         }
     }
 
@@ -60,20 +61,19 @@ export class PropertyService {
         }
     }
 
-    static async filterProperties(filters: Record<string, any>): Promise<any[]> {
-        try {
-            const params = new URLSearchParams();
-            Object.entries(filters).forEach(([key, val]) => {
-                if (val !== undefined && val !== null && val !== '') {
-                    params.append(key, String(val));
-                }
-            }); 
 
-            const result = await apiFetch(`/property/fillter-properties?${params.toString()}`);
-            return result.data ?? [];
+    static async filterProperties(filter: any, page: number = 1, limit: number = 10): Promise<any> {
+        try {
+            const params = new URLSearchParams({
+                ...filter,
+                page: String(page),
+                limit: String(limit),
+            }).toString();
+            const result = await apiFetch(`/property/fillter-properties?${params}`);
+            return result.data;
         } catch (error) {
-            console.error('Error fetching filtered properties:', error);
-            return [];
+            console.error('Error filtering properties:', error);
+            return { data: [], current_page: 1, last_page: 1, total: 0 };
         }
     }
 
