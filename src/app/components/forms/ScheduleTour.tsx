@@ -4,29 +4,32 @@ import { TimeSelect } from "../ui/TimeSelect";
 import { SelectForm } from "../ui/SelectForm";
 import { useTranslation } from "react-i18next";
 import { DatePicker } from "../ui/DatePicker";
-import { InterestService } from "../../services/interest.service";
+import { InteractionService } from "../../services/interaction.service";
+import { buildPayload } from "../../utils/helper";
 
 
-export const ScheduleTour = ({ agent }: { agent: any }) => {
+export const ScheduleTour = ({ agent, propertyId }: { agent: any, propertyId: string }) => {
     const { t } = useTranslation();
     const [tourType, setTourType] = useState<string | null>("in-person");
     const [message, setMessage] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [isloading, setIsLoading] = useState<boolean>(false);
     const [form, setForm] = useState({
-        time: "",
-        date: "",
-        tourType: tourType,
+        property_id: propertyId,
+        agent_id: agent?.id,
+        schedule_time: "",
+        schedule_date: "",
+        tour_type: tourType,
         name: "",
         phone: "",
         email: "",
-        message: ""
+        message: "",
     })
 
     const handleSubmit = async () => {
         try {
             setIsLoading(true)
-            InterestService.scheduleTour(form).then((res) => {
+            InteractionService.scheduleTour(buildPayload(form)).then((res) => {
                 if(res?.status == "success") {
                     setMessage(res?.message);
                 } else {
@@ -57,20 +60,20 @@ export const ScheduleTour = ({ agent }: { agent: any }) => {
                 <form className="flex flex-col gap-4">
                     <div className="flex justify-between gap-3 h-12 mt-6">  
                         <div onClick={() => {
-                                setForm({...form, tourType: "in-person"});
+                                setForm({...form, tour_type: "in-person"});
                                 setTourType("in-person");
                             }} 
                             className={`w-1/2 text-sm font-bold rounded-sm flex items-center justify-center cursor-pointer ${tourType === "in-person" ? "border border-sky-400 text-sky-400" : "text-gray-800 border border-gray-300"} hover:text-sky-400`}>{t('schedule_tour.in_person')}</div> 
                         <div onClick={() => {
-                                setForm({...form, tourType: "video-chat"});
+                                setForm({...form, tour_type: "video-chat"});
                                 setTourType("video-chat")
                             }}
                             className={`w-1/2 text-sm font-bold rounded-sm flex items-center justify-center cursor-pointer ${tourType === "video-chat" ? "border border-sky-400 text-sky-400" : "text-gray-800 border border-gray-300"} hover:text-sky-400`}>{t('schedule_tour.video_chart')}</div>
                     </div>
                     
-                    <DatePicker value={form.date} onChange={(value) => setForm({...form, date: value})} min={new Date().toISOString().split('T')[0]} placeholder={t('schedule_tour.select_date')}
+                    <DatePicker value={form.schedule_date} onChange={(value) => setForm({...form, schedule_date: value})} min={new Date().toISOString().split('T')[0]} placeholder={t('schedule_tour.select_date')}
                         className={`w-full px-4 py-4 rounded-xl bg-gray-50 border border-border focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 transition-all outline-none appearance-none cursor-pointer`} />
-                    <TimeSelect value={form.time} onChange={(value) => setForm({...form, time: value})} />
+                    <TimeSelect value={form.schedule_time} onChange={(value) => setForm({...form, schedule_time: value})} />
                     <input type="text" value={form.name} name="name" placeholder={t('schedule_tour.your_name')} onChange={(e) => setForm({...form, name: e.target.value})} className="w-full h-12 border border-gray-300 rounded-sm px-3 focus:outline-none focus:ring-1 focus:ring-sky-300" />
                     <input type="tel" value={form.phone} name="phone" placeholder={t('schedule_tour.your_phone')} onChange={(e) => setForm({...form, phone: e.target.value})} className="w-full h-12 border border-gray-300 rounded-sm px-3 focus:outline-none focus:ring-1 focus:ring-sky-300" />
                     <input type="email" value={form.email} name="email" placeholder={t('schedule_tour.your_email')} onChange={(e) => setForm({...form, email: e.target.value})} className="w-full h-12 border border-gray-300 rounded-sm px-3 focus:outline-none focus:ring-1 focus:ring-sky-300" />
@@ -90,13 +93,15 @@ export const ScheduleTour = ({ agent }: { agent: any }) => {
     );
 }
 
-export const RequestInfo = ({ agent }: { agent: any }) => {
+export const RequestInfo = ({ agent, propertyId }: { agent: any, propertyId: string }) => {
     const { t } = useTranslation();
     const options = ["I'm a buyer", "I'm a tennant", "I'm an agent", "Other"];
     const [error, setError] = useState("");
     const [message, setMessage] = useState("");
     const [isloading, setIsLoading] = useState(false);
     const [form, setForm] = useState({
+        property_id: propertyId,
+        agent_id: agent?.id,
         name: "",
         phone: "",
         email: "",
@@ -107,7 +112,7 @@ export const RequestInfo = ({ agent }: { agent: any }) => {
     const handleSubmit = () => {
         setIsLoading(true)
         try {
-            InterestService.requestInfo(form).then(res => {
+            InteractionService.requestInfo(form).then(res => {
                 setMessage(res?.message);
             }).catch(err => {
                 setError(err);

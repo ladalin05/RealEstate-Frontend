@@ -1,9 +1,9 @@
 import { apiFetch } from "../utils/api";
 
-export class InterestService {
+export class InteractionService {
     static async scheduleTour(data: any) {
         try {
-            const result = await apiFetch('/interest/schedule-tour', {
+            const result = await apiFetch('/interaction/schedule-tour', {
                 method: 'POST',
                 body: JSON.stringify(data)
             });
@@ -16,7 +16,9 @@ export class InterestService {
 
     static async requestInfo(data: any) {
         try {
-            const result = await apiFetch('/interest/request-info', {
+            console.log(data);
+            return
+            const result = await apiFetch('/interaction/request-info', {
                 method: 'POST',
                 body: JSON.stringify(data)
             });

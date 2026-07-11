@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
+import { AuthService } from "../services/auth.service";
 
 const MainLayout = () => {
     const [isHeaderFixed, setIsHeaderFixed] = useState(false);
@@ -12,6 +13,10 @@ const MainLayout = () => {
         };
         window.addEventListener('scroll', onScroll);
         return () => window.removeEventListener('scroll', onScroll);
+    }, []);
+
+    useEffect(() => {
+        AuthService.checkAuthUser()
     }, []);
 
     return (

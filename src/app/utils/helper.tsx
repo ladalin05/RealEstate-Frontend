@@ -245,3 +245,40 @@ export function SocialIcon ({ platform, size = 12, className = "text-gray-500" }
     if (!Icon) return null;
     return <Icon size={size} className={className} />;
 };
+
+export function toHMS(time: string): string {
+    if (!time) return "";
+    
+    const ampmMatch = time.match(/(\d{1,2}):(\d{2})\s?(am|pm)/i);
+    if (ampmMatch) {
+        let [, h, m, period] = ampmMatch;
+        let hour = parseInt(h, 10);
+        if (period.toLowerCase() === "pm" && hour !== 12) hour += 12;
+        if (period.toLowerCase() === "am" && hour === 12) hour = 0;
+        return `${String(hour).padStart(2, "0")}:${m}:00`;
+    }
+    
+    if (/^\d{2}:\d{2}$/.test(time)) return `${time}:00`;
+    return time;
+}
+
+export function buildPayload(form: any) {
+    return {
+        property_id: Number(form.property_id),
+        agent_id: form.agent_id ? Number(form.agent_id) : null,
+        name: form.name.trim(),
+        email: form.email.trim(),
+        phone: form.phone?.trim() || null,
+        tour_type: form.tour_type,
+        schedule_date: form.schedule_date, // must be "YYYY-MM-DD" already
+        schedule_time: toHMS(form.schedule_time),
+        message: form.message?.trim() || null,
+    };
+}
+
+export function refreshToken() {
+    const token = localStorage.getItem("token");
+    if(token) {
+        
+    }
+}

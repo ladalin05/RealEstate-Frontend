@@ -36,6 +36,34 @@ export class AuthService {
       return result.data;
   }
 
+  static async checkAuthUser() {
+    const token = this.getToken();
+
+    if (!token) return null;
+
+    try {
+        const response = await fetch(`${API_URL}/user-management/get-user`, {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            },
+        });
+
+        if (!response.ok) {
+            await this.logout();
+            return null;
+        }
+
+        const result = await response.json();
+        return result?.data?.user ?? null;
+
+    } catch (error) {
+        console.error("checkAuthUser failed:", error);
+        await this.logout();
+        return null;
+    }
+  }
+
   static async updateProfile(user_id: any, data: { fullname: string; phone: string }) {
     const token = this.getToken();
  

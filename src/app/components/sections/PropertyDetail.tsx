@@ -264,11 +264,11 @@ export const PropertyDetail = ({ property, relatedProperties, latestProperties }
                             </div>
                             {tourOpen ? (
                                 <div>
-                                    <ScheduleTour agent={property?.agent} />
+                                    <ScheduleTour agent={property?.agent} propertyId={property?.id} />
                                 </div>
                             ) : (
                                 <div>
-                                    <RequestInfo agent={property?.agent} />
+                                    <RequestInfo agent={property?.agent} propertyId={property?.id} />
                                 </div>
                             )}
                             
