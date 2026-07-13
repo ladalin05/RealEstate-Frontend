@@ -40,7 +40,6 @@ const UserDashboard = () => {
         setIsLoading(true);
         CMSService.getUserDashboard()
             .then((res) => {
-                console.log('data is ',res)
                 setProperties(res.favouriteProperties);
                 setInquiries(res.inquiries);
                 setTourSchedules(res.tourSchedules);
@@ -51,7 +50,7 @@ const UserDashboard = () => {
 
 
     const MOCK_STATS = [
-        { id: 1, label: t('user_dashboard.recently_saved_properties'), count: properties?.length, icon: "💖", color: "bg-pink-100 text-pink-600" },
+        { id: 1, label: t('user_dashboard.favorite_properties'), count: properties?.length, icon: "💖", color: "bg-pink-100 text-pink-600" },
         { id: 2, label: t('user_dashboard.active_inquiries'), count: inquiries?.length, icon: "📩", color: "bg-blue-100 text-blue-600" },
         { id: 3, label: t('user_dashboard.tour_schedules'), count: tourSchedules?.length, icon: "📅", color: "bg-green-100 text-green-600" },
     ];
@@ -100,7 +99,7 @@ const UserDashboard = () => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div className="lg:col-span-2 space-y-4">
                     <div className="flex items-center justify-between">
-                        <h2 className="text-xl font-bold text-gray-800 dark:text-white">{t('user_dashboard.recently_saved_properties')}</h2>
+                        <h2 className="text-xl font-bold text-gray-800 dark:text-white">{t('user_dashboard.favorite_properties')}</h2>
                         <Link to="/dashboard/favorites" className="text-sm font-semibold text-blue-600 hover:underline">
                             {t('general.view_all')}
                         </Link>

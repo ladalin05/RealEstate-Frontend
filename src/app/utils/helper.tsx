@@ -295,3 +295,13 @@ export const getPasswordStrength = (password: string): "weak" | "fair" | "good" 
   if (score === 3) return "good";
   return "strong";
 };
+
+
+export const formatDateBadge = (dateStr: string) => {
+    const d = new Date(dateStr + "T00:00:00");
+    return {
+        day: d.toLocaleDateString("en-US", { day: "2-digit" }),
+        month: d.toLocaleDateString("en-US", { month: "short" }).toUpperCase(),
+        weekday: d.toLocaleDateString("en-US", { weekday: "long" })
+    };
+};

@@ -4,7 +4,6 @@ export class PropertyService {
 
     static async getProperties(page: number = 1, limit: number = 10): Promise<any> {
         try {
-            console.log(page, limit);
             const result = await apiFetch(`/property?page=${page}&limit=${limit}`);
             return result.data;
         } catch (error) {

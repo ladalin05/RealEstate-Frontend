@@ -1,30 +1,36 @@
-import { Clock, MapPin, User, CalendarCheck, CalendarX, CalendarClock } from "lucide-react";
+import { Clock, MapPin, User, CalendarCheck, CalendarX, CalendarClock, Hourglass } from "lucide-react";
 
-export type TourStatus = "scheduled" | "completed" | "cancelled";
+export type TourStatus = "pending" | "confirmed" | "scheduled" | "completed" | "cancelled";
 
 export interface Tour {
     id: number;
     property_id: number;
     property_title: string;
-    address: string;
+    address?: string;
     agent_name: string;
-    tour_date: string; // "YYYY-MM-DD"
-    tour_time: string; // e.g. "10:30 AM"
+    tour_date: string;
+    tour_time: string;
     status: TourStatus;
     note?: string | null;
 }
 
 const STATUS_STYLES: Record<TourStatus, string> = {
+    pending: "bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-400",
+    confirmed: "bg-blue-100 text-blue-700 dark:bg-blue-950/60 dark:text-blue-400",
     scheduled: "bg-blue-100 text-blue-700 dark:bg-blue-950/60 dark:text-blue-400",
     completed: "bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400",
     cancelled: "bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400"
 };
 
 const STATUS_ICON: Record<TourStatus, typeof CalendarClock> = {
+    pending: Hourglass,
+    confirmed: CalendarClock,
     scheduled: CalendarClock,
     completed: CalendarCheck,
     cancelled: CalendarX
 };
+
+const FALLBACK_STATUS: TourStatus = "pending";
 
 interface TourCardProps {
     tour: any;
@@ -34,7 +40,8 @@ interface TourCardProps {
 }
 
 export const TourCard = ({ tour, compact = false, onReschedule, onCancel }: TourCardProps) => {
-    const StatusIcon = STATUS_ICON[tour.status];
+    const status: TourStatus = STATUS_ICON[tour.status as TourStatus] ? tour.status : FALLBACK_STATUS;
+    const StatusIcon = STATUS_ICON[status];
 
     return (
         <div
@@ -46,18 +53,20 @@ export const TourCard = ({ tour, compact = false, onReschedule, onCancel }: Tour
                 <div className="flex items-center gap-2 flex-wrap">
                     <h3 className="font-bold text-gray-900 dark:text-white text-base truncate">{tour.property_title}</h3>
                     <span
-                        className={`text-xs px-2.5 py-1 font-semibold rounded-full uppercase flex items-center gap-1 shrink-0 ${STATUS_STYLES[tour.status]}`}
+                        className={`text-xs px-2.5 py-1 font-semibold rounded-full uppercase flex items-center gap-1 shrink-0 ${STATUS_STYLES[status]}`}
                     >
                         <StatusIcon className="w-3 h-3" />
-                        {tour.status}
+                        {status}
                     </span>
                 </div>
 
-                <p className="text-xs text-gray-400 dark:text-gray-500 mt-1 flex items-center gap-1">
-                    <MapPin className="w-3 h-3 shrink-0" /> {tour.address}
-                </p>
+                {tour.address && (
+                    <p className="text-xs text-gray-400 dark:text-gray-500 mt-1 flex items-center gap-1">
+                        <MapPin className="w-3 h-3 shrink-0" /> {tour.address}
+                    </p>
+                )}
 
-                <div className="flex items-center gap-4 mt-2 text-sm text-gray-600 dark:text-gray-300">
+                <div className="flex items-center gap-4 mt-2 text-sm text-gray-600 dark:text-gray-300 flex-wrap">
                     <span className="flex items-center gap-1">
                         <Clock className="w-3.5 h-3.5 text-indigo-500" /> {tour.tour_time}
                     </span>
@@ -73,7 +82,7 @@ export const TourCard = ({ tour, compact = false, onReschedule, onCancel }: Tour
                 )}
             </div>
 
-            {tour.status === "scheduled" && (
+            {(status === "pending" || status === "confirmed" || status === "scheduled") && (
                 <div className="flex gap-2 shrink-0 sm:flex-col md:flex-row">
                     <button
                         onClick={() => onReschedule?.(tour.id)}

@@ -1,93 +1,66 @@
-import { useState } from "react";
-import { Calendar, X } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Calendar, X, Video, MapPin } from "lucide-react";
 import { TourCard } from "../components/cards/TourCard";
-
-// Hardcoded demo database entries mapping to a scheduled_tours table
-const initialTours = [
-    {
-        id: 1,
-        property_id: 12,
-        property_title: "Seaside Eco-Villa Apartment",
-        address: "18 Coral Bay Road, Sihanoukville",
-        agent_name: "Sarah Jenkins",
-        tour_date: "2026-07-14",
-        tour_time: "10:30 AM",
-        status: "scheduled",
-        note: "Bring proof of ID for building access."
-    },
-    {
-        id: 2,
-        property_id: 45,
-        property_title: "Downtown Minimalist Studio",
-        address: "22F Riverside Tower, Phnom Penh",
-        agent_name: "Michael Chang",
-        tour_date: "2026-07-14",
-        tour_time: "2:00 PM",
-        status: "scheduled",
-        note: null
-    },
-    {
-        id: 3,
-        property_id: 7,
-        property_title: "Hillside Family Villa",
-        address: "9 Boeung Kak Lane, Phnom Penh",
-        agent_name: "Sarah Jenkins",
-        tour_date: "2026-07-18",
-        tour_time: "9:00 AM",
-        status: "scheduled",
-        note: null
-    },
-    {
-        id: 4,
-        property_id: 31,
-        property_title: "Garden View Duplex",
-        address: "4 Norodom Blvd, Phnom Penh",
-        agent_name: "Lina Sok",
-        tour_date: "2026-07-02",
-        tour_time: "11:00 AM",
-        status: "completed",
-        note: null
-    },
-    {
-        id: 5,
-        property_id: 19,
-        property_title: "Riverside Loft",
-        address: "3 Sisowath Quay, Phnom Penh",
-        agent_name: "Michael Chang",
-        tour_date: "2026-06-27",
-        tour_time: "4:30 PM",
-        status: "cancelled",
-        note: null
-    }
-];
-
-const formatDateBadge = (dateStr: string) => {
-    const d = new Date(dateStr + "T00:00:00");
-    return {
-        day: d.toLocaleDateString("en-US", { day: "2-digit" }),
-        month: d.toLocaleDateString("en-US", { month: "short" }).toUpperCase(),
-        weekday: d.toLocaleDateString("en-US", { weekday: "long" })
-    };
-};
+import { formatDateBadge } from "../utils/helper";
+import { InteractionService } from "../services/interaction.service";
 
 const TourScheduleView = () => {
-    const [tours, setTours] = useState(initialTours);
+    const [schedulesTour, setSchedulesTour] = useState<any[]>([]);
     const [cancelTarget, setCancelTarget] = useState<number | null>(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        InteractionService.getScheduleTour()
+            .then((res) => {
+                // Map raw API tour records into the shape the UI needs
+                const mapped = (res || []).map((t: any) => ({
+                    id: t.id,
+                    property_id: t.property?.id,
+                    property_title: t.property?.title_en || "Untitled Property",
+                    property_code: t.property?.property_code,
+                    price: t.property?.price,
+                    currency: t.property?.currency,
+                    agent_name: t.agent?.name || "Unassigned",
+                    agent_image: t.agent?.profile_image || null,
+                    requester_name: t.name,
+                    requester_email: t.email,
+                    requester_phone: t.phone,
+                    user: t.user || null,
+                    message: t.message,
+                    tour_type: t.tour_type, // 'in-person' | 'video-chat'
+                    tour_date: t.schedule_date ? t.schedule_date.split("T")[0] : null,
+                    tour_time: t.schedule_time,
+                    status: t.status, // 'pending' | 'confirmed' | 'completed' | 'cancelled'
+                    note: t.message || null,
+                }));
+                setSchedulesTour(mapped);
+            })
+            .finally(() => setLoading(false));
+    }, []);
 
     const handleCancelTour = (id: number) => {
-        setTours((prev) => prev.map((t) => (t.id === id ? { ...t, status: "cancelled" } : t)));
+        setSchedulesTour((prev) =>
+            prev.map((t) => (t.id === id ? { ...t, status: "cancelled" } : t))
+        );
         setCancelTarget(null);
+        // TODO: persist cancellation via InteractionService.cancelTour(id)
     };
 
-    const upcoming = tours
-        .filter((t) => t.status === "scheduled")
-        .sort((a, b) => new Date(`${a.tour_date} ${a.tour_time}`).getTime() - new Date(`${b.tour_date} ${b.tour_time}`).getTime());
-    const past = tours
-        .filter((t) => t.status !== "scheduled")
+    const upcoming = schedulesTour
+        .filter((t) => t.status === "pending" || t.status === "confirmed")
+        .sort(
+            (a, b) =>
+                new Date(`${a.tour_date} ${a.tour_time}`).getTime() -
+                new Date(`${b.tour_date} ${b.tour_time}`).getTime()
+        );
+
+    const past = schedulesTour
+        .filter((t) => t.status === "completed" || t.status === "cancelled")
         .sort((a, b) => new Date(b.tour_date).getTime() - new Date(a.tour_date).getTime());
 
     // Group upcoming tours by date so each date appears once as a divider
-    const groupedUpcoming = upcoming.reduce<Record<string, typeof initialTours>>((acc, tour) => {
+    const groupedUpcoming = upcoming.reduce<Record<string, typeof schedulesTour>>((acc, tour) => {
+        if (!tour.tour_date) return acc;
         acc[tour.tour_date] = acc[tour.tour_date] || [];
         acc[tour.tour_date].push(tour);
         return acc;
@@ -105,7 +78,7 @@ const TourScheduleView = () => {
             </div>
 
             {/* Quick Overview Panels */}
-            <div className="grid grid-cols-3 gap-4 max-w-2xl">
+            <div className="grid grid-cols-3 gap-4 max-w-2xl mx-auto">
                 <div className="p-4 bg-blue-50 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900/50 rounded-xl">
                     <span className="text-xs font-semibold text-blue-500 block">Upcoming</span>
                     <span className="text-xl font-bold text-blue-700 dark:text-blue-400">{upcoming.length}</span>
@@ -113,22 +86,26 @@ const TourScheduleView = () => {
                 <div className="p-4 bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-100 dark:border-emerald-900/50 rounded-xl">
                     <span className="text-xs font-semibold text-emerald-500 block">Completed</span>
                     <span className="text-xl font-bold text-emerald-700 dark:text-emerald-400">
-                        {tours.filter((t) => t.status === "completed").length}
+                        {schedulesTour.filter((t) => t.status === "completed").length}
                     </span>
                 </div>
                 <div className="p-4 bg-gray-50 dark:bg-slate-800/50 border border-gray-200 dark:border-slate-700 rounded-xl">
                     <span className="text-xs font-semibold text-gray-500 block">Cancelled</span>
                     <span className="text-xl font-bold text-gray-700 dark:text-gray-400">
-                        {tours.filter((t) => t.status === "cancelled").length}
+                        {schedulesTour.filter((t) => t.status === "cancelled").length}
                     </span>
                 </div>
             </div>
 
+            {loading && (
+                <div className="max-w-4xl text-sm text-gray-400 dark:text-gray-500">Loading tours…</div>
+            )}
+
             {/* Upcoming tours, grouped by date */}
-            <div className="max-w-4xl space-y-6">
+            <div className="max-w-4xl space-y-6 mx-auto">
                 <h2 className="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wide">Upcoming Tours</h2>
 
-                {Object.keys(groupedUpcoming).length === 0 && (
+                {!loading && Object.keys(groupedUpcoming).length === 0 && (
                     <div className="border border-dashed border-gray-300 dark:border-slate-700 rounded-xl p-8 text-center text-sm text-gray-400 dark:text-gray-500">
                         No tours booked yet. Browse listings to schedule your first walkthrough.
                     </div>
@@ -148,7 +125,24 @@ const TourScheduleView = () => {
                                 </p>
                                 <p className="hidden sm:block text-xs font-semibold text-gray-400 dark:text-gray-500">{badge.weekday}</p>
                                 {dateTours.map((tour) => (
-                                    <TourCard key={tour.id} tour={tour} onCancel={setCancelTarget} />
+                                    <div key={tour.id} className="space-y-1">
+                                        <TourCard tour={tour} onCancel={setCancelTarget} />
+                                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 pl-1 text-xs text-gray-400 dark:text-gray-500">
+                                            <span className="inline-flex items-center gap-1">
+                                                {tour.tour_type === "video-chat" ? (
+                                                    <><Video className="w-3 h-3" /> Video Chat</>
+                                                ) : (
+                                                    <><MapPin className="w-3 h-3" /> In-Person</>
+                                                )}
+                                            </span>
+                                            <span>Requested by: {tour.requester_name}</span>
+                                            {tour.user && (
+                                                <span className="text-emerald-600 dark:text-emerald-400">
+                                                    (Registered: {tour.user.name})
+                                                </span>
+                                            )}
+                                        </div>
+                                    </div>
                                 ))}
                             </div>
                         </div>
