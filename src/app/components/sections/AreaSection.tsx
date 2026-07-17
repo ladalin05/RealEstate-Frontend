@@ -76,9 +76,13 @@ export const AreaSection = ({ areas }: { areas: any[] }) => {
                             className="flex items-center gap-3 bg-white shadow-lg rounded-xl p-4 min-w-[22rem] flex-shrink-0 cursor-pointer transition-all"
                         >
                             <img
-                                src={area.image}
+                                src={area.image || 'http://localhost:9000/images/areas/area-no-image.jpg'}
                                 className="w-16 h-16 rounded-lg object-cover flex-shrink-0"
                                 alt={area[`name_${i18n.language}`]}
+                                onError={(e) => {
+                                    e.currentTarget.onerror = null;
+                                    e.currentTarget.src = 'http://localhost:9000/images/areas/area-no-image.jpg';
+                                }}
                             />
                             <div>
                                 <h3 className="font-semibold text-gray-800">{area[`name_${i18n.language}`]}</h3>
